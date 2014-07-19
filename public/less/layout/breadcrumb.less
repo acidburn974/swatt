@@ -1,0 +1,18 @@
+
+#l-breadcrumb {
+	background: #25b05d;
+	padding: 1.25em 1em;
+	//.box-shadow(0px 1px 40px -20px rgba(0,0,0,0.4));
+	.l-breadcrumb-item {
+		display: inline-block;
+		padding: 0 1.25em 0 0;
+		&:after { content: '>'; padding: 0 0 0 1.25em; color: white; }
+		.l-breadcrumb-item-link {
+			color: white;
+			text-transform: uppercase;
+			.transition();
+			.l-breadcrumb-item-link-title { }
+			&:hover { text-decoration: none; color: rgba(0,0,0,0.5); }
+		}
+	}
+}
