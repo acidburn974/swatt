@@ -23,6 +23,18 @@ return array(
     */
 
     'meta_description' => '',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Open state url tracker
+    |--------------------------------------------------------------------------
+    |
+    | Ratio minimum à avoir pour pouvoir accéder au peers et au download
+    |
+    */
+
+    'ratio' => 0,
+
 );
 
 ?>

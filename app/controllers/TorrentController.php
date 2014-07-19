@@ -47,7 +47,7 @@ class TorrentController extends BaseController {
 						{
 							unlink(getcwd() . '/files/torrents/' . $this->fileName);
 						}
-						Session::put('message', 'Une erreur s\'est produite');
+						Session::put('message', 'An error has occured');
 					}
 					else
 					{
@@ -63,7 +63,7 @@ class TorrentController extends BaseController {
 							unset($f);
 						}
 						return Redirect::route('torrent', ['slug' => $torrent->slug, 'id' => $torrent->id])
-						->with('message', 'Vous pouvez télecharger dès maintenant commencer à seed votre torrent');
+						->with('message', 'Now you can download your torrent and re-seed it');
 					}
 				}
 				else
@@ -84,81 +84,57 @@ class TorrentController extends BaseController {
 	* ANNOUNCE
 	*
 	*/
-	public function announce()
+	public function announce($passkey)
 	{
 		Log::info(Input::all());
-		$user = User::where('passkey', '=', Input::get('passkey'))->first();
-		$torrent = Torrent::where('info_hash', '=', bin2hex(Input::get('info_hash')))->first();
+		// Déclaration/Fetch des variables requises
+		$user = User::where('passkey', '=', $passkey)->first();
 		if($user == null)
 		{
 			return Response::make(Bencode::bencode(array('failure reason' => 'This user does not exist'), 200, array('Content-Type' => 'text/plain')));
 		}
+		$torrent = Torrent::where('info_hash', '=', bin2hex(Input::get('info_hash')))->first();
 		if($torrent == null)
 		{
 			return Response::make(Bencode::bencode(array('failure reason' => 'This torrent does not exist'), 200, array('Content-Type' => 'text/plain')));
 		}
+		$client = Peer::whereRaw('user_id = ? AND torrent_id = ?', array($user->id, $torrent->id))->first();
+		if($client == null)
+		{
+			$client = new Peer();
+		}
 		else
 		{
+			$user->uploaded += Input::get('uploaded') - $client->uploaded;
+			$user->downloaded += Input::get('downloaded') - $client->downloaded;
+			$user->save();
+		}
+		$peers = Peer::whereRaw('torrent_id = ?', array($torrent->id))->get()->toArray();
+		foreach($peers as $k => $p)
+		{
+			unset($p['uploaded']); unset($p['downloaded']); unset($p['left']); unset($p['seeder']); unset($p['connectable']); unset($p['user_id']); unset($p['torrent_id']); unset($p['client']);unset($p['created_at']); unset($p['updated_at']);
+			$peers[$k] = $p;
+		}
+
+		if(Input::get('event') == 'started' || Input::get('event') == null)
+		{
+			$client->peer_id = Input::get('peer_id');
+			$client->ip = Request::getClientIp();
+			$client->port = Input::get('port');
+			$client->left = Input::get('left');
+			$client->uploaded = Input::get('uploaded');
+			$client->downloaded = Input::get('downloaded');
+			$client->seeder = ($client->left > 0) ? true : false;
+			$client->user_id = $user->id;
+			$client->torrent_id = $torrent->id;
+			$client->save();
+
 			$torrent->seeders = Peer::whereRaw('torrent_id = ? AND `left` = 0', array($torrent->id))->count();
 			$torrent->leechers = Peer::whereRaw('torrent_id = ? AND `left` > 0', array($torrent->id))->count();
 			$torrent->save();
 		}
 
-		if(Input::get('compact') == 1)
-		{
-			$resp['interval'] = 300;
-		}
-		else
-		{
-			$resp['interval'] = 600;
-			$resp['min interval'] = 300;
-		}
-
-		$client = Peer::whereRaw('user_id = ? AND torrent_id = ?', array($user->id, $torrent->id))->first();
-		$peers = Peer::whereRaw('torrent_id = ?', array($torrent->id))->get()->toArray();
-		// Retire les champs useless
-		foreach($peers as $k => $p)
-		{
-			unset($p['uploaded']);
-			unset($p['downloaded']);
-			unset($p['left']);
-			unset($p['seeder']);
-			unset($p['connectable']);
-			unset($p['user_id']);
-			unset($p['torrent_id']);
-			unset($p['client']);
-			unset($p['created_at']);
-			unset($p['updated_at']);
-			$peers[$k] = $p;
-		}
-		//Log::info($peers);
-		if(Input::get('event') == 'started' || Input::get('event') == '')
-		{
-			if($client == null)
-			{
-				$client = new Peer();
-			}
-			$client->peer_id = Input::get('peer_id');
-			$client->ip = Request::getClientIp(); // Ip
-			$client->port = Input::get('port');
-			$client->uploaded = Input::get('uploaded');
-			$client->downloaded = Input::get('downloaded');
-			$client->left = Input::get('left');
-			if($client->left > 0) // Définit le client en tant que seeder
-				$client->seeder = false;
-			else
-				$client->seeder = true;
-			$client->connectable = true; // Besoin d'être testé
-			$client->user_id = $user->id;
-			$client->torrent_id = $torrent->id;
-			$client->save();
-
-			// Pas sur
-			$user->downloaded += Input::get('downloaded') - $client->downloaded;
-			$user->uploaded += Input::get('uploaded') - $client->uploaded;
-			$user->save();
-		}
-		elseif(Input::get('event') == 'completed')
+		if(Input::get('event') == 'completed')
 		{
 			if($client == null && $client->left > 0)
 			{
@@ -168,7 +144,8 @@ class TorrentController extends BaseController {
 			$client->seeder = 0;
 			$client->save();
 		}
-		elseif(Input::get('event') == 'stopped')
+
+		if(Input::get('event') == 'stopped')
 		{
 			if($client != null)
 			{
@@ -179,10 +156,7 @@ class TorrentController extends BaseController {
 				return Response::make(Bencode::bencode(array('failure reason' => 'You don\'t have a life'), 200, array('Content-Type' => 'text/plain')));
 			}
 		}
-		else
-		{
-			return Response::make(Bencode::bencode(array('failure reason' => 'What do you want ?'), 200, array('Content-Type' => 'text/plain')));
-		}
+
 		$resp['complete'] = $torrent->seeders;
 		$resp['incomplete'] = $torrent->leechers;
 		$resp['peers'] = $peers;
@@ -220,7 +194,7 @@ class TorrentController extends BaseController {
 		$user = Auth::user();
 		$torrent = Torrent::find($id);
 		$dict = Bencode::bdecode(file_get_contents(getcwd() . '/files/torrents/' . $torrent->file_name));
-		$dict['announce'] = route('announce') . sprintf('/%s', $user->passkey);
+		$dict['announce'] = route('announce', array('passkey' => $user->passkey));
 		unset($dict['announce-list']);
 		$fileToDownload = Bencode::bencode($dict);
 		$tmpFileName = $torrent->slug . '.torrent';
