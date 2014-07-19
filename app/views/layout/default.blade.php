@@ -30,11 +30,11 @@
             </div>
             <nav class="l-header-menu col-md-12">
                 <a href="{{ url('/') }}" class="l-header-menu-item">{{ trans('messages.home') }}</a>
-                @if(Auth::user()->role == 'admin')
-                    <a href="{{ route('admin_home') }}" class="l-header-menu-item">ACP</a>
-                @endif
                 <a href="{{ route('torrents') }}" class="l-header-menu-item">Torrents</a>
                 @if(Auth::check())
+                    @if(Auth::user()->role == 'admin')
+                        <a href="{{ route('admin_home') }}" class="l-header-menu-item">ACP</a>
+                    @endif
                 	<a href="{{ route('upload') }}" class="l-header-menu-item">Upload</a>
                     <a href="{{ route('logout') }}" class="l-header-menu-item">{{ trans('messages.logout') }}</a>
                 @else
@@ -67,7 +67,7 @@
     	</div>
     </div><!-- /flash -->
     @endif
-    
+
     <!-- content -->
     <div class="l-content">
         @yield('content')
