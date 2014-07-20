@@ -40,7 +40,12 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth|admin'), function()
     Route::any('/articles/edit/{slug}.{id}', array('uses' => 'PostController@admin_editPost', 'as' => 'admin_editPost'));
     Route::any('/articles/delete/{slug}.{id}', array('uses' => 'PostController@admin_deletePost', 'as' => 'admin_deletePost'));
 
+    // ToDo
     Route::any('/members', array('uses' => 'UserController@admin_indexUser', 'as' => 'admin_indexUser'));
     Route::any('/members/edit/{username}.{id}', array('uses' => 'UserController@admin_editUser', 'as' => 'admin_editUser'));
 
+    Route::any('/categories', array('uses' => 'CategoryController@admin_indexCategory', 'as' => 'admin_indexCategory'));
+    Route::any('/categories/new', array('uses' => 'CategoryController@admin_addCategory', 'as' => 'admin_addCategory'));
+    Route::any('/categories/edit/{slug}.{id}', array('uses' => 'CategoryController@admin_editCategory', 'as' => 'admin_editCategory'));
+    Route::any('/categories/delete/{slug}.{id}', array('uses' => 'CategoryController@admin_deleteCategory', 'as' => 'admin_deleteCategory'));
 });

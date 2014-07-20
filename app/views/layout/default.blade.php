@@ -69,7 +69,7 @@
     @endif
 
     <!-- content -->
-    <div class="l-content">
+    <div id="l-content">
         @yield('content')
     </div><!-- /content -->
 

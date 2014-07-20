@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Lib;
 
@@ -18,7 +18,7 @@ class TorrentTools {
 
 	/**
 	 * Déplace et décode le torrent
-	 * 
+	 *
 	 * @access private
 	 */
 	public static function moveAndDecode($torrentFile)
@@ -48,16 +48,16 @@ class TorrentTools {
 	public static function getTorrentSize($decodedTorrent)
 	{
 		$size = 0;
-		if(array_key_exists("files", $decodedTorrent['info']) && count($decodedTorrent['info']['files'])) // Torrent à fichiers multiple 
+		if(array_key_exists("files", $decodedTorrent['info']) && count($decodedTorrent['info']['files'])) // Torrent à fichiers multiple
 		{
-			foreach ($decodedTorrent['info']['files'] as $k => $file)  
+			foreach ($decodedTorrent['info']['files'] as $k => $file)
 			{
 				$dir = '';
 				$size += $file['length'];
 				$count = count($file["path"]);
 			}
-		} 
-		else 
+		}
+		else
 		{
 			$size = $decodedTorrent['info']['length'];
 			//$files[0] = $decodedTorrent['info']['name.utf-8'];
@@ -72,20 +72,20 @@ class TorrentTools {
 	 */
 	public static function getTorrentFiles($decodedTorrent)
 	{
-		if(array_key_exists("files", $decodedTorrent['info']) && count($decodedTorrent['info']['files'])) // Torrent à fichiers multiple 
+		if(array_key_exists("files", $decodedTorrent['info']) && count($decodedTorrent['info']['files'])) // Torrent à fichiers multiple
 		{
-			foreach ($decodedTorrent['info']['files'] as $k => $file)  
+			foreach ($decodedTorrent['info']['files'] as $k => $file)
 			{
 				$dir = '';
 				$count = count($file["path"]);
-				for ($i = 0; $i < $count; $i++) 
+				for ($i = 0; $i < $count; $i++)
 				{
-					if (($i + 1) == $count) 
+					if (($i + 1) == $count)
 					{
 						$fname = $dir.$file["path"][$i];
 						$files[$k]['name'] = $fname;
-					} 
-					else 
+					}
+					else
 					{
 						$dir .= $file["path"][$i]."/";
 						$files[$k]['name'] = $dir;
@@ -93,8 +93,8 @@ class TorrentTools {
 					$files[$k]['size'] = $file['length'];
 				}
 			}
-		} 
-		else 
+		}
+		else
 		{
 			$files[0]['name'] = $decodedTorrent['info']['name'];
 			$files[0]['size'] = $decodedTorrent['info']['length'];
@@ -106,7 +106,7 @@ class TorrentTools {
 	 * Retourne le sha1 (hash) du torrent
 	 *
 	 */
-	public static function getTorrentHash($decodedTorrent) 
+	public static function getTorrentHash($decodedTorrent)
 	{
 		return sha1(Bencode::bencode($decodedTorrent['info']));
 	}
@@ -119,7 +119,7 @@ class TorrentTools {
 	{
 		if(array_key_exists("files", $decodedTorrent['info']))
 		{
-			return count($decodedTorrent['info']['files']); // Torrent à fichiers multiple 
+			return count($decodedTorrent['info']['files']); // Torrent à fichiers multiple
 		}
 		return 1; // Torrent à fichier unique
 	}
@@ -130,8 +130,15 @@ class TorrentTools {
 	 */
 	public static function getNfo($inputFile)
 	{
-		$fileName = uniqid() . '.nfo';
-		$inputFile->move(getcwd() . '/files/tmp/', $fileName);
+		try
+		{
+			$fileName = uniqid() . '.nfo';
+			$inputFile->move(getcwd() . '/files/tmp/', $fileName);
+		}
+		catch(Exception $e)
+		{
+
+		}
 		if(file_exists(getcwd() . '/files/tmp/' . $fileName))
 		{
 			$fileContent = file_get_contents(getcwd() . '/files/tmp/' . $fileName);

@@ -20,7 +20,7 @@
                 <textarea name="content" id="content" cols="30" rows="10" class="form-control">{{ $post->content }}</textarea>
             </div>
 
-            <button type="submit" class="btn btn-default">Post</button>
+            <button type="submit" class="btn btn-default">Save</button>
         {{ Form::close() }}
     </div>
 </div>

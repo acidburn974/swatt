@@ -36,6 +36,7 @@
                 <ul class="nav nav-sidebar">
                     <li><a href="{{ route('admin_home') }}">Overview</a></li>
                     <li><a href="{{ route('admin_indexPost') }}">Articles</a></li>
+                    <li><a href="{{ route('admin_indexCategory') }}">Categories</a></li>
                 </ul>
             </div>
 
