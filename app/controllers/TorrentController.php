@@ -33,7 +33,10 @@ class TorrentController extends BaseController {
 					$torrent->file_count = $info['info']['filecount'];
 					$torrent->announce = $this->decodedTorrent['announce'];
 					$torrent->size = $info['info']['size'];
-					$torrent->nfo = TorrentTools::getNfo(Input::file('nfo'));
+					if(Input::hasFile('nfo'))
+						$torrent->nfo = TorrentTools::getNfo(Input::file('nfo'));
+					else
+						$torrent->nfo = '';
 					$torrent->created_by = $this->decodedTorrent['created by'];
 					$torrent->category_id = $input['category_id'];
 					$torrent->user_id = $user->id;
@@ -73,7 +76,7 @@ class TorrentController extends BaseController {
 					{
 						unlink(getcwd() . '/files/torrents/' . $this->fileName);
 					}
-					Session::put('message', 'L\'URL de votre torrent est invalide');
+					Session::put('message', 'You announce URL is invalid');
 				}
 			}
 		}

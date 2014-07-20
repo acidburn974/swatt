@@ -15,7 +15,7 @@ class Torrent extends Eloquent {
 		'file_count' => 'required|numeric',
 		'announce' => 'required',
 		'size' => 'required',
-		//'nfo' => 'required',
+		//'nfo' => '',
 		'created_by' => 'required',
 		'category_id' => 'required',
 		'user_id' => 'required',

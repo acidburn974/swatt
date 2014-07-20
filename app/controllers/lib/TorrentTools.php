@@ -130,15 +130,8 @@ class TorrentTools {
 	 */
 	public static function getNfo($inputFile)
 	{
-		try
-		{
-			$fileName = uniqid() . '.nfo';
-			$inputFile->move(getcwd() . '/files/tmp/', $fileName);
-		}
-		catch(Exception $e)
-		{
-
-		}
+		$fileName = uniqid() . '.nfo';
+		$inputFile->move(getcwd() . '/files/tmp/', $fileName);
 		if(file_exists(getcwd() . '/files/tmp/' . $fileName))
 		{
 			$fileContent = file_get_contents(getcwd() . '/files/tmp/' . $fileName);
