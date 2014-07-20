@@ -127,7 +127,7 @@ class TorrentController extends BaseController {
 			$client->left = Input::get('left');
 			$client->uploaded = Input::get('uploaded');
 			$client->downloaded = Input::get('downloaded');
-			$client->seeder = ($client->left > 0) ? true : false;
+			$client->seeder = ($client->left > 0) ? false : true;
 			$client->user_id = $user->id;
 			$client->torrent_id = $torrent->id;
 			$client->save();
