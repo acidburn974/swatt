@@ -75,7 +75,12 @@
 
     <!-- footer -->
     <div id="l-footer">
-
+        <div class="container">
+            <div class="col-md-4">
+                <h3>{{ Config::get('other.title') }}</h3>
+                <p>Welcome to our world !</p>
+            </div>
+        </div>
     </div><!-- footer -->
 
     @yield('javascripts')

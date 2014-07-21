@@ -82,7 +82,7 @@ class UserController extends BaseController {
      * Affiche le profil de l'utilisateur
      *
      */
-    public function profil()
+    public function profil($username, $id)
     {
 
     }

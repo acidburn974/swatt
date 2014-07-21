@@ -25,9 +25,12 @@
                 <div class="home-post-more">
                     <a href="{{ route('post', array('slug' => $p->slug, 'id' => $p->id)) }}" class="btn btn-default">Read More</a>
                 </div>
+                <div class="clearfix"></div>
             </article>
-            <hr>
         @endforeach
+    </div>
+    <div class="col-md-12">
+        {{ $posts->links() }}
     </div>
 </div>
 @stop

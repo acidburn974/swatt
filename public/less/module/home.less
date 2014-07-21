@@ -1,5 +1,17 @@
 .home {
     .home-post {
+        margin: 1.25em 0;
+        padding: 1.25em; 
+        border: solid 1px #cecece;
+        border-bottom-width: 2px;
+        .rounded();
+        background: #fff;
+        transition: box-shadow 0.2s ease-out, border-bottom-width 0.2s ease-out;
+        background: #f0f3f6;
+        &:hover {
+            .box-shadow(0px 0px 5px #cecece);
+            border-bottom-width: 5px;
+        }
         .home-post-title {
             a {
                 &:hover {
