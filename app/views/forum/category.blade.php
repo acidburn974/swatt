@@ -15,7 +15,7 @@
 
 @section('content')
 <div class="forum container">
-    <div class="col-md-9">
+    <div class="col-md-12">
         <div class="forum-node">
             <div class="forum-node-title"><a href="{{ route('forum_category', array('slug' => $node->slug, 'id' => $node->id)) }}">{{ $node->name }}</a></div>
             <div class="forum-node-forums">
