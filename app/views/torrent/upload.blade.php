@@ -1,6 +1,8 @@
 @extends('layout.default')
 
-
+@section('title')
+<title>Upload - {{{ Config::get('other.title') }}}</title>
+@stop
 
 @section('breadcrumb')
 <div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
@@ -10,12 +12,8 @@
 </div>
 @stop
 
-@section('stylesheets')
-<link rel="stylesheet" href="{{ url('files/wysibb/theme/default/wbbtheme.css')}}" type="text/css">
-@stop
-
 @section('content')
-<div class="container">
+<div class="box container">
 	<div class="upload col-md-7">
 		<h3 class="upload-title">Upload a torrent</h3>
 		{{ Form::open(['route' => 'upload', 'files' => true, 'class' => 'upload-form']) }}
@@ -61,12 +59,6 @@
 @stop
 
 @section('javascripts')
-<script type="text/javascript" src="{{ url('js/jquery.min.js') }}"></script>
-<script type="text/javascript" src="{{ url('files/wysibb/jquery.wysibb.min.js') }}"></script>
-<script>
-$(document).ready(function() {
-    var wbbOpt = { buttons: "bold,italic,underline,|,img,link,|,code,quote" }
-    $("#upload-form-description").wysibb(wbbOpt);
-});
-</script>
+<script type="text/javascript" src="{{ url('files/ckeditor_bbcode/ckeditor.js') }}"></script>
+<script>CKEDITOR.replace('upload-form-description');</script>
 @stop

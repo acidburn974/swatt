@@ -1,7 +1,7 @@
 @extends('layout.default')
 
 @section('content')
-<div class="container">
+<div class="box container">
     <div class="home col-md-12">
         @foreach($posts as $p)
             <article class="home-post">

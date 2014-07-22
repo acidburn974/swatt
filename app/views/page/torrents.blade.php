@@ -1,7 +1,7 @@
 @extends('layout.default')
 
 @section('title')
-<title>Zizitracker | Liste des torrents</title>
+<title>Torrents - {{{ Config::get('other.title') }}}</title>
 @stop
 
 @section('meta_description')
@@ -17,7 +17,7 @@
 @stop
 
 @section('content')
-<div class="container">
+<div class="box container">
 	<div class="torrents col-md-12">
 		<h1 class="torrents-title">Latest torrents</h1>
 		<table class="torrents-list table table-striped">

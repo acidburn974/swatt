@@ -49,3 +49,13 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth|admin'), function()
     Route::any('/categories/edit/{slug}.{id}', array('uses' => 'CategoryController@admin_editCategory', 'as' => 'admin_editCategory'));
     Route::any('/categories/delete/{slug}.{id}', array('uses' => 'CategoryController@admin_deleteCategory', 'as' => 'admin_deleteCategory'));
 });
+
+Route::group(array('prefix' => 'forums'), function()
+{
+    Route::get('/', array('uses' => 'ForumController@index', 'as' => 'forum_index'));
+    Route::get('/category/{slug}.{id}', array('uses' => 'ForumController@category', 'as' => 'forum_category'));
+    Route::get('/display/{slug}.{id}', array('uses' => 'ForumController@display', 'as' => 'forum_display'));
+    Route::any('/display/{slug}.{id}/new-thread', array('uses' => 'ForumController@newThread', 'as' => 'forum_new_thread', 'before' => 'auth'));
+    Route::get('/topic/{slug}.{id}', array('uses' => 'ForumController@topic', 'as' => 'forum_topic'));
+    Route::post('/topic/{slug}.{id}/new-reponse', array('uses' => 'ForumController@response', 'as' => 'forum_response', 'before' => 'auth'));
+});
