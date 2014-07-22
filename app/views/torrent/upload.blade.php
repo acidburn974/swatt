@@ -1,5 +1,9 @@
 @extends('layout.default')
 
+@section('title')
+<title>Upload - {{{ Config::get('other.title') }}}</title>
+@stop
+
 @section('breadcrumb')
 <div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
     <a href="{{ url('/upload') }}" itemprop="url" class="l-breadcrumb-item-link">

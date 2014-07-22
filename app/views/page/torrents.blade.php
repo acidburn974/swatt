@@ -1,7 +1,7 @@
 @extends('layout.default')
 
 @section('title')
-<title>Zizitracker | Liste des torrents</title>
+<title>Torrents - {{{ Config::get('other.title') }}}</title>
 @stop
 
 @section('meta_description')

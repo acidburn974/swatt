@@ -18,7 +18,7 @@
 @stop
 
 @section('content')
-<div class="container">
+<div class="box container">
     <article class="post col-md-12">
         <h2 class="post-title">{{{ $post->title }}}</h2>
         <div class="post-time"><time pubdate>{{ date('d M Y', strtotime($post->created_at)) }}</time></div>

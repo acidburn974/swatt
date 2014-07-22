@@ -1,7 +1,7 @@
 @extends('layout.default')
 
 @section('title')
-<title>{{ trans('messages.login') }} | {{ Config::get('other.title') }}</title>
+<title>{{ trans('messages.login') }} - {{ Config::get('other.title') }}</title>
 @stop
 
 @section('meta_description')
@@ -17,7 +17,7 @@
 @stop
 
 @section('content')
-<div class="container">
+<div class="box container">
     <div class="col-md-4">
         <h3>{{ trans('messages.login') }}</h3>
         {{ Form::open(array('route' => 'login')) }}

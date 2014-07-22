@@ -1,7 +1,7 @@
 @extends('layout.default')
 
 @section('title')
-<title>{{ trans('messages.signup') }} | {{ Config::get('other.title') }}</title>
+<title>{{ trans('messages.signup') }} - {{ Config::get('other.title') }}</title>
 @stop
 
 @section('meta_description')
@@ -17,22 +17,22 @@
 @stop
 
 @section('content')
-<div class="container">
+<div class="box container">
     <div class="col-md-4">
         <h3>{{ trans('messages.signup') }}</h3>
         {{ Form::open(array('route' => 'signup')) }}
             <div class="form-group">
-                <label for="username">{{ trans('messages.username') }}</label>
+                <label for="username">Username</label>
                 <input type="text" name="username" class="form-control">
             </div>
 
             <div class="form-group">
-                <label for="email">{{ trans('messages.email') }}</label>
+                <label for="email">Email</label>
                 <input type="text" name="email" class="form-control">
             </div>
 
             <div class="form-group">
-                <label for="password">{{ trans('messages.password') }}</label>
+                <label for="password">Password</label>
                 <input type="password" name="password" class="form-control">
             </div>
 

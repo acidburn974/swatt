@@ -6,7 +6,7 @@
         <title>{{ Config::get('other.title') }}</title>
     @show
     @section('meta_description')
-        <meta type="description" content="">
+        <meta type="description" content="{{{ 'Torrent tracker specialized in high qualities movies and tv series' }}}">
     @show
     <link rel="stylesheet" href="{{ url('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url('css/main.css') }}">
@@ -52,13 +52,13 @@
     		<div class="col-md-9">
     			<div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
 					<a href="{{ url('/') }}" itemprop="url" class="l-breadcrumb-item-link">
-						<span itemprop="title" class="l-breadcrumb-item-link-title">{{ trans('messages.home') }}</span>
+						<span itemprop="title" class="l-breadcrumb-item-link-title">Home</span>
 					</a>
 				</div>
 				@yield('breadcrumb')
     		</div>
     	</div>
-    </div><!-- breadcrumb -->
+    </div><!-- /breadcrumb -->
 
 	@if(Session::has('message'))
     <!-- flash -->
@@ -78,11 +78,12 @@
     <div id="l-footer">
         <div class="container">
             <div class="col-md-4">
-                <h3>{{ Config::get('other.title') }}</h3>
-                <p>Welcome to our world !</p>
+                <h3>{{{ Config::get('other.title') }}}</h3>
+                <p>A new sort of torrent tracker specialized in HD movies and tv series.</p>
+                {{-- <p>Page generated in {{ round((microtime(TRUE)-$_SERVER['REQUEST_TIME_FLOAT']), 4) . 's' }}</p> --}}
             </div>
         </div>
-    </div><!-- footer -->
+    </div><!-- /footer -->
 
     @yield('javascripts')
 </body>
