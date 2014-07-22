@@ -30,6 +30,7 @@
             </div>
             <nav class="l-header-menu col-md-12">
                 <a href="{{ url('/') }}" class="l-header-menu-item">{{ trans('messages.home') }}</a>
+                <a href="{{ route('forum_index') }}" class="l-header-menu-item">Forums</a>
                 <a href="{{ route('torrents') }}" class="l-header-menu-item">Torrents</a>
                 @if(Auth::check())
                     @if(Auth::user()->role == 'admin')

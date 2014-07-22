@@ -1,12 +1,11 @@
 
 #l-header {
-    background: #2AC568;
-    
+    background: linear-gradient(lighten(#25b05d, 10%), #25b05d);
+    //border-bottom: 1px solid #1B3759;
     //.box-shadow(0px 1px 40px rgba(0,0,0,0.4));
     .l-header-logo {
         color: white;
         text-transform: uppercase;
-
         .transition();
         a {
             color: white;
@@ -37,13 +36,14 @@
     }
     .l-header-menu {
         padding: 1.25em 1em;
-        text-transform: uppercase;
         .l-header-menu-item {
-            padding: 0 1.25em 0 0;
-            color: rgba(0,0,0,0.5);
-            font-size: 1.5em;
+            padding: 0.75em 1em;
+            color: #fff;
+            font-size: 1.15em;
+            text-shadow: 0px 1px 2px #000;
+            .rounded(4px);
             .transition();
-            &:hover { text-decoration: none; color: white; }
+            &:hover { text-decoration: none; color: white; background: rgba(0, 0, 0, 0.2); }
             //.is-active { background: blue; }
         }
     }
