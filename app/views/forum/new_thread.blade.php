@@ -48,12 +48,6 @@
 @stop
 
 @section('javascripts')
-<script type="text/javascript" src="{{ url('js/jquery.min.js') }}"></script>
-<script type="text/javascript" src="{{ url('files/wysibb/jquery.wysibb.min.js') }}"></script>
-<script>
-$(document).ready(function() {
-    var wbbOpt = { buttons: "bold,italic,underline,|,img,link,|,code,quote" }
-    $("#new-thread-content").wysibb(wbbOpt);
-});
-</script>
+<script type="text/javascript" src="{{ url('files/ckeditor_bbcode/ckeditor.js') }}"></script>
+<script>CKEDITOR.replace('new-thread-content');</script>
 @stop
