@@ -9,7 +9,7 @@
 @stop
 
 @section('content')
-<div class="forum container">
+<div class="forum box container">
 	<div class="col-md-12">
 		@foreach($nodes as $node)
 			<div class="forum-node">

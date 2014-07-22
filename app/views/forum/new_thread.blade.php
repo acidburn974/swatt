@@ -28,7 +28,7 @@
 @stop
 
 @section('content')
-<div class="forum container">
+<div class="forum box container">
 	<div class="col-md-12">
 		<h2>Start a new thread in {{ $forum->name }}</h2>
 		{{ Form::open(array('route' => array('forum_new_thread', 'slug' => $forum->slug, 'id' => $forum->id))) }}

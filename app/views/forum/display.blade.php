@@ -19,7 +19,7 @@
 @stop
 
 @section('content')
-<div class="forum container">
+<div class="forum box container">
     <div class="col-md-12">
         <h2>Forum: {{ $forum->name }}</h2>
         @if(Auth::check())
