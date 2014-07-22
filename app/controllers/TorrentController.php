@@ -34,9 +34,13 @@ class TorrentController extends BaseController {
 					$torrent->announce = $this->decodedTorrent['announce'];
 					$torrent->size = $info['info']['size'];
 					if(Input::hasFile('nfo'))
+					{
 						$torrent->nfo = TorrentTools::getNfo(Input::file('nfo'));
+					}
 					else
+					{
 						$torrent->nfo = '';
+					}
 					$torrent->created_by = $this->decodedTorrent['created by'];
 					$torrent->category_id = $input['category_id'];
 					$torrent->user_id = $user->id;
@@ -84,8 +88,11 @@ class TorrentController extends BaseController {
 	}
 
 	/**
-	* ANNOUNCE
+	* Announce code
 	*
+	* @access public 
+	* @param $passkey Passkey de l'utilisateur*
+	* @return Bencoded response for the torrent client
 	*/
 	public function announce($passkey)
 	{
@@ -169,7 +176,9 @@ class TorrentController extends BaseController {
 
 	/**
 	 * Affiche la liste des torrents
-	 *
+	 * 
+	 * @access public
+	 * @return page.torrents
 	 */
 	public function torrents()
 	{
@@ -180,6 +189,9 @@ class TorrentController extends BaseController {
 	/**
 	 * Affiche le torrent désiré
 	 *
+	 * @access public
+	 * @param $slug Slug du torrent
+	 * @param $id Id du torrent
 	 *
 	 */
 	public function torrent($slug, $id)
