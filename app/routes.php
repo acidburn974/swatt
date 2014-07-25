@@ -12,25 +12,29 @@
 */
 
 Route::get('/', ['uses' => 'HomeController@home', 'as' => 'home']);
-
+// User
 Route::any('/login', ['uses' => 'UserController@login', 'as' => 'login']);
 Route::any('/signup', ['uses' => 'UserController@signup', 'as' => 'signup']);
 Route::any('/logout', ['uses' => 'UserController@logout', 'before' => 'auth', 'as' => 'logout']);
 Route::get('/members', ['uses' => 'UserController@members', 'as' => 'members']);
 Route::get('/members/{username}.{id}', ['uses' => 'UserController@profil', 'as' => 'profil']);
 
+// Torrent
 Route::get('/torrents', array('uses' => 'TorrentController@torrents', 'as' => 'torrents'));
 Route::get('/torrents/{slug}.{id}', array('uses' => 'TorrentController@torrent', 'as' => 'torrent'));
 Route::any('/upload', ['uses' => 'TorrentController@upload', 'before' => 'auth', 'as' => 'upload']);
 Route::any('/announce/{passkey?}', ['uses' => 'TorrentController@announce', 'as' => 'announce']);
 Route::get('/download/{slug}.{id}', ['uses' => 'TorrentController@download', 'before' => 'auth', 'as' => 'download',]);
 
+// Category
 Route::get('/categories', array('uses' => 'CategoryController@categories', 'as' => 'categories'));
 Route::get('/categories/{slug}.{id}', ['uses' => 'CategoryController@category', 'as' => 'category']);
 
+// Article
 Route::get('/articles', array('uses' => 'ArticleController@articles', 'as' => 'articles'));
 Route::get('/articles/{slug}.{id}', array('uses' => 'ArticleController@post', 'as' => 'post'));
 
+// Admin
 Route::group(array('prefix' => 'admin', 'before' => 'auth|admin'), function()
 {
     Route::any('/', array('uses' => 'HomeController@admin_home', 'as' => 'admin_home'));
@@ -50,6 +54,8 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth|admin'), function()
     Route::any('/categories/delete/{slug}.{id}', array('uses' => 'CategoryController@admin_deleteCategory', 'as' => 'admin_deleteCategory'));
 });
 
+// Forum
+Route::get('/forums', function() { return Redirect::to('/community'); }); // Old link
 Route::group(array('prefix' => 'community'), function()
 {
     Route::get('/', array('uses' => 'ForumController@index', 'as' => 'forum_index'));
