@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Str;
 
-class PostController extends BaseController {
+class ArticleController extends BaseController {
 
     /**
      * Affiche les articles comme en page d'accueil
@@ -12,7 +12,7 @@ class PostController extends BaseController {
      */
     public function articles()
     {
-        $posts = Post::orderBy('created_at', 'DESC')->paginate(5);
+        $posts = Article::orderBy('created_at', 'DESC')->paginate(5);
         return View::make('post.articles', array('posts' => $posts));
     }
 
@@ -24,7 +24,7 @@ class PostController extends BaseController {
      */
     public function post($slug, $id)
     {
-        $post = Post::find($id);
+        $post = Article::find($id);
 
         return View::make('post.post', array('post' => $post));
     }
@@ -37,7 +37,7 @@ class PostController extends BaseController {
      */
     public function admin_indexPost()
     {
-        $posts = Post::all();
+        $posts = Article::all();
         return View::make('post.admin_index_post', array('posts' => $posts));
     }
 
@@ -51,7 +51,7 @@ class PostController extends BaseController {
         if(Request::isMethod('post'))
         {
             $input = Input::all();
-            $post = new Post();
+            $post = new Article();
             $post->title = $input['title'];
             $post->slug = Str::slug($post->title);
             $post->brief = $input['brief'];
@@ -64,7 +64,7 @@ class PostController extends BaseController {
             }
             else
             {
-                Auth::user()->posts()->save($post);
+                Auth::user()->articles()->save($post);
                 return Redirect::route('admin_indexPost')->with('message', 'Your article has been published');
             }
         }
@@ -77,7 +77,7 @@ class PostController extends BaseController {
      */
     public function admin_editPost($slug, $id)
     {
-        $post =  Post::find($id);
+        $post =  Article::find($id);
         if(Request::isMethod('post'))
         {
             $input = Input::all();
@@ -106,7 +106,7 @@ class PostController extends BaseController {
      */
     public function admin_deletePost($slug, $id)
     {
-        $post = Post::find($id);
+        $post = Article::find($id);
         $post->delete();
         return Redirect::route('admin_indexPost')->with('message', 'This article has been deleted');
     }

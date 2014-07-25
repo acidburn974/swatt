@@ -30,6 +30,15 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	protected $hidden = array('password', 'remember_token');
 
 	/**
+	 * Belongs to group
+	 *
+	 */
+	public function group()
+	{
+		return $this->belongsTo('Group');
+	}
+
+	/**
 	 * Has many torrents
 	 *
 	 */
@@ -48,6 +57,15 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	}
 
 	/**
+	* Has many articles
+	*
+	*/
+	public function articles()
+	{
+		return $this->hasMany('Article');
+	}
+
+	/**
 	* Has many posts
 	*
 	*/
@@ -55,6 +73,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	{
 		return $this->hasMany('Post');
 	}
+
 
 	/**
 	 * Retourne le upload au format humain

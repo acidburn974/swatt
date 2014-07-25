@@ -1,9 +1,5 @@
 <?php
 
-use \Forum\Node;
-use \Forum\Forum;
-use \Forum\Thread;
-use \Forum\Post;
 use Illuminate\Support\Str;
 
 class ForumController extends BaseController {
@@ -14,136 +10,169 @@ class ForumController extends BaseController {
 	 */
 	public function index()
 	{
-		$nodes = Node::all();
-		return View::make('forum.index', array('nodes' => $nodes));
+		$categories = Forum::where('parent_id', '=', 0)->orderBy('position', 'ASC')->get();
+		return View::make('forum.index', array('categories' => $categories));
 	}
 
 	/**
-	 * Affiche la node demandé avec les forums appartenant à cette categorie
+	 * Affiche la catégorie demandé
 	 *
 	 * @access public
-	 * @param $slug Slug de la catégorie (node)
-	 * @param $id Id de la catégorie (node)
+	 * @param $slug Slug de la catégorie
+	 * @param $id Id de la catégorie
 	 * @return void
 	 */
 	public function category($slug, $id)
 	{
-		$node = Node::find($id);
-		$forums = $node->forums;
-
-		return View::make('forum.category', array('node' => $node, 'forums' => $forums));
+		$category = Forum::find($id);
+		return View::make('forum.category', array('c' => $category));
 	}
 
 	/**
-	 * Affiche tout les threads(topics) dans le forum demandé
+	 * Affiche le forums et les topics à l'intérieur
 	 *
-	 * @param $slug Slug du forum
-	 * @param $id Id du forum
 	 *
 	 */
 	public function display($slug, $id)
 	{
 		$forum = Forum::find($id);
-		$category = $forum->node;
-		$threads = $forum->threads()->orderBy('created_at', 'DESC')->get();
-
-		return View::make('forum.display', array('forum' => $forum, 'category' => $category, 'threads' => $threads));
-	}
-
-	/**
-	 * Démarre un nouveau sujet dans le forum choisie
-	 *
-	 * @param $id Id du forum
-	 * @param $slug Slug du forum
-	 *
-	 */
-	public function newThread($slug, $id)
-	{
-		$user = Auth::user();
-		$forum = Forum::find($id);
-		$category = $forum->node;
-		if(Request::isMethod('post'))
+		if($forum->parent_id == 0)
 		{
-			$thread = new Thread();
-			$thread->name = Input::get('title');
-			$thread->slug = Str::slug($thread->name);
-			$thread->num_post = 0;
-			$thread->forum_id = $forum->id;
-			$thread->user_id = $user->id;
-			$vThread = Validator::make($thread->toArray(), $thread->rules);
-			if($vThread->fails())
-			{
-				Session::put('message', 'An error has occurred');
-			}
-			else
-			{
-				$thread->save();
-				$post = new Post();
-				$post->content = Input::get('content');
-				$post->user_id = $user->id;
-				$post->thread_id = $thread->id;
-				$vPost = Validator::make($post->toArray(), $post->rules);
-				if($vPost->fails())
-				{
-					Session::put('message', 'An error has occurred when saving the post');
-				}
-				else
-				{
-					$post->save();
-					$thread->num_post = $thread->posts()->count();
-					$thread->save();
-					return Redirect::route('forum_topic', array('slug' => $thread->slug, 'id' => $thread->id));
-				}
-			}
+			return Redirect::route('forum_category', array('slug' => $forum->slug, 'id' => $forum->id));
 		}
-		return View::make('forum.new_thread', array('forum' => $forum, 'category' => $category));
+		$category = Forum::find($forum->parent_id);
+		$topics = $forum->topics()->orderBy('created_at', 'DESC')->paginate();
+
+		return View::make('forum.display', array('forum' => $forum, 'topics' => $topics, 'category' => $category));
 	}
 
 	/**
-	 * Affiche le thread demandé
+	 * Affiche le topic
 	 *
-	 * @param $slug Slug du thread
-     * @param $id Id du thread
+	 *
 	 */
 	public function topic($slug, $id)
 	{
-		$thread = Thread::find($id);
-		$posts = $thread->posts;
-		$forum = $thread->forum;
-		$category = $forum->node;
+		$topic = Topic::find($id);
+		$forum = $topic->forum;
+		$category = $forum->getCategory();
+		$posts = $topic->posts;
 
-		return View::make('forum.topic', array('thread' => $thread, 'posts' => $posts, 'forum' => $forum, 'category' => $category));
+		//$topic->views++;
+		//$topic->save();
+
+		return View::make('forum.topic', array('topic' => $topic, 'forum' => $forum, 'category' => $category, 'posts' => $posts));
 	}
 
 	/**
-	 * Ajoute une réponse au thread
+	 * Ajoute une réponse à un topic
 	 *
-	 * @access public
-	 * @param $slug Slug du thread
-	 * @param $id Id du thread
+	 * @param $slug Slug du topic
+	 * @param $id Id du topic
 	 */
-	public function response($slug, $id)
+	public function reply($slug, $id)
 	{
-		if(Request::isMethod('post'))
-		{
-			$user = Auth::user();
-			$thread = Thread::find($id);
-			$post = new Post();
-			$post->content = Input::get('response');
-			$post->user_id = $user->id;
-			$post->thread_id = $thread->id;
-			$v = Validator::make($post->toArray(), $post->rules);
-			if($v->fails())
-			{
+		$user = Auth::user();
+		$topic = Topic::find($id);
+		$forum = $topic->forum;
+		$category = $forum->getCategory();
 
+		$post = new Post();
+		$post->content = Input::get('content');
+		$post->user_id = $user->id;
+		$post->topic_id = $topic->id;
+
+		$v = Validator::make($post->toArray(), array(
+			'content' => 'required',
+			'user_id' => 'required',
+			'topic_id' => 'required'
+			)
+		);
+		if($v->passes())
+		{
+			$post->save();
+
+			$topic->last_post_user_id = $user->id;
+			$topic->last_post_user_username = $user->username;
+			$topic->num_post = Post::where('topic_id', '=', $topic->id)->count();
+			$topic->save();
+
+			/** Compte les topics dans ce forum */
+			$forum->num_post = $forum->getPostCount($forum->id);
+			$forum->num_topic = $forum->getTopicCount($forum->id);
+			$forum->save();
+
+			return Redirect::route('forum_topic', array('slug' => $topic->slug, 'id' => $topic->id));
+		}	
+	}
+
+	/**
+	 * Crée un nouveau topic dans le forum désiré
+	 *
+	 * @param $slug Slug du forum dans lequel sera le topic
+	 * @param $id Id du forum dans lequel sera le topic
+	 */
+	public function newTopic($slug, $id)
+	{
+		$user = Auth::user();
+		$forum = Forum::find($id);
+		$category = $forum->getCategory();
+		$parsedContent = null;
+
+		// Prévisualisation du post
+		if(Request::getMethod() == 'POST' && Input::get('preview') == true)
+		{
+			$code = new Decoda\Decoda(Input::get('content'));
+			$code->defaults();
+			$parsedContent = $code->parse();
+		}
+		
+		if(Request::getMethod() == 'POST' && Input::get('post') == true)
+		{
+			// Crée le topic
+			$topic = new Topic();
+			$topic->name = Input::get('title');
+			$topic->slug = Str::slug(Input::get('title'));
+			$topic->state = "open";
+			$topic->first_post_user_id = $user->id;
+			$topic->first_post_user_username = $user->username;
+			$topic->last_post_user_id = $user->id;
+			$topic->last_post_user_username = $user->username;
+			$topic->views = 0;
+			$topic->pinned = false;
+			$topic->forum_id = $forum->id;
+			$v = Validator::make($topic->toArray(), $topic->rules);
+			if($v->passes())
+			{
+				$topic->save();
+
+				$post = new Post();
+				$post->content = Input::get('content');
+				$post->user_id = $user->id;
+				$post->topic_id = $topic->id;
+				$v = Validator::make($post->toArray(), $post->rules);
+				if($v->passes())
+				{
+					$post->save();
+					$topic->num_post = 1;
+					$topic->save();
+					$forum->num_topic = $forum->getTopicCount($forum->id);
+					$forum->num_post = $forum->getPostCount($forum->id);
+					$forum->save();
+					return Redirect::route('forum_topic', array('slug' => $topic->slug, 'id' => $topic->id));
+				}
+				else
+				{
+					// Impoossible de save le premier post donc delete le topic
+					$topic->delete();
+				}
 			}
 			else
 			{
-				$post->save();
-				$thread->num_post = $thread->posts()->count();
-				$thread->save();
+
 			}
-			return Redirect::route('forum_topic', array('slug' => $thread->slug, 'id' => $thread->id));
 		}
+
+		return View::make('forum.new_topic', array('forum' => $forum, 'category' => $category, 'parsedContent' => $parsedContent, 'title' => Input::get('title'), 'content' => Input::get('content')));
 	}
 } ?>

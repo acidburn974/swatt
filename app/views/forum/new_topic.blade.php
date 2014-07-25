@@ -21,7 +21,7 @@
     </a>
 </div>
 <div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
-    <a href="{{ route('forum_new_thread', array('slug' => $forum->slug, 'id' => $forum->id)) }}" itemprop="url" class="l-breadcrumb-item-link">
+    <a href="{{ route('forum_new_topic', array('slug' => $forum->slug, 'id' => $forum->id)) }}" itemprop="url" class="l-breadcrumb-item-link">
         <span itemprop="title" class="l-breadcrumb-item-link-title">New Thread</span>
     </a>
 </div>
@@ -29,19 +29,26 @@
 
 @section('content')
 <div class="forum box container">
+	@if(isset($parsedContent))
+		<div class="preview col-md-12">
+			{{ $parsedContent }}
+		</div><hr>
+	@endif
+
 	<div class="col-md-12">
-		<h2>Start a new thread in {{ $forum->name }}</h2>
-		{{ Form::open(array('route' => array('forum_new_thread', 'slug' => $forum->slug, 'id' => $forum->id))) }}
+		<h2>Start a new topic in {{ $forum->name }}</h2>
+		{{ Form::open(array('route' => array('forum_new_topic', 'slug' => $forum->slug, 'id' => $forum->id))) }}
 			<div class="form-group">
-				<label for="title">Thread title</label>
-				<input type="text" name="title" class="form-control">
+				<input type="text" name="title" class="form-control" placeholder="Title of the discussion" value="{{ $title }}">
 			</div>
 			
 			<div class="form-group">
-				<textarea id="new-thread-content" name="content" cols="30" rows="10" class="form-control"></textarea>
+				<textarea id="new-thread-content" name="content" cols="30" rows="10" class="form-control">{{ $content }}</textarea>
 			</div>
 
-			<button type="submit" class="btn btn-default">Send this new subject</button>
+			
+			<button type="submit" name="post" value="true" class="btn btn-primary">Send this new subject</button>
+			<button type="submit" name="preview" value="true" class="btn btn-default">Preview</button>
 		{{ Form::close() }}
 	</div>
 </div>

@@ -100,7 +100,7 @@ Route::filter('csrf', function()
 
 Route::filter('admin', function()
 {
-	if(Auth::check() && Auth::user()->role == 'admin')
+	if(Auth::check() && Auth::user()->group->is_admin == true)
 	{
 
 	}

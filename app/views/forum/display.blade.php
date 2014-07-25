@@ -19,32 +19,52 @@
 @stop
 
 @section('content')
-<div class="forum box container">
-    <div class="col-md-12">
-        <h2>Forum: {{ $forum->name }}</h2>
-        @if(Auth::check())
-            <a href="{{ route('forum_new_thread', array('slug' => $forum->slug, 'id' => $forum->id)) }}" class="btn btn-primary">Start a new topic</a>
-        @else
-            <a href="#" class="btn btn-primary disabled">You must be connected to start a new topic</a>
-        @endif
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Topic</th>
-                    <th>Response</th>
-                    <th>Last post</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($threads as $thread)
+<div class="box container">
+    <div class="f-display">
+        <div class="f-display-info col-md-12">
+            <h2 class="f-display-info-title">{{ $forum->name }}</h2>
+            <p class="f-display-info-description">{{ $forum->description }}</p>
+        </div>
+        <div class="f-display-table-wrapper col-md-12">
+            <table class="f-display-topics table col-md-12">
+                <thead class="f-display-topics-hidden">
                     <tr>
-                        <td><a href="{{ route('forum_topic', array('slug' => $thread->slug, 'id' => $thread->id)) }}">{{ $thread->name }}</a></td>
-                        <td>{{ $thread->num_post }}</td>
-                        <td>{{ date('d M Y', strtotime($thread->updated_at)) }}</td>
+                        <!-- <th></th> -->
+                        <th>Topic</th>
+                        <th>Started by</th>
+                        <th>Stats</th>
+                        <th>Last Post Info</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach($topics as $t)
+                    <tr>
+                        <!-- <td class="f-display-topic-icon"><img src="{{ url('img/f_icon_read.png') }}"></td> -->
+                        <td class="f-display-topic-title">
+                            <h4><a href="{{ route('forum_topic', array('slug' => $t->slug, 'id' => $t->id)) }}">{{{ $t->name }}}</a></h4>
+                        </td>
+                        <td></td>
+                        <td class="f-display-topic-stats">
+                            <ul>
+                                <li class="f-display-topic-stats-item"><strong>{{ $t->num_post - 1 }}</strong> replies</li>
+                                <li class="f-display-topic-stats-item"><strong>{{{ $t->views }}}</strong> views</li>
+                            </ul>
+                        </td>
+                        <td class="f-display-topic-last-post">
+                            <ul>
+                                <li class="f-display-topic-last-post-item">{{{ $t->last_post_user_username }}}</li>
+                                <li class="f-display-topic-last-post-item"><time pubdate>{{ date('d M Y', strtotime($t->updated_at)) }}</time></li>
+                            </ul>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        <a href="{{ route('forum_new_topic', array('slug' => $forum->slug, 'id' => $forum->id)) }}" class="btn btn-primary">Start a new topic</a>
+        <div class="f-display-pagination col-md-12">
+            {{ $topics->links() }}
+        </div>
     </div>
 </div>
 @stop

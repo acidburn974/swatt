@@ -33,7 +33,7 @@
                 <a href="{{ route('forum_index') }}" class="l-header-menu-item">Forums</a>
                 <a href="{{ route('torrents') }}" class="l-header-menu-item">Torrents</a>
                 @if(Auth::check())
-                    @if(Auth::user()->role == 'admin')
+                    @if(Auth::user()->group->is_admin == true)
                         <a href="{{ route('admin_home') }}" class="l-header-menu-item">ACP</a>
                     @endif
                 	<a href="{{ route('upload') }}" class="l-header-menu-item">Upload</a>

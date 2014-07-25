@@ -19,15 +19,14 @@ class UserController extends BaseController {
             }
             else
             {
+                $group = Group::where('slug', '=', 'members')->first();
                 $user->username = $input['username'];
                 $user->email = $input['email'];
                 $user->password = Hash::make($input['password']);
                 $user->passkey = md5(uniqid() . time() . microtime());
-                $user->role = 'user';
-                $user->ip = $_SERVER['REMOTE_ADDR']; // Adresse ip
                 $user->uploaded = 2147483648; // 2GB
                 $user->downloaded = 1073741824; // 1GB
-                $user->save();
+                $group->users()->save($user);
                 Session::put('message', 'You are now registered and can login without email confirmation');
                 return Redirect::route('login');
             }

@@ -28,17 +28,17 @@ Route::get('/download/{slug}.{id}', ['uses' => 'TorrentController@download', 'be
 Route::get('/categories', array('uses' => 'CategoryController@categories', 'as' => 'categories'));
 Route::get('/categories/{slug}.{id}', ['uses' => 'CategoryController@category', 'as' => 'category']);
 
-Route::get('/articles', array('uses' => 'PostController@articles', 'as' => 'articles'));
-Route::get('/articles/{slug}.{id}', array('uses' => 'PostController@post', 'as' => 'post'));
+Route::get('/articles', array('uses' => 'ArticleController@articles', 'as' => 'articles'));
+Route::get('/articles/{slug}.{id}', array('uses' => 'ArticleController@post', 'as' => 'post'));
 
 Route::group(array('prefix' => 'admin', 'before' => 'auth|admin'), function()
 {
     Route::any('/', array('uses' => 'HomeController@admin_home', 'as' => 'admin_home'));
 
-    Route::any('/articles', array('uses' => 'PostController@admin_indexPost', 'as' => 'admin_indexPost'));
-    Route::any('/articles/new', array('uses' => 'PostController@admin_addPost', 'as' => 'admin_addPost'));
-    Route::any('/articles/edit/{slug}.{id}', array('uses' => 'PostController@admin_editPost', 'as' => 'admin_editPost'));
-    Route::any('/articles/delete/{slug}.{id}', array('uses' => 'PostController@admin_deletePost', 'as' => 'admin_deletePost'));
+    Route::any('/articles', array('uses' => 'ArticleController@admin_indexPost', 'as' => 'admin_indexPost'));
+    Route::any('/articles/new', array('uses' => 'ArticleController@admin_addPost', 'as' => 'admin_addPost'));
+    Route::any('/articles/edit/{slug}.{id}', array('uses' => 'ArticleController@admin_editPost', 'as' => 'admin_editPost'));
+    Route::any('/articles/delete/{slug}.{id}', array('uses' => 'ArticleController@admin_deletePost', 'as' => 'admin_deletePost'));
 
     // ToDo
     Route::any('/members', array('uses' => 'UserController@admin_indexUser', 'as' => 'admin_indexUser'));
@@ -50,12 +50,12 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth|admin'), function()
     Route::any('/categories/delete/{slug}.{id}', array('uses' => 'CategoryController@admin_deleteCategory', 'as' => 'admin_deleteCategory'));
 });
 
-Route::group(array('prefix' => 'forums'), function()
+Route::group(array('prefix' => 'community'), function()
 {
     Route::get('/', array('uses' => 'ForumController@index', 'as' => 'forum_index'));
-    Route::get('/category/{slug}.{id}', array('uses' => 'ForumController@category', 'as' => 'forum_category'));
-    Route::get('/display/{slug}.{id}', array('uses' => 'ForumController@display', 'as' => 'forum_display'));
-    Route::any('/display/{slug}.{id}/new-thread', array('uses' => 'ForumController@newThread', 'as' => 'forum_new_thread', 'before' => 'auth'));
+    Route::get('/category/{slug}.{id}', array('uses' => 'ForumController@category', 'as' => 'forum_category')); // Affiche la categorie
+    Route::get('/forum/{slug}.{id}', array('uses' => 'ForumController@display', 'as' => 'forum_display')); // Affiche le forum et les topics
+    Route::any('/forum/{slug}.{id}/new-topic', array('uses' => 'ForumController@newTopic', 'as' => 'forum_new_topic', 'before' => 'auth'));
     Route::get('/topic/{slug}.{id}', array('uses' => 'ForumController@topic', 'as' => 'forum_topic'));
-    Route::post('/topic/{slug}.{id}/new-reponse', array('uses' => 'ForumController@response', 'as' => 'forum_response', 'before' => 'auth'));
+    Route::post('/topic/{slug}.{id}/reply', array('uses' => 'ForumController@reply', 'as' => 'forum_reply', 'before' => 'auth'));
 });
