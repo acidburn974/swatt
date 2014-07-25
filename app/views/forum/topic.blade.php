@@ -1,5 +1,13 @@
 @extends('layout.default')
 
+@section('title')
+<title>{{{ $topic->name }}} - Forums - {{{ Config::get('other.title') }}}</title>
+@stop
+
+@section('meta_description')
+<meta type="description" content="{{{ 'Read the topic ' . $topic->name }}}">
+@stop
+
 @section('breadcrumb')
 <div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
     <a href="{{ route('forum_index') }}" itemprop="url" class="l-breadcrumb-item-link">
@@ -53,7 +61,11 @@
                     <div class="from-group">
                         <textarea name="content" id="topic-response" cols="30" rows="10"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-default">Post</button>
+                    @if(Auth::check())
+                        <button type="submit" class="btn btn-default">Post</button>
+                    @else
+                        <button type="submit" class="btn btn-default disabled">You must be connected</button>
+                    @endif
                 {{ Form::close() }}
             </div>
         </div>

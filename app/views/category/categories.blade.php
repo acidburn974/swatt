@@ -13,7 +13,7 @@
 @stop
 
 @section('content')
-<div class="container">
+<div class="box container">
     <div class="categories col-md-12">
         @foreach($categories as $c)
             <span class="categories-word">

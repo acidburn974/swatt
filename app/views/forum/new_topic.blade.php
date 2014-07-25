@@ -1,5 +1,13 @@
 @extends('layout.default')
 
+@section('title')
+<title>{{{ 'Create a new topic' }}} - {{{ Config::get('other.title') }}}</title>
+@stop
+
+@section('meta_description')
+<meta type="description" content="{{{ 'Create a new topic in ' . $forum->name }}}">
+@stop
+
 @section('stylesheets')
 <link rel="stylesheet" href="{{ url('files/wysibb/theme/default/wbbtheme.css')}}" type="text/css">
 @stop
