@@ -158,6 +158,11 @@ class ForumController extends BaseController {
 					$topic->save();
 					$forum->num_topic = $forum->getTopicCount($forum->id);
 					$forum->num_post = $forum->getPostCount($forum->id);
+					$forum->last_topic_id = $topic->id;
+					$forum->last_topic_name = $topic->name;
+					$forum->last_topic_slug = $topic->slug;
+					$forum->last_topic_user_id = $user->id;
+					$forum->last_topic_user_username = $user->username;
 					$forum->save();
 					return Redirect::route('forum_topic', array('slug' => $topic->slug, 'id' => $topic->id));
 				}
