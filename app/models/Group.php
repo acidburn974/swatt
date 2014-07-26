@@ -1,5 +1,7 @@
-<?php 
+<?php
 class Group extends Eloquent {
+
+	public $timestamps = false;
 
 	/**
 	 * Has many users
@@ -8,5 +10,14 @@ class Group extends Eloquent {
 	public function users()
 	{
 		return $this->hasMany('User');
+	}
+
+	/**
+	 * Has many permissions
+	 *
+	 */
+	public function permissions()
+	{
+		return $this->hasMany('Permission');
 	}
 } ?>

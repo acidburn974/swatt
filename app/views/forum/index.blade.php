@@ -15,12 +15,13 @@
 @section('content')
 <div class="box container">
 	@foreach($categories as $c)
+		@if($c->getPermission()->show_forum == true)
 		<div class="f-category" id="category_{{ $c->id }}">
 			<!-- Titre de la categorie -->
 			<div class="f-category-title col-md-12">
 				<h2><a href="{{ route('forum_category', array('slug' => $c->slug, 'id' => $c->id)) }}">{{ $c->name }}</a></h2>
 			</div><!-- Titre de la categorie -->
-			
+
 			<div class="f-category-table-wrapper col-md-12">
 				<table class="f-category-forums table col-md-12">
 					<thead class="f-category-forums-hidden">
@@ -41,7 +42,7 @@
 								<!-- Forum title -->
 								<td>
 									<h4 class="f-category-forums-title">
-										<a href="{{ route('forum_display', array('slug' => $f->slug, 'id' => $f->id)) }}">{{{ $f->name }}}</a>	
+										<a href="{{ route('forum_display', array('slug' => $f->slug, 'id' => $f->id)) }}">{{{ $f->name }}}</a>
 									</h4>
 									<br>
 									<p class="f-category-forums-description">{{{ $f->description }}}</p>
@@ -66,8 +67,8 @@
 					</tbody>
 				</table>
 			</div>
-			
 		</div>
+		@endif
 	@endforeach
 </div>
 @stop

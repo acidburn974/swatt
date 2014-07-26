@@ -71,4 +71,5 @@
             </table>
         </div>
     </div>
+</div>
 @stop

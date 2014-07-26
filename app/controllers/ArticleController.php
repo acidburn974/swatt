@@ -44,7 +44,8 @@ class ArticleController extends BaseController {
     /**
      * Ajoute un article
      *
-     *
+     * @access public
+     * @return post.admin_add_post
      */
     public function admin_addPost()
     {
@@ -74,6 +75,10 @@ class ArticleController extends BaseController {
     /**
      * Edite l'article voulu
      *
+     * @access public
+     * @param $slug Slug de l'article à édité
+     * @param $id Id de l'article
+     * @return post.admin_edit_post
      */
     public function admin_editPost($slug, $id)
     {
@@ -103,6 +108,10 @@ class ArticleController extends BaseController {
     /**
      * Supprime l'article désiré
      *
+     * @access public
+     * @param $slug Slug de l'article
+     * @param $id Id de l'article
+     * @return void
      */
     public function admin_deletePost($slug, $id)
     {

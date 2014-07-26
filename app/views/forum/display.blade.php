@@ -65,7 +65,10 @@
                 </tbody>
             </table>
         </div>
-        <a href="{{ route('forum_new_topic', array('slug' => $forum->slug, 'id' => $forum->id)) }}" class="btn btn-primary">Start a new topic</a>
+        <!-- Permissions -->
+        @if($category->getPermission()->start_topic == true)
+            <a href="{{ route('forum_new_topic', array('slug' => $forum->slug, 'id' => $forum->id)) }}" class="btn btn-primary">Start a new topic</a>
+        @endif<!-- /Permissions -->
         <div class="f-display-pagination col-md-12">
             {{ $topics->links() }}
         </div>
