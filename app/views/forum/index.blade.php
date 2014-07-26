@@ -15,15 +15,17 @@
 @section('content')
 <div class="box container">
 	@foreach($categories as $c)
-		@if($c->getPermission()->show_forum == true)
+		<!-- Verifie les permissions du groupe et du forum -->
+		@if($c->getPermission()->show_forum == true) 
 		<div class="f-category" id="category_{{ $c->id }}">
 			<!-- Titre de la categorie -->
 			<div class="f-category-title col-md-12">
 				<h2><a href="{{ route('forum_category', array('slug' => $c->slug, 'id' => $c->id)) }}">{{ $c->name }}</a></h2>
-			</div><!-- Titre de la categorie -->
-
+			</div><!-- /Titre de la categorie -->
+			<!-- Wrapper -->
 			<div class="f-category-table-wrapper col-md-12">
 				<table class="f-category-forums table col-md-12">
+					<!-- Hidden thead -->
 					<thead class="f-category-forums-hidden">
 						<tr>
 							<th></th>
@@ -31,7 +33,8 @@
 							<th>Stats</th>
 							<th>Last message</th>
 						</tr>
-					</thead>
+					</thead><!-- /Hidden thead -->
+					<!-- Liste des forums -->
 					<tbody>
 						@foreach($c->getForumsInCategory() as $f)
 							<tr>
@@ -64,9 +67,9 @@
 								</td><!-- /Last post -->
 							</tr>
 						@endforeach
-					</tbody>
+					</tbody><!-- /Liste des forums -->
 				</table>
-			</div>
+			</div><!-- /Wrapper -->
 		</div>
 		@endif
 	@endforeach
