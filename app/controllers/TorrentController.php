@@ -30,7 +30,7 @@ class TorrentController extends BaseController {
 					$torrent->description = $input['description'];
 					$torrent->info_hash = $info['info_hash'];
 					$torrent->file_name = $this->fileName;
-					$torrent->file_count = $info['info']['filecount'];
+					$torrent->num_file = $info['info']['filecount'];
 					$torrent->announce = $this->decodedTorrent['announce'];
 					$torrent->size = $info['info']['size'];
 					if(Input::hasFile('nfo'))
@@ -41,7 +41,7 @@ class TorrentController extends BaseController {
 					{
 						$torrent->nfo = '';
 					}
-					$torrent->created_by = $this->decodedTorrent['created by'];
+					//$torrent->created_by = $this->decodedTorrent['created by'];
 					$torrent->category_id = $input['category_id'];
 					$torrent->user_id = $user->id;
 					$torrent->leechers = 0;
@@ -197,7 +197,8 @@ class TorrentController extends BaseController {
 	public function torrent($slug, $id)
 	{
 		$torrent = Torrent::find($id);
-		return View::make('torrent.torrent', array('torrent' => $torrent));
+		$comments = $torrent->comments()->orderBy('created_at', 'DESC')->get();
+		return View::make('torrent.torrent', array('torrent' => $torrent, 'comments' => $comments));
 	}
 
 	/**
