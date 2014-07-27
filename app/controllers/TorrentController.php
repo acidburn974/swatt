@@ -209,11 +209,23 @@ class TorrentController extends BaseController {
 	{
 		$user = Auth::user();
 		$torrent = Torrent::find($id);
+		$tmpFileName = $torrent->slug . '.torrent';
+		if( ! file_exists(getcwd() . '/files/torrents/' . $torrent->file_name))
+		{
+			return Redirect::route('torrent', array('slug' => $torrent->slug, 'id' => $torrent->id))
+			->with('message', 'The torrent file is currently unavailable');
+		}
+		else
+		{
+			if(file_exists(getcwd() . '/files/tmp/' . $tmpFileName))
+			{
+				unlink(getcwd() . '/files/tmp/' . $tmpFileName);
+			}
+		}
 		$dict = Bencode::bdecode(file_get_contents(getcwd() . '/files/torrents/' . $torrent->file_name));
 		$dict['announce'] = route('announce', array('passkey' => $user->passkey));
 		unset($dict['announce-list']);
 		$fileToDownload = Bencode::bencode($dict);
-		$tmpFileName = $torrent->slug . '.torrent';
 		file_put_contents(getcwd() . '/files/tmp/' . $tmpFileName, $fileToDownload);
 		return Response::download(getcwd() . '/files/tmp/' . $tmpFileName);
 	}

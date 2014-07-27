@@ -1,7 +1,7 @@
 @extends('layout.default')
 
 @section('title')
-<title>Zizitracker | {{{ $torrent->name }}}</title>
+<title>{{{ $torrent->name }}} - </title>
 @stop
 
 @section('breadcrumb')
