@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class Forum extends \Eloquent {
 
@@ -9,6 +9,15 @@ class Forum extends \Eloquent {
 	public function topics()
 	{
 		return $this->hasMany('Topic');
+	}
+
+	/**
+	 * Has many permissions
+	 *
+	 */
+	public function permissions()
+	{
+		return $this->hasMany('Permission');
 	}
 
 	/**
@@ -54,5 +63,22 @@ class Forum extends \Eloquent {
 	{
 		$forum = Forum::find($forumId);
 		return Topic::where('forum_id', '=', $forum->id)->count();
+	}
+
+	/**
+	 * Retourne le champ permission
+	 *
+	 */
+	public function getPermission()
+	{
+		if(Auth::check())
+		{
+			$group = Auth::user()->group;
+		}
+		else
+		{
+			$group = Group::find(2);
+		}
+		return Permission::whereRaw('forum_id = ? AND group_id = ?', array($this->id, $group->id))->first();
 	}
 } ?>

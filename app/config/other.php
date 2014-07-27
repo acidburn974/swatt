@@ -22,7 +22,7 @@ return array(
     |
     */
 
-    'meta_description' => '',
+    'meta_description' => 'Download HD movies, tv series and animes and much more. Obsessedto.me is a new sort of tracker made from scratch.',
 
     /*
     |--------------------------------------------------------------------------

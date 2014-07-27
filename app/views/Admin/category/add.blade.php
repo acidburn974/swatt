@@ -3,19 +3,19 @@
 @section('content')
 <div class="container">
     <div class="col-md-10">
-        <h2>Edit a category</h2>
-        {{ Form::open(array('route' => array('admin_editCategory', 'slug' => $category->slug, 'id' => $category->id))) }}
+        <h2>Add a category</h2>
+        {{ Form::open(array('route' => 'admin_category_add')) }}
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" class="form-control" name="name" value="{{ $category->name }}">
+                <input type="text" class="form-control" name="name">
             </div>
 
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea name="description" id="description" cols="30" rows="10" class="form-control">{{ $category->description }}</textarea>
+                <textarea name="description" id="description" cols="30" rows="10" class="form-control"></textarea>
             </div>
 
-            <button type="submit" class="btn btn-default">Save</button>
+            <button type="submit" class="btn btn-default">Add</button>
         {{ Form::close() }}
     </div>
 </div>

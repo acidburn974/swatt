@@ -25,6 +25,10 @@ class ForumController extends BaseController {
 	public function category($slug, $id)
 	{
 		$category = Forum::find($id);
+		if($category->getPermission()->show_forum != true)
+		{
+			return Redirect::route('forum_index')->with('message', 'You haven\'t access to this category');
+		}
 		return View::make('forum.category', array('c' => $category));
 	}
 
@@ -41,6 +45,11 @@ class ForumController extends BaseController {
 			return Redirect::route('forum_category', array('slug' => $forum->slug, 'id' => $forum->id));
 		}
 		$category = Forum::find($forum->parent_id);
+		// Permission
+		if($category->getPermission()->show_forum != true)
+		{
+			return Redirect::route('forum_index')->with('message', 'You haven\'t access to this forum');
+		}
 		$topics = $forum->topics()->orderBy('created_at', 'DESC')->paginate();
 
 		return View::make('forum.display', array('forum' => $forum, 'topics' => $topics, 'category' => $category));
@@ -58,8 +67,14 @@ class ForumController extends BaseController {
 		$category = $forum->getCategory();
 		$posts = $topic->posts;
 
-		//$topic->views++;
-		//$topic->save();
+		// L'utilisateur possède le droit de crée un topic ici
+		if($category->getPermission()->read_topic != true)
+		{
+			return Redirect::route('forum_index')->with('message', 'You can\'t read this topic');
+		}
+
+		$topic->views++;
+		$topic->save();
 
 		return View::make('forum.topic', array('topic' => $topic, 'forum' => $forum, 'category' => $category, 'posts' => $posts));
 	}
@@ -76,6 +91,12 @@ class ForumController extends BaseController {
 		$topic = Topic::find($id);
 		$forum = $topic->forum;
 		$category = $forum->getCategory();
+
+		// L'utilisateur possède le droit de crée un topic ici
+		if($category->getPermission()->reply_topic != true)
+		{
+			return Redirect::route('forum_index')->withm('message', 'You can\'t reply this topic');
+		}
 
 		$post = new Post();
 		$post->content = Input::get('content');
@@ -103,7 +124,10 @@ class ForumController extends BaseController {
 			$forum->save();
 
 			return Redirect::route('forum_topic', array('slug' => $topic->slug, 'id' => $topic->id));
-		}	
+		}
+		else
+		{
+		}
 	}
 
 	/**
@@ -119,6 +143,12 @@ class ForumController extends BaseController {
 		$category = $forum->getCategory();
 		$parsedContent = null;
 
+		// L'utilisateur possède le droit de crée un topic ici
+		if($category->getPermission()->start_topic != true)
+		{
+			return Redirect::route('forum_index')->with('message', 'You can\'t start a new topic here');
+		}
+
 		// Prévisualisation du post
 		if(Request::getMethod() == 'POST' && Input::get('preview') == true)
 		{
@@ -126,7 +156,7 @@ class ForumController extends BaseController {
 			$code->defaults();
 			$parsedContent = $code->parse();
 		}
-		
+
 		if(Request::getMethod() == 'POST' && Input::get('post') == true)
 		{
 			// Crée le topic
@@ -177,7 +207,6 @@ class ForumController extends BaseController {
 
 			}
 		}
-
 		return View::make('forum.new_topic', array('forum' => $forum, 'category' => $category, 'parsedContent' => $parsedContent, 'title' => Input::get('title'), 'content' => Input::get('content')));
 	}
 } ?>

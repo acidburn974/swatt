@@ -96,7 +96,7 @@ class TorrentController extends BaseController {
 	*/
 	public function announce($passkey)
 	{
-		Log::info(Input::all());
+		//Log::info(Input::all());
 		// Déclaration/Fetch des variables requises
 		$user = User::where('passkey', '=', $passkey)->first();
 		if($user == null)
