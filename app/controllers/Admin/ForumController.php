@@ -97,7 +97,7 @@ class ForumController extends \BaseController {
 			$forum->position = Input::get('position');
 			$forum->slug = Str::slug(Input::get('title'));
 			$forum->description = Input::get('description');
-			$forum->parent_id = (Input::get('forum_type') == 'category') ? 0 : Input::get('parent_id');
+			//$forum->parent_id = (Input::get('forum_type') == 'category') ? 0 : Input::get('parent_id'); // Non changé depuis la création
 			$forum->save();
 
 			// Sauvegarde des permissions dans la DB

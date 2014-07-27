@@ -115,10 +115,8 @@ class TorrentController extends BaseController {
 		}
 		else
 		{
-			//$user->uploaded += Input::get('uploaded') - $client->uploaded;
-			//$user->downloaded += Input::get('downloaded') - $client->downloaded;
-			$user->uploaded += Input::get('uploaded');
-			$user->downloaded += Input::get('downloaded');
+			$user->uploaded += Input::get('uploaded') - $client->uploaded;
+			$user->downloaded += Input::get('downloaded') - $client->downloaded;
 			$user->save();
 		}
 		$peers = Peer::whereRaw('torrent_id = ?', array($torrent->id))->get()->toArray();
