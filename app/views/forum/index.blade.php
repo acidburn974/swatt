@@ -16,7 +16,7 @@
 <div class="box container">
 	@foreach($categories as $c)
 		<!-- Verifie les permissions du groupe et du forum -->
-		@if($c->getPermission()->show_forum == true) 
+		@if($c->getPermission() != null && $c->getPermission()->show_forum == true && $c->getForumsInCategory()->count() > 0) 
 		<div class="f-category" id="category_{{ $c->id }}">
 			<!-- Titre de la categorie -->
 			<div class="f-category-title col-md-12">

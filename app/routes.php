@@ -52,6 +52,11 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth|admin'), function()
     Route::any('/categories/new', array('uses' => 'CategoryController@admin_addCategory', 'as' => 'admin_addCategory'));
     Route::any('/categories/edit/{slug}.{id}', array('uses' => 'CategoryController@admin_editCategory', 'as' => 'admin_editCategory'));
     Route::any('/categories/delete/{slug}.{id}', array('uses' => 'CategoryController@admin_deleteCategory', 'as' => 'admin_deleteCategory'));
+
+    Route::get('/forums', array('uses' => 'ForumController@admin_index', 'as' => 'admin_indexForum'));
+    Route::any('/forums/new', array('uses' => 'ForumController@admin_add', 'as' => 'admin_addForum'));
+    Route::any('/forums/edit/{slug}.{id}', array('uses' => 'ForumController@admin_edit', 'as' => 'admin_editForum'));
+    Route::get('/forums/delete/{slug}.{id}', array());
 });
 
 // Forum

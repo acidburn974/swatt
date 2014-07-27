@@ -37,6 +37,7 @@
                     <li><a href="{{ route('admin_home') }}">Overview</a></li>
                     <li><a href="{{ route('admin_indexPost') }}">Articles</a></li>
                     <li><a href="{{ route('admin_indexCategory') }}">Categories</a></li>
+                    <li><a href="{{ route('admin_indexForum') }}">Forums</a></li>
                 </ul>
             </div>
 
