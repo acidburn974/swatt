@@ -1,7 +1,7 @@
 @extends('layout.default')
 
 @section('title')
-<title>{{{ 'Create a new topic' }}} - {{{ Config::get('other.title') }}}</title>
+<title>Create a new topic - {{{ Config::get('other.title') }}}</title>
 @stop
 
 @section('meta_description')

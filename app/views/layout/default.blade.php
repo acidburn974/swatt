@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     @section('title')
-        <title>{{ Config::get('other.title') }}</title>
+        <title>{{{ Config::get('other.title') }}}</title>
     @show
     @section('meta_description')
         <meta type="description" content="{{{ 'Torrent tracker specialized in high qualities movies and tv series' }}}">

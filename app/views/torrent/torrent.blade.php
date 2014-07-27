@@ -1,7 +1,7 @@
 @extends('layout.default')
 
 @section('title')
-<title>{{{ $torrent->name }}} - </title>
+<title>{{{ $torrent->name }}} - {{{ Config::get('other.title') }}}</title>
 @stop
 
 @section('breadcrumb')

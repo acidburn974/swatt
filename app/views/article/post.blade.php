@@ -1,7 +1,7 @@
 @extends('layout.default')
 
 @section('title')
-<title>{{{ $post->title }}} - {{ Config::get('other.title') }}</title>
+<title>{{{ $post->title }}} - Article - {{ Config::get('other.title') }}</title>
 @stop
 
 @section('breadcrumb')

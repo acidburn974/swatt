@@ -1,7 +1,7 @@
 @extends('layout.default')
 
 @section('title')
-<title>{{ trans('messages.login') }} - {{ Config::get('other.title') }}</title>
+<title>Login - {{ Config::get('other.title') }}</title>
 @stop
 
 @section('meta_description')
