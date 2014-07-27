@@ -13,7 +13,7 @@ class ArticleController extends BaseController {
     public function articles()
     {
         $posts = Article::orderBy('created_at', 'DESC')->paginate(5);
-        return View::make('post.articles', array('posts' => $posts));
+        return View::make('article.articles', array('posts' => $posts));
     }
 
     /**
@@ -25,8 +25,9 @@ class ArticleController extends BaseController {
     public function post($slug, $id)
     {
         $post = Article::find($id);
+        $comments = $post->comments()->orderBy('created_at', 'DESC')->get();
 
-        return View::make('post.post', array('post' => $post));
+        return View::make('article.post', array('post' => $post, 'comments' => $comments));
     }
 
 } ?>

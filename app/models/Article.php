@@ -18,4 +18,13 @@ class Article extends Eloquent {
     {
         return $this->belongsTo('User');
     }
+
+    /**
+     * Has many Comment
+     *
+     */
+    public function comments()
+    {
+        return $this->hasMany('Comment');
+    }
 } ?>

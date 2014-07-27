@@ -1,4 +1,5 @@
 <?php
+
 class Group extends Eloquent {
 
 	public $timestamps = false;
