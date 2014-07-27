@@ -4,6 +4,8 @@ class UserController extends BaseController {
 
     /**
      * Enregistre l'utilisateur
+     *
+     *
      */
     public function signup()
     {

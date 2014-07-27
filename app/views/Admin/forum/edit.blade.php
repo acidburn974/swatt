@@ -5,7 +5,7 @@
 	<div class="col-md-10">
 		<h2>Edit: {{ $forum->name }}</h2>
 
-		{{ Form::open(array('route' => array('admin_editForum', 'slug' => $forum->slug, 'id' => $forum->id))) }}
+		{{ Form::open(array('route' => array('admin_forum_edit', 'slug' => $forum->slug, 'id' => $forum->id))) }}
 			<div class="form-group">
 				<label for="title">Title</label>
 				<input type="text" name="title" class="form-control" value="{{ $forum->name }}">

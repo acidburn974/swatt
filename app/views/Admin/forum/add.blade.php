@@ -5,7 +5,7 @@
 	<div class="col-md-10">
 		<h2>Add a new Forum</h2>
 
-		{{ Form::open(array('route' => 'admin_addForum')) }}
+		{{ Form::open(array('route' => 'admin_forum_add')) }}
 			<div class="form-group">
 				<label for="forum_type">Forum Type</label>
 				<select name="forum_type" class="form-control">
