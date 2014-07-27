@@ -26,7 +26,7 @@ class ForumController extends \BaseController {
 	{
 		$categories = Forum::where('parent_id', '=', 0)->get();
 
-		return View::make('Admin\forum.index', array('categories' => $categories));
+		return View::make('Admin.forum.index', array('categories' => $categories));
 	}
 
 	/**
@@ -78,7 +78,7 @@ class ForumController extends \BaseController {
 
 			return Redirect::route('admin_forum_index');
 		}
-		return View::make('Admin\forum.add', array('categories' => $categories, 'groups' => $groups));
+		return View::make('Admin.forum.add', array('categories' => $categories, 'groups' => $groups));
 	}
 
 	/**
@@ -131,7 +131,7 @@ class ForumController extends \BaseController {
 
 			return Redirect::route('admin_forum_index');
 		}
-		return View::make('Admin\forum.edit', array('categories' => $categories, 'groups' => $groups, 'forum' => $forum));
+		return View::make('Admin.forum.edit', array('categories' => $categories, 'groups' => $groups, 'forum' => $forum));
 	}
 
 	/**

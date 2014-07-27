@@ -23,7 +23,7 @@ class ArticleController extends \BaseController {
     public function index()
     {
         $posts = Article::all();
-        return View::make('Admin\article.index', array('posts' => $posts));
+        return View::make('Admin.article.index', array('posts' => $posts));
     }
 
 	/**
@@ -54,7 +54,7 @@ class ArticleController extends \BaseController {
                 return Redirect::route('admin_article_index')->with('message', 'Your article has been published');
             }
         }
-        return View::make('Admin\article.add');
+        return View::make('Admin.article.add');
     }
 
     /**
@@ -87,7 +87,7 @@ class ArticleController extends \BaseController {
                 return Redirect::route('admin_article_index')->with('message', 'Your article has been modified');
             }
         }
-        return View::make('Admin\article.edit', array('post' => $post));
+        return View::make('Admin.article.edit', array('post' => $post));
     }
 
     /**

@@ -23,7 +23,7 @@ class CategoryController extends \BaseController {
 	{
 		$categories = Category::all();
 
-		return View::make('Admin\category.index', array('categories' => $categories));
+		return View::make('Admin.category.index', array('categories' => $categories));
 	}
 
 	/**
@@ -51,7 +51,7 @@ class CategoryController extends \BaseController {
 				return Redirect::route('admin_category_index')->with('message', 'Category sucessfully added');
 			}
 		}
-		return View::make('Admin\category.add');
+		return View::make('Admin.category.add');
 	}
 
 	/**
@@ -80,7 +80,7 @@ class CategoryController extends \BaseController {
 			}
 		}
 
-		return View::make('Admin\category.edit', array('category' => $category));
+		return View::make('Admin.category.edit', array('category' => $category));
 	}
 
 	public function delete($slug, $id)
