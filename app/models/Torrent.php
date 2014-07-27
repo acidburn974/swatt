@@ -12,11 +12,11 @@ class Torrent extends Eloquent {
 		'description' => 'required',
 		'info_hash' => 'required|unique:torrents',
 		'file_name' => 'required',
-		'file_count' => 'required|numeric',
+		'num_file' => 'required|numeric',
 		'announce' => 'required',
 		'size' => 'required',
 		//'nfo' => '',
-		'created_by' => 'required',
+		//'created_by' => 'required',
 		'category_id' => 'required',
 		'user_id' => 'required',
 	);
@@ -46,6 +46,15 @@ class Torrent extends Eloquent {
 	public function files()
 	{
 		return $this->hasMany('TorrentFile');
+	}
+
+	/**
+	 * Has many Comment
+	 *
+	 */
+	public function comments()
+	{
+		return $this->hasMany('Comment');
 	}
 
 	/**

@@ -25,6 +25,29 @@
         <div class="post-content">
             {{ $post->content }}
         </div>
+        <hr>
     </article>
+
+    <div class="col-md-12">
+        {{ Form::open(array('route' => array('comment_article', 'slug' => $post->slug, 'id' => $post->id))) }}
+            <div class="form-group">
+                <label for="content">Your comment:</label>
+                <textarea name="content" cols="30" rows="5" class="form-control"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-default">Save my comment</button>
+        {{ Form::close() }}
+        <hr>
+    </div>
+
+    <div class="comments col-md-12">
+        @foreach($comments as $comment)
+            <div class="comment">
+                <strong>{{ $comment->user->username }}</strong> -
+                <span><time pubdate>{{ date('d M Y h:m', strtotime($comment->created_at)) }}</time></span>
+                <blockquote>{{{ $comment->content }}}</blockquote>
+            </div>
+        @endforeach
+    </div>
 </div>
 @stop

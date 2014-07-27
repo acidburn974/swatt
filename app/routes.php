@@ -34,6 +34,10 @@ Route::get('/categories/{slug}.{id}', ['uses' => 'CategoryController@category', 
 Route::get('/articles', array('uses' => 'ArticleController@articles', 'as' => 'articles'));
 Route::get('/articles/{slug}.{id}', array('uses' => 'ArticleController@post', 'as' => 'post'));
 
+// Commentaires
+Route::any('/comment/article/{slug}.{id}', array('uses' => 'CommentController@article', 'as' => 'comment_article', 'before' => 'auth'));
+Route::any('/comment/torrent/{slug}.{id}', array('uses' => 'CommentController@torrent', 'as' => 'comment_torrent', 'before' => 'auth'));
+
 // Admin
 Route::group(array('prefix' => 'admin', 'before' => 'auth|admin', 'namespace' => 'Admin'), function()
 {
