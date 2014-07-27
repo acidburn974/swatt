@@ -2,6 +2,8 @@
 
 class Category extends Eloquent {
 
+	public $timestamps = false;
+
 	/**
 	 * Règles de validation
 	 *
