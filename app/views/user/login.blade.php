@@ -11,7 +11,7 @@
 @section('breadcrumb')
 <div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
     <a href="{{ url('/login') }}" itemprop="url" class="l-breadcrumb-item-link">
-        <span itemprop="title" class="l-breadcrumb-item-link-title">{{ trans('messages.torrents') }}</span>
+        <span itemprop="title" class="l-breadcrumb-item-link-title">Login</span>
     </a>
 </div>
 @stop

@@ -5,7 +5,7 @@
 @stop
 
 @section('meta_description')
-<meta type="description" content="{{{ 'Create a new topic in ' . $forum->name }}}">
+<meta name="description" content="{{{ 'Create a new topic in ' . $forum->name }}}">
 @stop
 
 @section('stylesheets')

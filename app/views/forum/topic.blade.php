@@ -5,7 +5,7 @@
 @stop
 
 @section('meta_description')
-<meta type="description" content="{{{ 'Read the topic ' . $topic->name }}}">
+<meta name="description" content="{{{ 'Read the topic ' . $topic->name }}}">
 @stop
 
 @section('breadcrumb')

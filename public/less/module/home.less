@@ -1,5 +1,5 @@
-.home {
-    .home-post {
+
+    .post {
         margin: 1.25em 0;
         padding: 1.25em; 
         border: solid 1px #cecece;
@@ -10,24 +10,27 @@
         background: #f0f3f6;
         &:hover {
             .box-shadow(0px 0px 5px #cecece);
-            border-bottom-width: 5px;
+            //border-bottom-width: 5px;
         }
-        .home-post-title {
+        .post-title {
             a {
                 &:hover {
                     text-decoration: none;
                 }
             }
         }
-        .home-post-time {
+        .post-time {
             padding: 1.25em 0;
         }
-        .home-post-brief {
+        .post-brief {
             color: #666;
             line-height: 2em;
             //text-shadow: 1px 1px 0px #000;
         }
-        .home-post-more {
+        .post-content {
+            line-height: 1.8em;
+        }
+        .post-more {
             float: right;
             a {
                 padding: 0.75em 2em;
@@ -40,4 +43,3 @@
             }
         }
     }
-}

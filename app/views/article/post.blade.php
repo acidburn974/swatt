@@ -21,7 +21,7 @@
 <div class="box container">
     <article class="post col-md-12">
         <h2 class="post-title">{{{ $post->title }}}</h2>
-        <div class="post-time"><time pubdate>{{ date('d M Y', strtotime($post->created_at)) }}</time></div>
+        <div class="post-time"><time datetime="{{ date('d-m-Y h:m', strtotime($p->created_at)) }}">{{ date('d M Y', strtotime($p->created_at)) }}</time></div>
         <div class="post-content">
             {{ $post->content }}
         </div>

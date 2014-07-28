@@ -4,6 +4,10 @@
 <title>Articles - {{ Config::get('other.title') }}</title>
 @stop
 
+@section('meta_description')
+<meta name="description" content="{{{ 'Articles and news on the tracker and the community' }}}">
+@stop
+
 @section('breadcrumb')
 <div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
     <a href="{{ route('articles') }}" itemprop="url" class="l-breadcrumb-item-link">
@@ -16,13 +20,13 @@
 <div class="box container">
     <div class="home col-md-12">
         @foreach($posts as $p)
-            <article class="home-post">
-                <h2 class="home-post-title"><a href="{{ route('post', array('slug' => $p->slug, 'id' => $p->id)) }}">{{{ $p->title }}}</a></h2>
-                <div class="home-post-time"><time pubdate>{{ date('d M Y', strtotime($p->created_at)) }}</time></div>
-                <div class="home-post-brief">
+            <article class="post">
+                <h2 class="post-title"><a href="{{ route('post', array('slug' => $p->slug, 'id' => $p->id)) }}">{{{ $p->title }}}</a></h2>
+                <div class="post-time"><time datetime="{{ date('d-m-Y h:m', strtotime($p->created_at)) }}">{{ date('d M Y', strtotime($p->created_at)) }}</time></div>
+                <div class="post-brief">
                     <p>{{{ $p->brief }}}</p>
                 </div>
-                <div class="home-post-more">
+                <div class="post-more">
                     <a href="{{ route('post', array('slug' => $p->slug, 'id' => $p->id)) }}" class="btn btn-default">Read More</a>
                 </div>
                 <div class="clearfix"></div>

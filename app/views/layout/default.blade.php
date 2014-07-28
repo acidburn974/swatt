@@ -6,7 +6,7 @@
         <title>{{{ Config::get('other.title') }}}</title>
     @show
     @section('meta_description')
-        <meta type="description" content="{{{ 'Torrent tracker specialized in high qualities movies and tv series' }}}">
+        <meta name="description" content="{{{ 'Obsessedto.me the best bittorrent community. Get exclusive access to HD movies and TV shows. The next-gen torrent tracker.' }}}">
     @show
     <link rel="stylesheet" href="{{ url('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url('css/main.css') }}">
@@ -19,7 +19,7 @@
     <!-- header -->
     <div id="l-header">
         <div class="container">
-            <div class="l-header-logo col-md-6"><h1><a href="{{ route('home') }}">{{ Config::get('other.title') }}</a></h1></div>
+            <header class="l-header-logo col-md-6"><h1><a href="{{ route('home') }}">{{ Config::get('other.title') }}</a></h1></header>
             <div class="l-header-user-data col-md-6">
                 @if(Auth::check())
                     {{-- <a href="{{ route('profil', array('username' => Auth::user()->username, 'id' => Auth::user()->id)) }}" class="l-header-user-data-link">{{ Auth::user()->username }}</a> --}}
@@ -77,19 +77,40 @@
     <!-- footer -->
     <div id="l-footer">
         <div class="container">
-            <div class="col-md-4">
-                <h3>{{{ Config::get('other.title') }}}</h3>
-                <p>A new sort of torrent tracker specialized in HD movies and tv series.</p>
-                {{-- <p>Page generated in {{ round((microtime(TRUE)-$_SERVER['REQUEST_TIME_FLOAT']), 4) . 's' }}</p> --}}
+            <div class="l-footer-section col-md-2">
+                <h3 class="l-footer-section-title">{{{ Config::get('other.title') }}}</h3>
+                <footer>{{{ Config::get('other.title') }}} is the next-gen torrent tracker specialized in HD movies and TV shows.</footer>
             </div>
-            <div class="col-md-4">
-                <h3>Categories</h3>
-                @foreach(Category::all() as $category)
-                <a href="{{ route('category', array('slug' => $category->slug, 'id' => $category->id)) }}">
-                    {{{ $category->name }}} ({{ $category->num_torrent }})
-                </a><br>
-                @endforeach
+
+            <div class="l-footer-section col-md-2">
+                <h3 class="l-footer-section-title">Account</h3>
+                <ul>
+                    @if(Auth::check())
+                        <li><a href="{{ route('logout') }}">Logout</a></li>
+                    @else
+                        <li><a href="{{ route('signup') }}">Register</a></li>
+                        <li><a href="{{ route('login') }}">Login</a></li>
+                    @endif
+                </ul>
             </div>
+
+            <div class="l-footer-section col-md-2">
+                <h3 class="l-footer-section-title">Community</h3>
+                <ul>
+                    <li><a href="{{ route('articles') }}">News</a></li>
+                    <li><a href="{{ route('forum_index') }}">Forums</a></li>
+                </ul>
+            </div>
+
+            <div class="l-footer-section col-md-2">
+                <h3 class="l-footer-section-title">Categories</h3>
+                <ul>
+                    @foreach(Category::all() as $category)
+                        <li><a href="{{ route('category', array('slug' => $category->slug, 'id' => $category->id)) }}">{{{ $category->name }}} ({{ $category->num_torrent }})</a></li>
+                    @endforeach
+                </ul>
+            </div>
+            
         </div>
     </div><!-- /footer -->
 

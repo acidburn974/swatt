@@ -5,7 +5,7 @@
 @stop
 
 @section('meta_description')
-<meta name="description" content="Need a content here !">
+<meta name="description" content="Signup to the torrent tracker in less than 30s. Get access to exclusive HD movies and tv shows.">
 @stop
 
 @section('breadcrumb')
