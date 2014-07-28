@@ -24,6 +24,8 @@ class TorrentController extends BaseController {
 				if($this->decodedTorrent['announce'] == route('announce')) // Verifie que l'url d'announce est la bonne
 				{
 					$input = Input::all();
+					$category = Category::find(Input::get('category_id'));
+
 					$torrent = new Torrent();
 					$torrent->name = $input['name'];
 					$torrent->slug = Str::slug($torrent->name);
@@ -42,11 +44,12 @@ class TorrentController extends BaseController {
 						$torrent->nfo = '';
 					}
 					//$torrent->created_by = $this->decodedTorrent['created by'];
-					$torrent->category_id = $input['category_id'];
+					$torrent->category_id = $category->id;
 					$torrent->user_id = $user->id;
 					$torrent->leechers = 0;
 					$torrent->seeders = 0;
 					$torrent->times_completed = 0;
+
 					$v = Validator::make($torrent->toArray(), $torrent->rules);
 					if($v->fails())
 					{
@@ -54,11 +57,16 @@ class TorrentController extends BaseController {
 						{
 							unlink(getcwd() . '/files/torrents/' . $this->fileName);
 						}
-						Session::put('message', 'An error has occured');
+						Session::put('message', 'An error has occured may ben this file is already online ?');
 					}
 					else
 					{
-						$torrent->save();
+						$torrent->save(); // Save le torrent
+						// Compte et sauvegarde le nombre de torrent dans  cette catégorie
+						$category->num_torrent = Torrent::where('category_id', '=', $category->id)->count();
+						$category->save();
+
+						// Sauvegarde les fichiers que contient le torrent
 						$fileList = TorrentTools::getTorrentFiles($this->decodedTorrent);
 						foreach($fileList as $file)
 						{

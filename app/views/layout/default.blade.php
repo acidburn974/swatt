@@ -30,8 +30,8 @@
             </div>
             <nav class="l-header-menu col-md-12">
                 <a href="{{ url('/') }}" class="l-header-menu-item">{{ trans('messages.home') }}</a>
-                <a href="{{ route('forum_index') }}" class="l-header-menu-item">Forums</a>
                 <a href="{{ route('torrents') }}" class="l-header-menu-item">Torrents</a>
+                <a href="{{ route('forum_index') }}" class="l-header-menu-item">Forums</a>
                 @if(Auth::check())
                     @if(Auth::user()->group->is_admin == true)
                         <a href="{{ route('admin_home') }}" class="l-header-menu-item">ACP</a>
@@ -81,6 +81,14 @@
                 <h3>{{{ Config::get('other.title') }}}</h3>
                 <p>A new sort of torrent tracker specialized in HD movies and tv series.</p>
                 {{-- <p>Page generated in {{ round((microtime(TRUE)-$_SERVER['REQUEST_TIME_FLOAT']), 4) . 's' }}</p> --}}
+            </div>
+            <div class="col-md-4">
+                <h3>Categories</h3>
+                @foreach(Category::all() as $category)
+                <a href="{{ route('category', array('slug' => $category->slug, 'id' => $category->id)) }}">
+                    {{{ $category->name }}} ({{ $category->num_torrent }})
+                </a><br>
+                @endforeach
             </div>
         </div>
     </div><!-- /footer -->

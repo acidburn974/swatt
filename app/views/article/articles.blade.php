@@ -29,8 +29,9 @@
             </article>
         @endforeach
     </div>
+    <!-- Pagination -->
     <div class="col-md-12">
         {{ $posts->links() }}
-    </div>
+    </div><!-- /Pagination -->
 </div>
 @stop
