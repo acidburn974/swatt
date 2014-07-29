@@ -61,7 +61,13 @@
 								<td>
 									<ul class="f-category-forums-last-post">
 										<li class="f-category-forums-last-post-item"><a href="{{ route('forum_topic', array('slug' => $f->last_topic_slug, 'id' => $f->last_topic_id)) }}">{{ $f->last_topic_name }}</a></li>
-										<li class="f-category-forums-last-post-item">By {{ $f->last_topic_user_username }}</li>
+										<li class="f-category-forums-last-post-item">
+											@if($f->last_topic_user_username != null && $f->last_topic_user_id != null)
+												By <a href="{{ route('profil', ['username' => $f->last_topic_user_username, 'id' => $f->last_topic_user_id]) }}">{{ $f->last_topic_user_username }}</a>
+											@else
+												By {{ $f->last_topic_user_username }}
+											@endif
+										</li>
 										<li class="f-category-forums-last-post-item"><time pubdate>{{ date('d M Y', strtotime($f->updated_at)) }}</time></li>
 									</ul>
 								</td><!-- /Last post -->
