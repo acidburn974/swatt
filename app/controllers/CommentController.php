@@ -1,5 +1,10 @@
 <?php 
 
+/**
+ * Gestion des commentaires
+ *
+ *
+ */
 class CommentController extends BaseController {
 
 

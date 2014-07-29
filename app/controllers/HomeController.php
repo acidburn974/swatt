@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Gestion des pages
+ *
+ */
 class HomeController extends BaseController {
 
 	/**

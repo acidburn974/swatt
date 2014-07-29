@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Str;
 
+/**
+ * Gestion du forum
+ *
+ */
 class ForumController extends BaseController {
 
 	/**

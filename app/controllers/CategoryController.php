@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Str;
 
+/**
+ * Gère toutes les categories du site
+ *
+ *
+ */
 class CategoryController extends BaseController {
 
 	/**

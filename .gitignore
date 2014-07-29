@@ -3,6 +3,7 @@
 /public/node_modules
 /public/files/torrents
 /public/files/tmp
+/public/files/img
 composer.phar
 composer.lock
 .env.*.php

@@ -2,6 +2,10 @@
 
 namespace Lib;
 
+/**
+ * Divers outils pour les torrents
+ *
+ */
 class TorrentTools {
 
 	/**

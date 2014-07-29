@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Str;
 
+/**
+ * Gestion des articles
+ *
+ */
 class ArticleController extends BaseController {
 
     /**

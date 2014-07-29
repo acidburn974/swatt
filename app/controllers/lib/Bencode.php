@@ -2,6 +2,10 @@
 
 namespace Lib;
 
+/**
+ * Bencode library for torrents
+ *
+ */
 class Bencode
 {
 	public static function bdecode($s, & $pos = 0)
