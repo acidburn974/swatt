@@ -68,7 +68,11 @@
                                             By {{ $f->last_topic_user_username }}
                                         @endif
                                     </li>
-                                    <li class="f-category-forums-last-post-item"><time pubdate>{{ date('d M Y', strtotime($f->updated_at)) }}</time></li>
+                                    <li class="f-category-forums-last-post-item">
+                                        <time datetime="{{ date('d-m-Y h:m', strtotime($f->updated_at)) }}">
+                                            {{ date('d M Y', strtotime($f->updated_at)) }}
+                                        </time>
+                                    </li>
                                 </ul>
                             </td><!-- /Last post -->
                         </tr>

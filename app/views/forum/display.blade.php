@@ -63,7 +63,11 @@
                                         {{ $t->last_post_user_username }}
                                     @endif
                                 </li>
-                                <li class="f-display-topic-last-post-item"><time pubdate>{{ date('d M Y', strtotime($t->updated_at)) }}</time></li>
+                                <li class="f-display-topic-last-post-item">
+                                    <time datetime="{{ date('d-m-Y h:m', strtotime($t->updated_at)) }}">
+                                        {{ date('d M Y', strtotime($t->updated_at)) }}
+                                    </time>
+                                </li>
                             </ul>
                         </td>
                     </tr>
