@@ -36,7 +36,11 @@
     <div class="topic col-md-12">
         <h2>{{{ $topic->name }}}</h2>
         <div class="topic-info">
-            <p>Started by {{{ $topic->first_post_user_username }}}, {{ date('d M Y H:m', strtotime($topic->created_at)) }}</p>
+            @if($topic->first_post_user_username != null && $topic->first_post_user_username != null)
+                <p>Started by <a href="{{ route('profil', ['username' => $topic->first_post_user_username, 'id' => $topic->first_post_user_id]) }}">{{ $topic->first_post_user_username }}</a>, {{ date('d M Y H:m', strtotime($topic->created_at)) }}</p>
+            @else
+                <p>Started by {{ $topic->first_post_user_username }}, {{ date('d M Y H:m', strtotime($topic->created_at)) }}</p>
+            @endif
         </div>
         <div class="topic-posts">
             <div class="topic-posts-head">
@@ -45,7 +49,7 @@
             @foreach($posts as $p)
                 <div class="topic-posts-p" id="post_{{ $p->id }}">
                     <div class="topic-posts-p-info">
-                        <p class="topic-posts-p-username">{{{ $p->user->username }}}</p>
+                        <p class="topic-posts-p-username"><a href="{{ route('profil', ['username' => $p->username, 'id' => $p->id]) }}">{{ $p->user->username }}</a></p>
                     </div>
                     <article class="topic-posts-p-content">
                         {{ $p->getContentHtml() }}

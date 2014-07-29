@@ -56,7 +56,13 @@
                         </td>
                         <td class="f-display-topic-last-post">
                             <ul>
-                                <li class="f-display-topic-last-post-item">{{{ $t->last_post_user_username }}}</li>
+                                <li class="f-display-topic-last-post-item">
+                                    @if($t->last_post_user_username != null && $t->last_post_user_id != null)
+                                        <a href="{{ route('profil', ['username' => $t->last_post_user_username, 'id' => $t->last_post_user_id]) }}">{{ $t->last_post_user_username }}</a>
+                                    @else
+                                        {{ $t->last_post_user_username }}
+                                    @endif
+                                </li>
                                 <li class="f-display-topic-last-post-item"><time pubdate>{{ date('d M Y', strtotime($t->updated_at)) }}</time></li>
                             </ul>
                         </td>
