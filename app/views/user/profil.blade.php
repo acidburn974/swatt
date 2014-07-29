@@ -37,6 +37,8 @@
 			<h2>{{ $user->username }}</h2>
 			<p>Last activity: {{ date('d M Y', strtotime($user->updated_at)) }}</p>
 			<p>Registered: {{ date('d M Y', strtotime($user->created_at)) }}</p> 
+			<p>Upload: {{ $user->getUploaded() }} - Download: {{ $user->getDownloaded() }}</p>
+			<p>Ratio: {{ $user->getUploaded() / $user->getDownloaded() }}</p>
 		</div>
 
 		<div class="col-md-5">
