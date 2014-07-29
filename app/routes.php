@@ -12,12 +12,15 @@
 */
 
 Route::get('/', ['uses' => 'HomeController@home', 'as' => 'home']);
+
 // User
 Route::any('/login', ['uses' => 'UserController@login', 'as' => 'login']);
 Route::any('/signup', ['uses' => 'UserController@signup', 'as' => 'signup']);
 Route::any('/logout', ['uses' => 'UserController@logout', 'before' => 'auth', 'as' => 'logout']);
 Route::get('/members', ['uses' => 'UserController@members', 'as' => 'members']);
 Route::get('/members/{username}.{id}', ['uses' => 'UserController@profil', 'as' => 'profil']);
+Route::post('/members/{username}.{id}/photo', ['uses' => 'UserController@changePhoto', 'as' => 'user_change_photo', 'before' => 'auth']);
+
 
 // Torrent
 Route::get('/torrents', array('uses' => 'TorrentController@torrents', 'as' => 'torrents'));

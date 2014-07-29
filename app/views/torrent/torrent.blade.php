@@ -22,12 +22,16 @@
     <div class="col-md-12">
         <h1 class="torrent-title"><a href="{{ route('download', array('slug' => $torrent->slug, 'id' => $torrent->id)) }}" class="torrent-data-item">Download {{{ $torrent->name }}}</a></h1>
     </div>
+    <!-- Données sur le torrent -->
     <div class="torrent-data col-md-12">
         <span class="torrent-data-item">Seeders: {{ $torrent->seeders }}</span>
         <span class="torrent-data-item">Leechers: {{ $torrent->leechers }}</span>
         <span class="torrent-data-item">Times completed: {{ $torrent->times_completed }}</span>
         <span class="torrent-data-item">Size: {{ $torrent->getSize() }}</span>
-    </div>
+        <span class="torrent-data-item">By <a href="{{ route('profil', ['username' => $user->username, 'id' => $user->id]) }}">{{ $user->username }}</a></span>
+    </div><!-- Données sur le torrent -->
+
+
     <div class="torrent-description col-md-12">
         <hr>
         {{ $torrent->getDescriptionHtml() }}

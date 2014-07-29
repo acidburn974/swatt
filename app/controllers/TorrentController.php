@@ -205,8 +205,9 @@ class TorrentController extends BaseController {
 	public function torrent($slug, $id)
 	{
 		$torrent = Torrent::find($id);
+		$user = $torrent->user;
 		$comments = $torrent->comments()->orderBy('created_at', 'DESC')->get();
-		return View::make('torrent.torrent', array('torrent' => $torrent, 'comments' => $comments));
+		return View::make('torrent.torrent', array('torrent' => $torrent, 'comments' => $comments, 'user' => $user));
 	}
 
 	/**

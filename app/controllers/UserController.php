@@ -76,7 +76,9 @@ class UserController extends BaseController {
      */
     public function members()
     {
+        $users = User::orderBy('created_at', 'DESC')->paginate(20);
 
+        return View::make('user.members', ['users' => $users]);
     }
 
     /**
@@ -85,6 +87,35 @@ class UserController extends BaseController {
      */
     public function profil($username, $id)
     {
+        $user = User::find($id);
+        return View::make('user.profil', ['user' => $user]);
+    }
 
+    /**
+     * Change la photo de l'utilisateur
+     *
+     */
+    public function changePhoto($slug, $id)
+    {
+        $user = Auth::user();
+        if(Input::hasFile('image'))
+        {
+            $image = Input::file('image');
+            if(in_array($image->getClientOriginalExtension(), array('jpg', 'jpeg', 'bmp', 'png', 'tiff')) && preg_match('#image/*#', $image->getMimeType()))
+            {
+                $image->move(getcwd() . '/files/img/', $user->username . '.' . $image->getClientOriginalExtension());
+                $user->image = $user->username . '.' . $image->getClientOriginalExtension();
+                $user->save();
+                return Redirect::route('profil', ['username' => $user->username, 'id' => $user->id])->with('message', 'Photo succesfully saved');
+            }
+            else
+            {
+                Redirect::route('profil', ['username' => $user->username, 'id' => $user->id])->with('message', 'Your image is invalid');
+            }
+        }
+        else
+        {
+            Redirect::route('profil', ['username' => $user->username, 'id' => $user->id])->with('message', 'You must upload an image');
+        }
     }
 } ?>

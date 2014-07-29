@@ -99,6 +99,7 @@
                 <ul>
                     <li><a href="{{ route('articles') }}">News</a></li>
                     <li><a href="{{ route('forum_index') }}">Forums</a></li>
+                    <li><a href="{{ route('members') }}">Members</a></li>
                 </ul>
             </div>
 
