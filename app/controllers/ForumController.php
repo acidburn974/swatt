@@ -213,4 +213,41 @@ class ForumController extends BaseController {
 		}
 		return View::make('forum.new_topic', array('forum' => $forum, 'category' => $category, 'parsedContent' => $parsedContent, 'title' => Input::get('title'), 'content' => Input::get('content')));
 	}
+
+	/**
+	 * Edit le post de l'utilisateur
+	 *
+	 * @param $slug Slug du topic
+	 * @param $id Id du topic
+	 * @param $postId Id du post
+	 */
+	public function postEdit($slug, $id, $postId)
+	{
+		$user = Auth::user();
+		$topic = Topic::find($id);
+		$forum = $topic->forum;
+		$category = $forum->getCategory();
+		$post = Post::find($id);
+		if($user->id != $post->user_id || $user->group->is_modo == false)
+		{
+			return Redirect::route('forum_topic', ['slug' => $topic->slug, 'id' => $topic->id]);
+		}
+
+		// Prévisualisation du post
+		if(Request::getMethod() == 'POST' && Input::get('preview') == true)
+		{
+			$post->content = Input::get('content');
+			$code = new Decoda\Decoda($post->content);
+			$code->defaults();
+			$parsedContent = $code->parse();
+		}
+
+		if(Request::isMethod('post') && Input::get('post') == true)
+		{
+			$post->content = Input::get('content');
+			$post->save();
+			return Redirect::route('forum_topic', ['slug' => $topic->slug, 'id' => $topic->id]);
+		}
+		return View::make('forum.post_edit', ['user' => $user, 'topic' => $topic, 'forum' => $forum, 'post' => $post, 'category' => $category, 'parsedContent' => $parsedContent]);
+	}
 } ?>
