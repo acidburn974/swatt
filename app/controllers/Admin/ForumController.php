@@ -198,5 +198,6 @@ class ForumController extends \BaseController {
 			}
 			$forum->delete();
 		}
+		return Redirect::route('admin_forum_index');
 	}
 } ?>
