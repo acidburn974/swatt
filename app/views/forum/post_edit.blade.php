@@ -49,7 +49,7 @@
 		{{ Form::open(array('route' => array('forum_post_edit', 'slug' => $topic->slug, 'id' => $topic->id, 'postId' => $post->id))) }}
 			
 			<div class="form-group">
-				<textarea id="new-thread-content" name="content" cols="30" rows="10" class="form-control">{{ $post->content }}</textarea>
+				<textarea id="new-thread-content" name="content" cols="30" rows="10" class="form-control">{{{ $post->content }}}</textarea>
 			</div>
 
 			

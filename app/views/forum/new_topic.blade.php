@@ -47,7 +47,7 @@
 			</div>
 			
 			<div class="form-group">
-				<textarea id="new-thread-content" name="content" cols="30" rows="10" class="form-control">{{ $content }}</textarea>
+				<textarea id="new-thread-content" name="content" cols="30" rows="10" class="form-control">{{{ $content }}}</textarea>
 			</div>
 
 			
