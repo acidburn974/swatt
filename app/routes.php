@@ -75,6 +75,6 @@ Route::group(array('prefix' => 'community'), function()
     Route::get('/forum/{slug}.{id}', array('uses' => 'ForumController@display', 'as' => 'forum_display')); // Affiche le forum et les topics
     Route::any('/forum/{slug}.{id}/new-topic', array('uses' => 'ForumController@newTopic', 'as' => 'forum_new_topic', 'before' => 'auth'));
     Route::get('/topic/{slug}.{id}', array('uses' => 'ForumController@topic', 'as' => 'forum_topic'));
-    Route::any('/topic/{slug}.{id}/post-{postId}/edit', array('uses' => 'ForumController@postEdit', 'as' => 'forum_post_edit'));
+    Route::any('/topic/{slug}.{id}/post-{postId}/edit', array('uses' => 'ForumController@postEdit', 'as' => 'forum_post_edit', 'before' => 'auth'));
     Route::post('/topic/{slug}.{id}/reply', array('uses' => 'ForumController@reply', 'as' => 'forum_reply', 'before' => 'auth'));
 });

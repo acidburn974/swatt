@@ -230,9 +230,12 @@ class ForumController extends BaseController {
 		$post = Post::find($postId);
 		$parsedContent = null;
 
-		if($user->id != $post->user_id || $user->group->is_modo == false)
+		if($user->group->is_modo == false)
 		{
-			return Redirect::route('forum_topic', ['slug' => $topic->slug, 'id' => $topic->id]);
+			if($post->user_id != $user->id)
+			{
+				return Redirect::route('forum_topic', ['slug' => $topic->slug, 'id' => $topic->id])->with('message', 'You can\'t edit this post');
+			}
 		}
 
 		// Prévisualisation du post
