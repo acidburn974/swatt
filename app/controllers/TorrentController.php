@@ -99,7 +99,7 @@ class TorrentController extends BaseController {
 	* Announce code
 	*
 	* @access public 
-	* @param $passkey Passkey de l'utilisateur*
+	* @param $passkey Passkey de l'utilisateur
 	* @return Bencoded response for the torrent client
 	*/
 	public function announce($passkey)
@@ -218,6 +218,10 @@ class TorrentController extends BaseController {
 	{
 		$user = Auth::user();
 		$torrent = Torrent::find($id);
+		if($user->getDownloaded() / $user->getUploaded() < Config::get('other.ratio'))
+		{
+			return Redirect::route('torrent', ['slug' => $torrent->slug, 'id' => $torrent->id])->with('message', 'You can\'t download torrents anymore your ratio is too low');
+		}
 		$tmpFileName = $torrent->slug . '.torrent';
 		if( ! file_exists(getcwd() . '/files/torrents/' . $torrent->file_name))
 		{
