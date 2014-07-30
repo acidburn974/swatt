@@ -50,7 +50,6 @@
 				<textarea id="new-thread-content" name="content" cols="30" rows="10" class="form-control">{{{ $content }}}</textarea>
 			</div>
 
-			
 			<button type="submit" name="post" value="true" class="btn btn-primary">Send this new subject</button>
 			<button type="submit" name="preview" value="true" class="btn btn-default">Preview</button>
 		{{ Form::close() }}

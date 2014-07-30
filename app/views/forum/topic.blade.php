@@ -49,7 +49,7 @@
             @foreach($posts as $p)
                 <div class="topic-posts-p" id="post_{{ $p->id }}">
                     <div class="topic-posts-p-info">
-                        <p class="topic-posts-p-username"><a href="{{ route('profil', ['username' => $p->username, 'id' => $p->id]) }}">{{ $p->user->username }}</a></p>
+                        <p class="topic-posts-p-username"><a href="{{ route('profil', ['username' => $p->user->username, 'id' => $p->user->id]) }}">{{ $p->user->username }}</a></p>
                     </div>
                     <article class="topic-posts-p-content">
                         {{ $p->getContentHtml() }}
