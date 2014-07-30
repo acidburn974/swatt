@@ -135,12 +135,68 @@ class ForumController extends \BaseController {
 	}
 
 	/**
-	 * Supprime un forum / une catégorie et déplace les topics (si besoin)
+	 * Supprime un forum / une catégorie ainsi que les topics et sous-forums
 	 *
 	 *
 	 */
 	public function delete($slug, $id)
 	{
+		// Forum to delete
+		$forum = Forum::find($id);
 
+		$permissions = Permission::where('forum_id', '=', $forum->id)->get();
+		foreach($permissions as $p)
+		{
+			$p->delete();
+		}
+		unset($permissions);
+
+		if($forum->parent_id == 0)
+		{
+			$category = $forum;
+			$permissions = Permission::where('forum_id', '=', $category->id)->get();
+			foreach($permissions as $p)
+			{
+				$p->delete();
+			}
+
+			$forums = $category->getForumsInCategory();
+			foreach($forums as $forum)
+			{
+				$permissions = Permission::where('forum_id', '=', $forum->id)->get();
+				foreach($permissions as $p)
+				{
+					$p->delete();
+				}
+
+				foreach($forum->topics as $t)
+				{
+					foreach($t->posts as $p)
+					{
+						$p->delete();
+					}
+					$t->delete();
+				}
+				$forum->delete();
+			}
+			$category->delete();
+		}
+		else
+		{
+			$permissions = Permission::where('forum_id', '=', $forum->id)->get();
+			foreach($permissions as $p)
+			{
+				$p->delete();
+			}
+			foreach($forum->topics as $t)
+			{
+				foreach($t->posts as $p)
+				{
+					$p->delete();
+				}
+				$t->delete();
+			}
+			$forum->delete();
+		}
 	}
 } ?>

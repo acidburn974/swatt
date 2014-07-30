@@ -63,7 +63,7 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth|admin', 'namespace' =>
     Route::get('/forums', array('uses' => 'ForumController@index', 'as' => 'admin_forum_index'));
     Route::any('/forums/new', array('uses' => 'ForumController@add', 'as' => 'admin_forum_add'));
     Route::any('/forums/edit/{slug}.{id}', array('uses' => 'ForumController@edit', 'as' => 'admin_forum_edit'));
-    Route::get('/forums/delete/{slug}.{id}', array());
+    Route::get('/forums/delete/{slug}.{id}', array('uses' => 'ForumController@delete', 'as' => 'admin_forum_delete'));
 });
 
 // Forum
