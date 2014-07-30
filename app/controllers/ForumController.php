@@ -227,9 +227,9 @@ class ForumController extends BaseController {
 		$topic = Topic::find($id);
 		$forum = $topic->forum;
 		$category = $forum->getCategory();
-		$post = Post::find($id);
+		$post = Post::find($postId);
 		$parsedContent = null;
-		
+
 		if($user->id != $post->user_id || $user->group->is_modo == false)
 		{
 			return Redirect::route('forum_topic', ['slug' => $topic->slug, 'id' => $topic->id]);
