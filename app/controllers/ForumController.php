@@ -99,7 +99,7 @@ class ForumController extends BaseController {
 		// L'utilisateur possède le droit de crée un topic ici
 		if($category->getPermission()->reply_topic != true)
 		{
-			return Redirect::route('forum_index')->withm('message', 'You can\'t reply this topic');
+			return Redirect::route('forum_index')->with('message', 'You can\'t reply this topic');
 		}
 
 		$post = new Post();
