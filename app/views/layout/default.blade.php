@@ -93,7 +93,7 @@
         <div class="container">
             <div class="l-footer-section col-md-2">
                 <h3 class="l-footer-section-title">{{{ Config::get('other.title') }}}</h3>
-                <footer>{{{ Config::get('other.title') }}} is the next-gen torrent tracker specialized in HD movies and TV shows.</footer>
+                <footer>{{{ Config::get('other.meta_description') }}}</footer>
             </div>
 
             <div class="l-footer-section col-md-2">
