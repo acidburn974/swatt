@@ -16,7 +16,9 @@ class ArticleController extends BaseController {
      */
     public function articles()
     {
+        // Fetch posts by created_at DESC order
         $posts = Article::orderBy('created_at', 'DESC')->paginate(5);
+
         return View::make('article.articles', array('posts' => $posts));
     }
 
@@ -28,7 +30,9 @@ class ArticleController extends BaseController {
      */
     public function post($slug, $id)
     {
+        // Find de right post
         $post = Article::find($id);
+        // Get comments on this post
         $comments = $post->comments()->orderBy('created_at', 'DESC')->get();
 
         return View::make('article.post', array('post' => $post, 'comments' => $comments));

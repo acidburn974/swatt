@@ -10,3 +10,5 @@ composer.lock
 .env.php
 .DS_Store
 Thumbs.db
+tracker.wxproj
+tracker.wxtask

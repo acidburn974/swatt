@@ -60,20 +60,29 @@ class ForumController extends BaseController {
 	}
 
 	/**
-	 * Affiche le topic
+	 * Show the topic
 	 *
-	 *
+	 * @param $slug Slug du  topic
+	 * @param $id Id topic
 	 */
 	public function topic($slug, $id)
 	{
+		// Find the topic
 		$topic = Topic::find($id);
+
+		// Get the forum of the topic
 		$forum = $topic->forum;
+
+		// Get The category of the forum
 		$category = $forum->getCategory();
+
+		// Get all posts
 		$posts = $topic->posts;
 
-		// L'utilisateur possède le droit de crée un topic ici
+		// The user can post a topic here ?
 		if($category->getPermission()->read_topic != true)
 		{
+			// Reditect him to the forum index
 			return Redirect::route('forum_index')->with('message', 'You can\'t read this topic');
 		}
 
@@ -115,15 +124,18 @@ class ForumController extends BaseController {
 		);
 		if($v->passes())
 		{
+			// Save the reply
 			$post->save();
-
+			// Save last post user data to topic table
 			$topic->last_post_user_id = $user->id;
 			$topic->last_post_user_username = $user->username;
+			// Count post i topic
 			$topic->num_post = Post::where('topic_id', '=', $topic->id)->count();
 			$topic->save();
 
-			/** Compte les topics dans ce forum */
+			// Count posts
 			$forum->num_post = $forum->getPostCount($forum->id);
+			// Count topics
 			$forum->num_topic = $forum->getTopicCount($forum->id);
 			$forum->save();
 
@@ -131,6 +143,7 @@ class ForumController extends BaseController {
 		}
 		else
 		{
+			return Redirect::route('forum_topic', array('slug' => $topic->slug, 'id' => $topic->id))->with('message', 'This reply can\'t be posted');
 		}
 	}
 

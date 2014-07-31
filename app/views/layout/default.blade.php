@@ -19,17 +19,31 @@
     <!-- header -->
     <div id="l-header">
         <div class="container">
-            <header class="l-header-logo col-md-6"><h1><a href="{{ route('home') }}">{{ Config::get('other.title') }}</a></h1></header>
+
+            <!-- Logo -->
+            <header class="l-header-logo col-md-3">
+                <h1><a href="{{ route('home') }}">{{ Config::get('other.title') }}</a></h1>
+            </header><!-- /Logo -->
+
+            <div class="l-header-search col-md-3">
+                {{ Form::open(array('url' => '/search')) }}
+                    <input type="text" id="search-input" name="search" class="form-control" placeholder="Search...">
+                {{ Form::close() }}
+            </div>
+
+            <!-- Menu -->
             <div class="l-header-user-data col-md-6">
                 @if(Auth::check())
-                    {{-- <a href="{{ route('profil', array('username' => Auth::user()->username, 'id' => Auth::user()->id)) }}" class="l-header-user-data-link">{{ Auth::user()->username }}</a> --}}
+                    <a href="{{ route('profil', array('username' => Auth::user()->username, 'id' => Auth::user()->id)) }}" class="l-header-user-data-link">{{ Auth::user()->username }}</a>
                     <span class="l-header-user-data-field">{{ Auth::user()->getUploaded() }} <i class="fa fa-long-arrow-up"></i></span>
                     <span class="l-header-user-data-field">{{ Auth::user()->getDownloaded() }} <i class="fa fa-long-arrow-down"></i></span>
                     <span class="l-header-user-data-field">{{ Auth::user()->getRatio() }} <i class="fa fa-arrows-v"></i></span>
                 @endif
-            </div>
+            </div><!-- /Menu -->
+
+            <!-- Bar de navigation -->
             <nav class="l-header-menu col-md-12">
-                <a href="{{ url('/') }}" class="l-header-menu-item">{{ trans('messages.home') }}</a>
+                <a href="{{ url('/') }}" class="l-header-menu-item">Home</a>
                 <a href="{{ route('torrents') }}" class="l-header-menu-item">Torrents</a>
                 <a href="{{ route('forum_index') }}" class="l-header-menu-item">Forums</a>
                 @if(Auth::check())
@@ -37,12 +51,12 @@
                         <a href="{{ route('admin_home') }}" class="l-header-menu-item">ACP</a>
                     @endif
                 	<a href="{{ route('upload') }}" class="l-header-menu-item">Upload</a>
-                    <a href="{{ route('logout') }}" class="l-header-menu-item">{{ trans('messages.logout') }}</a>
+                    <a href="{{ route('logout') }}" class="l-header-menu-item">Logout</a>
                 @else
-                    <a href="{{ route('login') }}" class="l-header-menu-item">{{ trans('messages.login') }}</a>
-                    <a href="{{ route('signup') }}" class="l-header-menu-item">{{ trans('messages.signup') }}</a>
+                    <a href="{{ route('login') }}" class="l-header-menu-item">Login</a>
+                    <a href="{{ route('signup') }}" class="l-header-menu-item">Signup</a>
                 @endif
-            </nav>
+            </nav><!-- Bar de navigation -->
         </div>
     </div><!-- /header -->
 
@@ -114,7 +128,10 @@
             
         </div>
     </div><!-- /footer -->
+    
 
+    <script type="text/javascript" src="{{ url('js/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url('js/search.js') }}"></script>
     @yield('javascripts')
 </body>
 </html>

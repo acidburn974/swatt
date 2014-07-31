@@ -54,7 +54,7 @@
                     <article class="topic-posts-p-content">
                         {{ $p->getContentHtml() }}
                     </article>
-                    @if(Auth::user()->group->is_modo || $p->user_id == Auth::user()->id)
+                    @if(Auth::check() && (Auth::user()->group->is_modo || $p->user_id == Auth::user()->id))
                         <div class="topic-moderation">
                             <a href="{{ route('forum_post_edit', ['slug' => $topic->slug, 'id' => $topic->id, 'postId' => $p->id]) }}">Edit this post</a>
                         </div>

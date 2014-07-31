@@ -12,6 +12,8 @@
 */
 
 Route::get('/', ['uses' => 'HomeController@home', 'as' => 'home']);
+Route::any('/search', ['uses' => 'HomeController@search', 'as' => 'search']);
+
 
 // User
 Route::any('/login', ['uses' => 'UserController@login', 'as' => 'login']);
