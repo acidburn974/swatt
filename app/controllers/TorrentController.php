@@ -144,7 +144,7 @@ class TorrentController extends BaseController {
 		}
 
 		// Finding peers for this torrent on the database
-		$peers = Peer::whereRaw('torrent_id = ? LIMIT 50', array($torrent->id))->get()->toArray();
+		$peers = Peer::whereRaw('torrent_id = ?', array($torrent->id))->get()->toArray();
 
 		// Removing useless data from the 
 		foreach($peers as $k => $p)
