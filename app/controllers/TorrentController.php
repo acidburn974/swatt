@@ -98,44 +98,65 @@ class TorrentController extends BaseController {
 	/**
 	* Announce code
 	*
-	* @access public 
+	* @access public
 	* @param $passkey Passkey de l'utilisateur
 	* @return Bencoded response for the torrent client
 	*/
-	public function announce($passkey)
+	public function announce($passkey = null)
 	{
 		//Log::info(Input::all());
 		// Déclaration/Fetch des variables requises
-		$user = User::where('passkey', '=', $passkey)->first();
-		if($user == null)
-		{
-			return Response::make(Bencode::bencode(array('failure reason' => 'This user does not exist'), 200, array('Content-Type' => 'text/plain')));
-		}
+
+		// Finding the torrent on the DB
 		$torrent = Torrent::where('info_hash', '=', bin2hex(Input::get('info_hash')))->first();
+
+		// Is torrent incorrect ?
 		if($torrent == null)
 		{
 			return Response::make(Bencode::bencode(array('failure reason' => 'This torrent does not exist'), 200, array('Content-Type' => 'text/plain')));
 		}
-		$client = Peer::whereRaw('user_id = ? AND torrent_id = ?', array($user->id, $torrent->id))->first();
+
+		// Is this a public tracker ?
+		if(Config::get('other.freeleech') == true)
+		{
+			// Finding the current peer (client) by torrent_id and ip
+			$client = Peer::whereRaw('torrent_id = ? AND ip = ?', array($torrent->id, Request::getClientIp()))->first();
+		}
+		else
+		{
+			// Finding the user in the DB
+			$user = User::where('passkey', '=', $passkey)->first();
+
+			// The user is incorrect ?
+			if($user == null)
+			{
+				return Response::make(Bencode::bencode(array('failure reason' => 'This user does not exist'), 200, array('Content-Type' => 'text/plain')));
+			}
+			
+			// Finding the current peer by his user_id and his torrent_id
+			$client = Peer::whereRaw('user_id = ? AND torrent_id = ?', array($user->id, $torrent->id))->first();
+		}
+
+		// First time the client connect
 		if($client == null)
 		{
 			$client = new Peer();
 		}
-		else
-		{
-			$user->uploaded += Input::get('uploaded') - $client->uploaded;
-			$user->downloaded += Input::get('downloaded') - $client->downloaded;
-			$user->save();
-		}
-		$peers = Peer::whereRaw('torrent_id = ?', array($torrent->id))->get()->toArray();
+
+		// Finding peers for this torrent on the database
+		$peers = Peer::whereRaw('torrent_id = ? LIMIT 50', array($torrent->id))->get()->toArray();
+
+		// Removing useless data from the 
 		foreach($peers as $k => $p)
 		{
 			unset($p['uploaded']); unset($p['downloaded']); unset($p['left']); unset($p['seeder']); unset($p['connectable']); unset($p['user_id']); unset($p['torrent_id']); unset($p['client']);unset($p['created_at']); unset($p['updated_at']);
 			$peers[$k] = $p;
 		}
 
+		// Get the event of the tracker
 		if(Input::get('event') == 'started' || Input::get('event') == null)
 		{
+			// Set the torrent data
 			$client->peer_id = Input::get('peer_id');
 			$client->ip = Request::getClientIp();
 			$client->port = Input::get('port');
@@ -143,7 +164,14 @@ class TorrentController extends BaseController {
 			$client->uploaded = Input::get('uploaded');
 			$client->downloaded = Input::get('downloaded');
 			$client->seeder = ($client->left > 0) ? false : true;
-			$client->user_id = $user->id;
+			if(Config::get('other.freeleech') == true)
+			{
+				$client->user_id = 0;
+			}
+			else
+			{
+				$client->user_id = $user->id;
+			}
 			$client->torrent_id = $torrent->id;
 			$client->save();
 
@@ -178,13 +206,13 @@ class TorrentController extends BaseController {
 		$resp['complete'] = $torrent->seeders;
 		$resp['incomplete'] = $torrent->leechers;
 		$resp['peers'] = $peers;
-		//Log::info($resp);
+
 		return Response::make(Bencode::bencode($resp), 200, array('Content-Type' => 'text/plain'));
 	}
 
 	/**
 	 * Affiche la liste des torrents
-	 * 
+	 *
 	 * @access public
 	 * @return page.torrents
 	 */
@@ -216,13 +244,27 @@ class TorrentController extends BaseController {
 	 */
 	public function download($slug, $id)
 	{
-		$user = Auth::user();
-		$torrent = Torrent::find($id);
-		if($user->getDownloaded() / $user->getUploaded() < Config::get('other.ratio'))
+		if(Auth::check())
 		{
-			return Redirect::route('torrent', ['slug' => $torrent->slug, 'id' => $torrent->id])->with('message', 'You can\'t download torrents anymore your ratio is too low');
+			$user = Auth::user();
+			// User's ratio is too low
+			if($user->getDownloaded() / $user->getUploaded() < Config::get('other.ratio') && Config::get('other.freeleech') == false)
+			{
+				return Redirect::route('torrent', ['slug' => $torrent->slug, 'id' => $torrent->id])->with('message', 'You can\'t download torrents anymore your ratio is too low');
+			}
 		}
+		else
+		{
+			$user = null;
+		}
+		
+		// Find th etorrent in the
+		$torrent = Torrent::find($id);
+
+		// Define the filename for the download
 		$tmpFileName = $torrent->slug . '.torrent';
+
+		// The torrent file exist ?
 		if( ! file_exists(getcwd() . '/files/torrents/' . $torrent->file_name))
 		{
 			return Redirect::route('torrent', array('slug' => $torrent->slug, 'id' => $torrent->id))
@@ -230,14 +272,35 @@ class TorrentController extends BaseController {
 		}
 		else
 		{
+			// Delete the last torrent tpm file
 			if(file_exists(getcwd() . '/files/tmp/' . $tmpFileName))
 			{
 				unlink(getcwd() . '/files/tmp/' . $tmpFileName);
 			}
 		}
+		// Get the content of the torrent
 		$dict = Bencode::bdecode(file_get_contents(getcwd() . '/files/torrents/' . $torrent->file_name));
-		$dict['announce'] = route('announce', array('passkey' => $user->passkey));
-		unset($dict['announce-list']);
+		// Freeleech ?
+		if(Config::get('other.freeleech') == true)
+		{
+			// Set the announce key only
+			$dict['announce'] = route('announce');
+		}
+		else
+		{
+			if(Auth::check())
+			{
+				// Set the announce key and add the user passkey
+				$dict['announce'] = route('announce', array('passkey' => $user->passkey));
+				// Remove Other announce url
+				unset($dict['announce-list']);
+			}
+			else
+			{
+				return Redirect::to('/login');
+			}
+		}
+		
 		$fileToDownload = Bencode::bencode($dict);
 		file_put_contents(getcwd() . '/files/tmp/' . $tmpFileName, $fileToDownload);
 		return Response::download(getcwd() . '/files/tmp/' . $tmpFileName);

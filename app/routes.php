@@ -29,7 +29,7 @@ Route::get('/torrents', array('uses' => 'TorrentController@torrents', 'as' => 't
 Route::get('/torrents/{slug}.{id}', array('uses' => 'TorrentController@torrent', 'as' => 'torrent'));
 Route::any('/upload', ['uses' => 'TorrentController@upload', 'before' => 'auth', 'as' => 'upload']);
 Route::any('/announce/{passkey?}', ['uses' => 'TorrentController@announce', 'as' => 'announce']);
-Route::get('/download/{slug}.{id}', ['uses' => 'TorrentController@download', 'before' => 'auth', 'as' => 'download',]);
+Route::get('/download/{slug}.{id}', ['uses' => 'TorrentController@download', 'as' => 'download',]);
 
 // Category
 Route::get('/categories', array('uses' => 'CategoryController@categories', 'as' => 'categories'));
