@@ -6,7 +6,7 @@
         <title>{{{ Config::get('other.title') }}}</title>
     @show
     @section('meta_description')
-        <meta name="description" content="{{{ 'Obsessedto.me the best bittorrent community. Get exclusive access to HD movies and TV shows. The next-gen torrent tracker.' }}}">
+        <meta name="description" content="{{{ Config::get('other.meta_description') }}}">
     @show
     <link rel="stylesheet" href="{{ url('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url('css/main.css') }}">
@@ -125,10 +125,10 @@
                     @endforeach
                 </ul>
             </div>
-            
+
         </div>
     </div><!-- /footer -->
-    
+
 
     <script type="text/javascript" src="{{ url('js/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ url('js/search.js') }}"></script>
