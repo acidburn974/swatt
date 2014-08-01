@@ -11,7 +11,7 @@
                     <p>{{{ $p->brief }}}</p>
                 </div>
                 <div class="post-more">
-                    <a href="{{ route('post', array('slug' => $p->slug, 'id' => $p->id)) }}" class="btn btn-default">Read More</a>
+                    <a href="{{ route('post', array('slug' => $p->slug, 'id' => $p->id)) }}" class="btn btn-default">{{ trans('traduction.read_more') }}</a>
                 </div>
                 <div class="clearfix"></div>
             </section>

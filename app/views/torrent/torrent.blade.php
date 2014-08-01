@@ -61,7 +61,7 @@
                 <textarea name="content" cols="30" rows="5" class="form-control"></textarea>
             </div>
 
-            <button type="submit" class="btn btn-default">Save my comment</button>
+            <button type="submit" class="btn btn-default">{{ trans('traduction.save') }}</button>
         {{ Form::close() }}
         <hr>
     </div><!-- Add comment -->

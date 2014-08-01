@@ -19,14 +19,14 @@
 @section('content')
 <div class="box container">
 	<div class="torrents col-md-12">
-		<h1 class="torrents-title">Latest torrents</h1>
+		<h1 class="torrents-title">{{ trans('traduction.latest_torrents') }}</h1>
 		<table class="torrents-list table table-striped">
 			<thead>
 				<tr>
 					<th>Type</th>
-					<th>Title</th>
-					<th>Size</th>
-					<th>Times completed</th>
+					<th>{{ trans('traduction.title') }}</th>
+					<th>{{ trans('traduction.size')}}</th>
+					<th>{{ trans('traduction.times_completed') }}</th>
 					<th>Seeders</th>
 					<th>Leechers</th>
 				</tr>
