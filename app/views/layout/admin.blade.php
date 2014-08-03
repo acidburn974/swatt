@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>Admin - {{ Config::get('other.title') }}</title>
     <link rel="stylesheet" href="{{ url('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url('css/main.css') }}">
+    <link rel="stylesheet" href="{{ url('css/font-awesome.min.css') }}">
+    <link href='http://fonts.googleapis.com/css?family=Lato|Cabin+Condensed|Open+Sans' rel='stylesheet' type='text/css'>
 
     @yield('stylesheets')
 </head>
