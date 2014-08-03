@@ -86,3 +86,4 @@ Route::group(array('prefix' => 'community'), function()
 Route::any('/api/article/{id}', 'ArticleController@api_article');
 Route::get('/api/comments', 'CommentController@api_getComments');
 Route::post('/api/comments', ['uses' => 'CommentController@api_postComments', 'before' => 'auth']);
+Route::any('/api/torrents/{id}', 'TorrentController@api_torrent');

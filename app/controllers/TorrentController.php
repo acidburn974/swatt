@@ -307,6 +307,20 @@ class TorrentController extends BaseController {
 		file_put_contents(getcwd() . '/files/tmp/' . $tmpFileName, $fileToDownload);
 		return Response::download(getcwd() . '/files/tmp/' . $tmpFileName);
 	}
-}
 
-?>
+	public function api_torrent($id)
+	{
+		// Find the right torrent
+		$torrent = Torrent::find($id);
+		// Format the description
+		$torrent->descriptionHtml = $torrent->getDescriptionHtml();
+		// Set username
+		$torrent->username = $torrent->user->username;
+		// Set user id
+		$torrent->user_id = $torrent->user->id;
+		// Define the size
+		$torrent->size = $torrent->getSize();
+
+		return Response::json($torrent);
+	}
+} ?>

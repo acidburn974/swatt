@@ -22,6 +22,7 @@
     <div class="col-md-12">
         <h1 class="torrent-title"><a href="{{ route('download', array('slug' => $torrent->slug, 'id' => $torrent->id)) }}" class="torrent-data-item">Download {{{ $torrent->name }}}</a></h1>
     </div>
+
     <!-- Données sur le torrent -->
     <div class="torrent-data col-md-12">
         <span class="torrent-data-item">Seeders: {{ $torrent->seeders }}</span>
@@ -66,6 +67,7 @@
             </tbody>
         </table>
     </div>
+    
     <!-- Add comment -->
     <div class="col-md-12">
         {{ Form::open(array('route' => array('comment_torrent', 'slug' => $torrent->slug, 'id' => $torrent->id))) }}

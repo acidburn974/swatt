@@ -25,6 +25,7 @@ return array(
 
 	// Torrent
 	'name' => 'Nom',
+	'download' => 'Télécharger',
 
 	// Commentaire
 	'comment' => 'Commentaire',
