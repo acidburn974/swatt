@@ -186,6 +186,8 @@ class TorrentController extends BaseController {
 			{
 				return Response::make(Bencode::bencode(array('failure reason' => 'Are you fucking kidding me ?'), 200, array('Content-Type' => 'text/plain')));
 			}
+			$torrent->times_completed++;
+			$torrent->save();
 			$client->left = 0;
 			$client->seeder = 0;
 			$client->save();

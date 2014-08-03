@@ -8,6 +8,10 @@
 <meta name="description" content="{{{ 'Create a new topic in ' . $forum->name }}}">
 @stop
 
+@section('stylesheets')
+<!-- <link rel="stylesheet" href="{{ url('css/xbbcode.js') }}"> -->
+@stop
+
 @section('breadcrumb')
 <div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
     <a href="{{ route('forum_index') }}" itemprop="url" class="l-breadcrumb-item-link">
@@ -33,17 +37,15 @@
 
 @section('content')
 <div class="forum box container">
-	@if(isset($parsedContent))
-		<div class="preview col-md-12">
-			{{ $parsedContent }}
-		</div><hr>
-	@endif
+		@if(isset($parsedContent))
+		<div id="content-preview" class="preview col-md-12">{{ $parsedContent }}</div><hr>
+		@endif
 
 	<div class="col-md-12">
-		<h2>Start a new topic in {{ $forum->name }}</h2>
+		<h2><span>Create a thread</span><span id="thread-title">{{ $title }}</span></h2>
 		{{ Form::open(array('route' => array('forum_new_topic', 'slug' => $forum->slug, 'id' => $forum->id))) }}
 			<div class="form-group">
-				<input type="text" name="title" class="form-control" placeholder="Title of the discussion" value="{{ $title }}">
+				<input id="input-thread-title" type="text" name="title" class="form-control" placeholder="Title of the discussion" value="{{ $title }}">
 			</div>
 			
 			<div class="form-group">
@@ -60,4 +62,19 @@
 @section('javascripts')
 <script type="text/javascript" src="{{ url('files/ckeditor_bbcode/ckeditor.js') }}"></script>
 <script>CKEDITOR.replace('new-thread-content');</script>
+<script type="text/javascript" src="{{ url('js/zepto.min.js') }}"></script>
+<script type="text/javascript" src="{{ url('js/xbbcode.js') }}"></script>
+
+
+<script type="text/javascript">
+var title = '{{ $title }}';
+if(title.length != 0)
+{
+	$('#thread-title').text(': ' + title);
+}
+
+$('#input-thread-title').on('input', function() {
+	$('#thread-title').text(': ' + $('#input-thread-title').val());
+});
+</script>
 @stop

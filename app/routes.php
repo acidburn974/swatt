@@ -21,6 +21,7 @@ Route::any('/signup', ['uses' => 'UserController@signup', 'as' => 'signup']);
 Route::any('/logout', ['uses' => 'UserController@logout', 'before' => 'auth', 'as' => 'logout']);
 Route::get('/members', ['uses' => 'UserController@members', 'as' => 'members']);
 Route::get('/members/{username}.{id}', ['uses' => 'UserController@profil', 'as' => 'profil']);
+//Route::post('/members/{username}.{id}/edit', ['uses' => 'UserController@editProfil', 'as' => 'user_edit_profil', 'before' => 'auth']);
 Route::post('/members/{username}.{id}/photo', ['uses' => 'UserController@changePhoto', 'as' => 'user_change_photo', 'before' => 'auth']);
 
 
@@ -80,3 +81,8 @@ Route::group(array('prefix' => 'community'), function()
     Route::any('/topic/{slug}.{id}/post-{postId}/edit', array('uses' => 'ForumController@postEdit', 'as' => 'forum_post_edit', 'before' => 'auth'));
     Route::post('/topic/{slug}.{id}/reply', array('uses' => 'ForumController@reply', 'as' => 'forum_reply', 'before' => 'auth'));
 });
+
+
+Route::any('/api/article/{id}', 'ArticleController@api_article');
+Route::get('/api/comments', 'CommentController@api_getComments');
+Route::post('/api/comments', ['uses' => 'CommentController@api_postComments', 'before' => 'auth']);

@@ -47,11 +47,24 @@
         @endif
 
         <h4>Files</h4>
-        <pre class="torrent-bottom-files">
-            @foreach($torrent->files as $f)
-                {{{ $f->name }}} <br/>
-            @endforeach
-        </pre>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>{{ trans('traduction.name') }}</th>
+                    <th>{{ trans('traduction.size') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($torrent->files as $k => $f)
+                    <tr>
+                        <td>{{ $k + 1 }}</td>
+                        <td>{{ $f->name }}</td>
+                        <td>{{ $f->getSize() }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
     <!-- Add comment -->
     <div class="col-md-12">
@@ -61,7 +74,7 @@
                 <textarea name="content" cols="30" rows="5" class="form-control"></textarea>
             </div>
 
-            <button type="submit" class="btn btn-default">Save my comment</button>
+            <button type="submit" class="btn btn-default">{{ trans('traduction.save') }}</button>
         {{ Form::close() }}
         <hr>
     </div><!-- Add comment -->

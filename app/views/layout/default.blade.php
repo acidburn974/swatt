@@ -27,7 +27,7 @@
 
             <div class="l-header-search col-md-3">
                 {{ Form::open(array('url' => '/search')) }}
-                    <input type="text" id="search-input" name="search" class="form-control" placeholder="Search...">
+                    <input type="text" id="search-input" name="search" class="form-control" placeholder="{{{ trans('traduction.search') }}}">
                 {{ Form::close() }}
             </div>
 
@@ -43,7 +43,7 @@
 
             <!-- Bar de navigation -->
             <nav class="l-header-menu col-md-12">
-                <a href="{{ url('/') }}" class="l-header-menu-item">Home</a>
+                <a href="{{ url('/') }}" class="l-header-menu-item">{{ trans('traduction.home') }}</a>
                 <a href="{{ route('torrents') }}" class="l-header-menu-item">Torrents</a>
                 <a href="{{ route('forum_index') }}" class="l-header-menu-item">Forums</a>
                 @if(Auth::check())
@@ -51,10 +51,10 @@
                         <a href="{{ route('admin_home') }}" class="l-header-menu-item">ACP</a>
                     @endif
                 	<a href="{{ route('upload') }}" class="l-header-menu-item">Upload</a>
-                    <a href="{{ route('logout') }}" class="l-header-menu-item">Logout</a>
+                    <a href="{{ route('logout') }}" class="l-header-menu-item">{{ trans('traduction.logout') }}</a>
                 @else
-                    <a href="{{ route('login') }}" class="l-header-menu-item">Login</a>
-                    <a href="{{ route('signup') }}" class="l-header-menu-item">Signup</a>
+                    <a href="{{ route('login') }}" class="l-header-menu-item">{{ trans('traduction.login') }}</a>
+                    <a href="{{ route('signup') }}" class="l-header-menu-item">{{ trans('traduction.register') }}</a>
                 @endif
             </nav><!-- Bar de navigation -->
         </div>
@@ -66,7 +66,7 @@
     		<div class="col-md-9">
     			<div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
 					<a href="{{ url('/') }}" itemprop="url" class="l-breadcrumb-item-link">
-						<span itemprop="title" class="l-breadcrumb-item-link-title">Home</span>
+						<span itemprop="title" class="l-breadcrumb-item-link-title">{{ trans('traduction.home') }}</span>
 					</a>
 				</div>
 				@yield('breadcrumb')
@@ -91,34 +91,34 @@
     <!-- footer -->
     <div id="l-footer">
         <div class="container">
-            <div class="l-footer-section col-md-2">
+            <div class="l-footer-section col-md-3">
                 <h3 class="l-footer-section-title">{{{ Config::get('other.title') }}}</h3>
                 <footer>{{{ Config::get('other.meta_description') }}}</footer>
             </div>
 
             <div class="l-footer-section col-md-2">
-                <h3 class="l-footer-section-title">Account</h3>
+                <h3 class="l-footer-section-title">{{ trans('traduction.account') }}</h3>
                 <ul>
                     @if(Auth::check())
-                        <li><a href="{{ route('logout') }}">Logout</a></li>
+                        <li><a href="{{ route('logout') }}">{{ trans('traduction.logout') }}</a></li>
                     @else
-                        <li><a href="{{ route('signup') }}">Register</a></li>
-                        <li><a href="{{ route('login') }}">Login</a></li>
+                        <li><a href="{{ route('signup') }}">{{ trans('traduction.register') }}</a></li>
+                        <li><a href="{{ route('login') }}">{{ trans('traduction.login') }}</a></li>
                     @endif
                 </ul>
             </div>
 
             <div class="l-footer-section col-md-2">
-                <h3 class="l-footer-section-title">Community</h3>
+                <h3 class="l-footer-section-title">{{ trans('traduction.community') }}</h3>
                 <ul>
                     <li><a href="{{ route('articles') }}">News</a></li>
                     <li><a href="{{ route('forum_index') }}">Forums</a></li>
-                    <li><a href="{{ route('members') }}">Members</a></li>
+                    <li><a href="{{ route('members') }}">{{ trans('traduction.members') }}</a></li>
                 </ul>
             </div>
 
             <div class="l-footer-section col-md-2">
-                <h3 class="l-footer-section-title">Categories</h3>
+                <h3 class="l-footer-section-title">{{ trans('traduction.categories') }}</h3>
                 <ul>
                     @foreach(Category::all() as $category)
                         <li><a href="{{ route('category', array('slug' => $category->slug, 'id' => $category->id)) }}">{{{ $category->name }}} ({{ $category->num_torrent }})</a></li>
@@ -129,9 +129,11 @@
         </div>
     </div><!-- /footer -->
 
-
-    <script type="text/javascript" src="{{ url('js/jquery.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url('js/search.js') }}"></script>
+    
+    <script type="text/javascript">
+    var url = "{{ url('/') }}";
+    </script>
+    
     @yield('javascripts')
 </body>
 </html>
