@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <div class="row">
 
-        <div class="col-md-6 box">
+        <div class="col-md-6 left">
             @foreach($posts as $p)
             <section class="post">
                 <h2 class="post-title"><a data-id="{{ $p->id }}" class="post-read-more" href="{{ route('post', array('slug' => $p->slug, 'id' => $p->id)) }}">{{{ $p->title }}}</a></h2>
@@ -95,12 +95,11 @@
             var self = this;
             event.preventDefault();                
             this.article_id = $(event.currentTarget).data('id');
-            self.comments.fetch({data: {article_id: self.article_id}, success: function() { self.render(); } });
             this.article = new Article({id:  this.article_id});
             this.article.fetch({
                 success: function(article) {
-                    self.render();
-                    
+                    self.comments.fetch({data: {article_id: self.article_id}, success: function() { self.render(); } });
+                    //self.render();
                 }
             });
         },
