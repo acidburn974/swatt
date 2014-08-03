@@ -5,7 +5,6 @@ class Article extends Eloquent {
     public $rules = array(
         'title' => 'required',
         'slug' => 'required',
-        'brief' => 'required',
         'content' => 'required',
         //'user_id' => 'required'
     );

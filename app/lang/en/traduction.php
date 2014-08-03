@@ -1,15 +1,35 @@
-<?php
+<?php 
 return array(
-    'home' => 'Home',
+	// Layout
+	'home' => 'Home',
+	'signup' => 'Signup',
+	'register' => 'Signup',
+	'login' => 'Login',
+	'logout' => 'Logout',
+	'search' => 'Search',
+	'members' => 'Members',
+	'account' => 'Account',
+	'categories' => 'Categories',
+	'community' => 'Community',
+	'add' => 'Add',
+	'save' => 'Save',
 
-    'login' => 'Login',
-    'logout' => 'Logout',
-    'signup' => 'Signup',
+	// Index
+	'read_more' => 'Read more',
 
-    'username' => 'Username',
-    'email' => 'Email address',
-    'password' => 'Password',
+	// Torrents
+	'latest_torrents' => 'Lastest torrents',
+	'title' => 'Title',
+	'size' => 'Size',
+	'times_completed' => 'Times completed',
 
-    'torrents' => 'Torrents',
-    'category' => 'Category',
-); ?>
+	// Torrent
+	'name' => 'Name',
+
+	// Commentaire
+	'comment' => 'Comment',
+
+	// Forum
+	'start_a_new_topic' => 'Create a new topic',
+	);
+?>

@@ -27,7 +27,7 @@
 
             <div class="l-header-search col-md-3">
                 {{ Form::open(array('url' => '/search')) }}
-                    <input type="text" id="search-input" name="search" class="form-control" placeholder="Search...">
+                    <input type="text" id="search-input" name="search" class="form-control" placeholder="{{{ trans('traduction.search') }}}">
                 {{ Form::close() }}
             </div>
 
@@ -129,9 +129,11 @@
         </div>
     </div><!-- /footer -->
 
-
-    <script type="text/javascript" src="{{ url('js/jquery.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url('js/search.js') }}"></script>
+    
+    <script type="text/javascript">
+    var url = "{{ url('/') }}";
+    </script>
+    
     @yield('javascripts')
 </body>
 </html>

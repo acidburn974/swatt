@@ -8,6 +8,7 @@ use \Input;
 use \Auth;
 use \Redirect;
 use \Validator;
+use \Session;
 
 use \Illuminate\Support\Str;
 use \Article;
@@ -40,7 +41,6 @@ class ArticleController extends \BaseController {
             $post = new Article();
             $post->title = $input['title'];
             $post->slug = Str::slug($post->title);
-            $post->brief = $input['brief'];
             $post->content = $input['content'];
             //$post->user_id = Auth::user()->id;
             $v = Validator::make($post->toArray(), $post->rules);
@@ -73,7 +73,6 @@ class ArticleController extends \BaseController {
             $input = Input::all();
             $post->title = $input['title'];
             $post->slug = Str::slug($post->title);
-            $post->brief = $input['brief'];
             $post->content = $input['content'];
             //$post->user_id = Auth::user()->id;
             $v = Validator::make($post->toArray(), $post->rules);

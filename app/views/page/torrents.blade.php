@@ -17,33 +17,35 @@
 @stop
 
 @section('content')
-<div class="box container">
-	<div class="torrents col-md-12">
-		<h1 class="torrents-title">{{ trans('traduction.latest_torrents') }}</h1>
-		<table class="torrents-list table table-striped">
-			<thead>
-				<tr>
-					<th>Type</th>
-					<th>{{ trans('traduction.title') }}</th>
-					<th>{{ trans('traduction.size')}}</th>
-					<th>{{ trans('traduction.times_completed') }}</th>
-					<th>Seeders</th>
-					<th>Leechers</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach($torrents as $k => $t)
+<div class="container-fluid">
+	<div class="row">
+		<div class="torrents col-md-6 box left">
+			<h1 class="torrents-title">{{ trans('traduction.latest_torrents') }}</h1>
+			<table class="torrents-list table table-striped">
+				<thead>
 					<tr>
-						<td><a href="{{ route('category', array('slug' => $t->category->slug, 'id' => $t->category->id)) }}">{{ $t->category->name }}</a></td>
-						<td><a href="{{ route('torrent', array('slug' => $t->slug, 'id' => $t->id)) }}">{{ $t->name }}</a></td>
-						<td>{{ $t->getSize() }}</td>
-						<td>{{ $t->times_completed }}</td>
-						<td>{{ $t->seeders }}</td>
-						<td>{{ $t->leechers }}</td>
+						<th>Type</th>
+						<th>{{ trans('traduction.title') }}</th>
+						<th>{{ trans('traduction.size')}}</th>
+						<th>{{ trans('traduction.times_completed') }}</th>
+						<th>Seeders</th>
+						<th>Leechers</th>
 					</tr>
-				@endforeach
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					@foreach($torrents as $k => $t)
+						<tr>
+							<td><a href="{{ route('category', array('slug' => $t->category->slug, 'id' => $t->category->id)) }}">{{ $t->category->name }}</a></td>
+							<td><a href="{{ route('torrent', array('slug' => $t->slug, 'id' => $t->id)) }}">{{ $t->name }}</a></td>
+							<td>{{ $t->getSize() }}</td>
+							<td>{{ $t->times_completed }}</td>
+							<td>{{ $t->seeders }}</td>
+							<td>{{ $t->leechers }}</td>
+						</tr>
+					@endforeach
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
 @stop

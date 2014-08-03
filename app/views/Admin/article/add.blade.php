@@ -11,11 +11,6 @@
             </div>
 
             <div class="form-group">
-                <label for="brief">An introduction to your article</label>
-                <textarea name="brief" cols="30" rows="3" class="form-control"></textarea>
-            </div>
-
-            <div class="form-group">
                 <label for="content">The content of your article</label>
                 <textarea name="content" id="content" cols="30" rows="10" class="form-control"></textarea>
             </div>

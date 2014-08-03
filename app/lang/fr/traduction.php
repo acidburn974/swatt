@@ -6,6 +6,7 @@ return array(
 	'register' => 'Inscription',
 	'login' => 'Connexion',
 	'logout' => 'Déconnexion',
+	'search' => 'Recherche',
 	'members' => 'Membres',
 	'account' => 'Compte',
 	'categories' => 'Catégories',
@@ -22,9 +23,13 @@ return array(
 	'size' => 'Taille',
 	'times_completed' => 'Nom de téléchargement',
 
+	// Torrent
+	'name' => 'Nom',
+
 	// Commentaire
 	'comment' => 'Commentaire',
 
 	// Forum
 	'start_a_new_topic' => 'Crée un nouveau sujet',
-	) ?>
+	);
+?>
