@@ -109,6 +109,13 @@ class TorrentController extends BaseController {
 		// Correct info hash
 		$infoHash = bin2hex((Input::get('info_hash') != null) ? Input::get('info_hash') : Input::get('hash_id'));
 
+		// Peer id
+		$peerId = bin2hex(urldecode(Input::get('peer_id')));
+		if (!preg_match('#([0-9a-f]{40})#', $peerId))
+		{
+			return Response::make(Bencode::bencode(array('failure reason' => 'Invalid peer id'), 200, array('Content-Type' => 'text/plain')));
+		}
+
 		// Finding the torrent on the DB
 		$torrent = Torrent::where('info_hash', '=', $infoHash)->first();
 
@@ -131,7 +138,7 @@ class TorrentController extends BaseController {
 			}
 		}
 		// Finding the correct client/peer
-		$client = Peer::whereRaw('torrent_id = ? AND peer_id = ?', array($torrent->id, urldecode(Input::get('peer_id'))))->first();
+		$client = Peer::whereRaw('torrent_id = ? AND peer_id = ?', array($torrent->id, $peerId))->first();
 
 		// First time the client connect
 		if($client == null)
@@ -146,7 +153,7 @@ class TorrentController extends BaseController {
 		foreach($peers as $k => $p)
 		{
 			unset($p['uploaded']); unset($p['downloaded']); unset($p['left']); unset($p['seeder']); unset($p['connectable']); unset($p['user_id']); unset($p['torrent_id']); unset($p['client']);unset($p['created_at']); unset($p['updated_at']);
-			$peers[$k]['peer_id'] = urlencode($p['peer_id']);
+			$peers[$k]['peer_id'] = pack('H*', $p['peer_id']);
 			$peers[$k] = $p;
 		}
 
@@ -154,7 +161,7 @@ class TorrentController extends BaseController {
 		if(Input::get('event') == 'started' || Input::get('event') == null)
 		{
 			// Set the torrent data
-			$client->peer_id = urldecode(Input::get('peer_id'));
+			$client->peer_id = $peerId;
 			$client->ip = Request::getClientIp();
 			$client->port = Input::get('port');
 			$client->left = Input::get('left');
