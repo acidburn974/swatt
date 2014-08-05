@@ -2,24 +2,24 @@
 
 @section('content')
 	
-			<h1>Dashboard ralamoin :</h1>
+			<h1>Dashboard Tracker :</h1>
 			<div class="col-md-10" id="dashboard">
 				<div class="col-md-2" id="admin-panel">
 					<div class="panel padder-v item"> 
-						<div class="h1 text-info font-thin h1">0</div>  
+						<div class="h1 text-info font-thin h1">{{ $users }}</div>  
 							<span class="text-muted text-xs">Users</span>
 					</div>
 				</div>
 				<div class="col-md-2" id="admin-panel">
 				<div class="panel padder-v item"> 
-						<div class="h1 text-info font-thin h1">0</div>  
+						<div class="h1 text-info font-thin h1">{{ $torrents }}</div>  
 							<span class="text-muted text-xs">Torrents</span>
 					</div>
 				</div>
 				<div class="col-md-2" id="admin-panel">
 					<div class="panel padder-v item"> 
-						<div class="h1 text-info font-thin h1">0</div>  
-							<span class="text-muted text-xs">News topics</span>
+						<div class="h1 text-info font-thin h1">{{ $posts }}</div>  
+							<span class="text-muted text-xs">News articles</span>
 					</div>
 				</div>
 			<div class="col-md-3">
