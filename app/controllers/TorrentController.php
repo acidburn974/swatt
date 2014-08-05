@@ -108,7 +108,9 @@ class TorrentController extends BaseController {
 		// Déclaration/Fetch des variables requises
 
 		// Finding the torrent on the DB
-		$torrent = Torrent::where('info_hash', '=', bin2hex(Input::get('info_hash')))->first();
+		$infoHash = bin2hex((Input::get('info_hash') != null) ? Input::get('info_hash') : Input::get('hash_id'));
+
+		$torrent = Torrent::where('info_hash', '=', $infoHash)->first();
 
 		// Is torrent incorrect ?
 		if($torrent == null)
@@ -150,6 +152,7 @@ class TorrentController extends BaseController {
 		foreach($peers as $k => $p)
 		{
 			unset($p['uploaded']); unset($p['downloaded']); unset($p['left']); unset($p['seeder']); unset($p['connectable']); unset($p['user_id']); unset($p['torrent_id']); unset($p['client']);unset($p['created_at']); unset($p['updated_at']);
+			$peers[$k]['peer_id'] = urlencode($p['peer_id']);
 			$peers[$k] = $p;
 		}
 
