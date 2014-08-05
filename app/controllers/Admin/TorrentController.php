@@ -26,6 +26,13 @@ class TorrentController extends \BaseController {
         return View::make('Admin.torrent.index', array('torrents' => $torrents));
 	}
 
+	/**
+	 * Edite un torrent
+	 *
+	 * @access public
+	 * @param $slug Slug du torrent
+	 * @param $id Id du torrent
+	 */
 	public function edit($slug, $id)
 	{
 		$torrent = Torrent::find($id);
@@ -43,6 +50,14 @@ class TorrentController extends \BaseController {
 		return View::make('Admin.torrent.edit', array('tor' => $torrent));
 	}
 
+	/**
+	 * Supprime un torrent
+	 *
+	 * @access public
+	 * @param $slug Slug du torrent
+	 * @param $id Id du torrent
+	 * @return Redirection vers le admin_torrent_index
+	 */
 	public function delete($slug, $id)
 	{
 		$torrent = Torrent::find($id);
