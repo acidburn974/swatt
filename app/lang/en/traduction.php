@@ -13,6 +13,7 @@ return array(
 	'community' => 'Community',
 	'add' => 'Add',
 	'save' => 'Save',
+	'users' => 'Users',
 
 	// Index
 	'read_more' => 'Read more',
