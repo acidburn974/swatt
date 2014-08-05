@@ -131,7 +131,7 @@ class TorrentController extends BaseController {
 			}
 		}
 		// Finding the correct client/peer
-		$client = Peer::whereRaw('torrent_id = ? AND peer_id = ?', array($torrent->id, bin2hex(Input::get('peer_id'))))->first();
+		$client = Peer::whereRaw('torrent_id = ? AND peer_id = ?', array($torrent->id, Input::get('peer_id')))->first();
 
 		// First time the client connect
 		if($client == null)
@@ -154,7 +154,7 @@ class TorrentController extends BaseController {
 		if(Input::get('event') == 'started' || Input::get('event') == null)
 		{
 			// Set the torrent data
-			$client->peer_id = bin2hex(Input::get('peer_id'));
+			$client->peer_id = Input::get('peer_id');
 			$client->ip = Request::getClientIp();
 			$client->port = Input::get('port');
 			$client->left = Input::get('left');
