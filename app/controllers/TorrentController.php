@@ -104,7 +104,7 @@ class TorrentController extends BaseController {
 	*/
 	public function announce($passkey = null)
 	{
-		//Log::info(Input::all());
+		Log::info(Input::all());
 		// Déclaration/Fetch des variables requises
 
 		// Finding the torrent on the DB
