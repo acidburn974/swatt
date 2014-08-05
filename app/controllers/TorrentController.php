@@ -111,10 +111,6 @@ class TorrentController extends BaseController {
 
 		// Peer id
 		$peerId = urldecode(Input::get('peer_id'));
-		if (!preg_match('#([0-9a-f]{40})#', $peerId))
-		{
-			return Response::make(Bencode::bencode(array('failure reason' => 'Invalid peer id'), 200, array('Content-Type' => 'text/plain')));
-		}
 
 		// Finding the torrent on the DB
 		$torrent = Torrent::where('info_hash', '=', $infoHash)->first();
