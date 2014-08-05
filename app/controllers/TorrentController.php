@@ -133,8 +133,8 @@ class TorrentController extends BaseController {
 				return Response::make(Bencode::bencode(array('failure reason' => 'This user does not exist'), 200, array('Content-Type' => 'text/plain')));
 			}
 			
-			// Finding the current peer by his user_id and his torrent_id
-			$client = Peer::whereRaw('user_id = ? AND torrent_id = ?', array($user->id, $torrent->id))->first();
+			// Finding the current peer by his torrent_id and peer_id
+			$client = Peer::whereRaw('peer_id = ? AND torrent_id = ?', array(urldecode(Input::get('peer_id')), $torrent->id))->first();
 		}
 
 		// First time the client connect
