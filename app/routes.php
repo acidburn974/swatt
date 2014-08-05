@@ -54,6 +54,11 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth|admin', 'namespace' =>
     Route::any('/articles/edit/{slug}.{id}', array('uses' => 'ArticleController@edit', 'as' => 'admin_article_edit'));
     Route::any('/articles/delete/{slug}.{id}', array('uses' => 'ArticleController@delete', 'as' => 'admin_article_delete'));
 
+    //torrent
+
+    Route::any('/torrents', array('uses' => 'TorrentController@index', 'as' => 'admin_torrent_index'));
+    Route::any('/torrents/edit/{slug}.{id}', array('uses' => 'TorrentController@edit', 'as' => 'admin_torrent_edit'));
+
     // ToDo
     Route::any('/members', array('uses' => 'UserController@admin_user_index', 'as' => 'admin_indexUser'));
     Route::any('/members/edit/{username}.{id}', array('uses' => 'UserController@admin_editUser', 'as' => 'admin_user_edit'));
