@@ -54,7 +54,7 @@ class TorrentController extends \BaseController {
 
 		if(file_exists(getcwd() . '/files/torrents/' . $torrent->file_name))
 		{
-			unlink(getcwd() . '/files/torrents/' . $torrent->file_name));
+			unlink(getcwd() . '/files/torrents/' . $torrent->file_name);
 		}
 
 		$torrent->delete();
