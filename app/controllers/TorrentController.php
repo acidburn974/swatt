@@ -110,7 +110,7 @@ class TorrentController extends BaseController {
 		$infoHash = bin2hex((Input::get('info_hash') != null) ? Input::get('info_hash') : Input::get('hash_id'));
 
 		// Peer id
-		$peerId = bin2hex(urldecode(Input::get('peer_id')));
+		$peerId = urldecode(Input::get('peer_id'));
 		if (!preg_match('#([0-9a-f]{40})#', $peerId))
 		{
 			return Response::make(Bencode::bencode(array('failure reason' => 'Invalid peer id'), 200, array('Content-Type' => 'text/plain')));
@@ -153,7 +153,7 @@ class TorrentController extends BaseController {
 		foreach($peers as $k => $p)
 		{
 			unset($p['uploaded']); unset($p['downloaded']); unset($p['left']); unset($p['seeder']); unset($p['connectable']); unset($p['user_id']); unset($p['torrent_id']); unset($p['client']);unset($p['created_at']); unset($p['updated_at']);
-			$peers[$k]['peer_id'] = hex2bin(urlencode($p['peer_id']));
+			$peers[$k]['peer_id'] = urlencode($p['peer_id']);
 			$peers[$k] = $p;
 		}
 
