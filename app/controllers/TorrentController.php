@@ -105,11 +105,11 @@ class TorrentController extends BaseController {
 	public function announce($passkey = null)
 	{
 		Log::info(Input::all());
-		// Déclaration/Fetch des variables requises
 
-		// Finding the torrent on the DB
+		// Correct info hash
 		$infoHash = bin2hex((Input::get('info_hash') != null) ? Input::get('info_hash') : Input::get('hash_id'));
 
+		// Finding the torrent on the DB
 		$torrent = Torrent::where('info_hash', '=', $infoHash)->first();
 
 		// Is torrent incorrect ?
@@ -119,12 +119,7 @@ class TorrentController extends BaseController {
 		}
 
 		// Is this a public tracker ?
-		if(Config::get('other.freeleech') == true)
-		{
-			// Finding the current peer (client) by torrent_id and ip
-			$client = Peer::whereRaw('torrent_id = ? AND ip = ?', array($torrent->id, Request::getClientIp()))->first();
-		}
-		else
+		if(Config::get('other.freeleech') == false)
 		{
 			// Finding the user in the DB
 			$user = User::where('passkey', '=', $passkey)->first();
@@ -134,12 +129,10 @@ class TorrentController extends BaseController {
 			{
 				return Response::make(Bencode::bencode(array('failure reason' => 'This user does not exist'), 200, array('Content-Type' => 'text/plain')));
 			}
-			
-			// Finding the current peer by his torrent_id and peer_id
-			$client = Peer::whereRaw('peer_id = `?` AND torrent_id = ?', array(urldecode(Input::get('peer_id')), $torrent->id))->first();
 		}
+		// Finding the correct client/peer
+		$client = Peer::whereRaw('torrent_id = ? AND peer_id = ?', array($torrent->id, bin2hex(Input::get('peer_id'))))->first();
 
-		//$client = Peer::whereRaw('torrent_id = ? AND ip = ?', array($torrent->id, Request::getClientIp()))->first();
 		// First time the client connect
 		if($client == null)
 		{
@@ -161,7 +154,7 @@ class TorrentController extends BaseController {
 		if(Input::get('event') == 'started' || Input::get('event') == null)
 		{
 			// Set the torrent data
-			$client->peer_id = Input::get('peer_id');
+			$client->peer_id = bin2hex(Input::get('peer_id'));
 			$client->ip = Request::getClientIp();
 			$client->port = Input::get('port');
 			$client->left = Input::get('left');
