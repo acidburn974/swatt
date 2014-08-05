@@ -62,8 +62,7 @@
 @section('javascripts')
 <script type="text/javascript" src="{{ url('files/ckeditor_bbcode/ckeditor.js') }}"></script>
 <script>CKEDITOR.replace('new-thread-content');</script>
-<script type="text/javascript" src="{{ url('js/zepto.min.js') }}"></script>
-<script type="text/javascript" src="{{ url('js/xbbcode.js') }}"></script>
+<script type="text/javascript" src="{{ url('js/vendor/zepto.min.js') }}"></script>
 
 
 <script type="text/javascript">
