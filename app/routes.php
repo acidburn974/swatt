@@ -55,9 +55,9 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth|admin', 'namespace' =>
     Route::any('/articles/delete/{slug}.{id}', array('uses' => 'ArticleController@delete', 'as' => 'admin_article_delete'));
 
     //torrent
-
     Route::any('/torrents', array('uses' => 'TorrentController@index', 'as' => 'admin_torrent_index'));
     Route::any('/torrents/edit/{slug}.{id}', array('uses' => 'TorrentController@edit', 'as' => 'admin_torrent_edit'));
+    Route::get('/torrents/delete/{slug}.{id}', ['uses' => 'TorrentController@delete', 'as' => 'admin_torrent_delete']);
 
     // ToDo
     Route::any('/members', array('uses' => 'UserController@admin_user_index', 'as' => 'admin_indexUser'));
@@ -91,3 +91,4 @@ Route::group(array('prefix' => 'community'), function()
 Route::any('/api/article/{id}', 'ArticleController@api_article');
 Route::get('/api/comments', 'CommentController@api_getComments');
 Route::post('/api/comments', ['uses' => 'CommentController@api_postComments', 'before' => 'auth']);
+Route::any('/api/torrents/{id}', 'TorrentController@api_torrent');

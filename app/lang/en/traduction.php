@@ -13,6 +13,7 @@ return array(
 	'community' => 'Community',
 	'add' => 'Add',
 	'save' => 'Save',
+	'users' => 'Users',
 
 	// Index
 	'read_more' => 'Read more',
@@ -25,6 +26,7 @@ return array(
 
 	// Torrent
 	'name' => 'Name',
+	'download' => 'Download',
 
 	// Commentaire
 	'comment' => 'Comment',

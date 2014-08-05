@@ -9,6 +9,7 @@
                 <tr>
                     <th>id</th>
                     <th>Title</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -16,6 +17,7 @@
                     <tr>
                         <td>{{ $t->id }}</a></td>
                         <td><a href="{{ route('admin_torrent_edit', array('slug' => $t->slug, 'id' => $t->id)) }}">{{ $t->name }}</a></td>
+                        <td><a href="{{ route('admin_torrent_delete', ['slug' => $t->slug, 'id' => $t->id]) }}" class="btn btn-danger">Delete</a></td>
                     </tr>
                 @endforeach
             </tbody>

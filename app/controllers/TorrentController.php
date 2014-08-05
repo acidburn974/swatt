@@ -104,11 +104,16 @@ class TorrentController extends BaseController {
 	*/
 	public function announce($passkey = null)
 	{
-		//Log::info(Input::all());
-		// Déclaration/Fetch des variables requises
+		Log::info(Input::all());
+
+		// Correct info hash
+		$infoHash = bin2hex((Input::get('info_hash') != null) ? Input::get('info_hash') : Input::get('hash_id'));
+
+		// Peer id
+		$peerId = bin2hex(urldecode(Input::get('peer_id')));
 
 		// Finding the torrent on the DB
-		$torrent = Torrent::where('info_hash', '=', bin2hex(Input::get('info_hash')))->first();
+		$torrent = Torrent::where('info_hash', '=', $infoHash)->first();
 
 		// Is torrent incorrect ?
 		if($torrent == null)
@@ -117,12 +122,7 @@ class TorrentController extends BaseController {
 		}
 
 		// Is this a public tracker ?
-		if(Config::get('other.freeleech') == true)
-		{
-			// Finding the current peer (client) by torrent_id and ip
-			$client = Peer::whereRaw('torrent_id = ? AND ip = ?', array($torrent->id, Request::getClientIp()))->first();
-		}
-		else
+		if(Config::get('other.freeleech') == false)
 		{
 			// Finding the user in the DB
 			$user = User::where('passkey', '=', $passkey)->first();
@@ -132,10 +132,9 @@ class TorrentController extends BaseController {
 			{
 				return Response::make(Bencode::bencode(array('failure reason' => 'This user does not exist'), 200, array('Content-Type' => 'text/plain')));
 			}
-			
-			// Finding the current peer by his user_id and his torrent_id
-			$client = Peer::whereRaw('user_id = ? AND torrent_id = ?', array($user->id, $torrent->id))->first();
 		}
+		// Finding the correct client/peer
+		$client = Peer::whereRaw('torrent_id = ? AND peer_id = ?', array($torrent->id, $peerId))->first();
 
 		// First time the client connect
 		if($client == null)
@@ -150,6 +149,8 @@ class TorrentController extends BaseController {
 		foreach($peers as $k => $p)
 		{
 			unset($p['uploaded']); unset($p['downloaded']); unset($p['left']); unset($p['seeder']); unset($p['connectable']); unset($p['user_id']); unset($p['torrent_id']); unset($p['client']);unset($p['created_at']); unset($p['updated_at']);
+			$p['peer_id'] = hex2bin($p['peer_id']);
+			$peers[$k]['peer_id'] = urlencode($p['peer_id']);
 			$peers[$k] = $p;
 		}
 
@@ -157,7 +158,7 @@ class TorrentController extends BaseController {
 		if(Input::get('event') == 'started' || Input::get('event') == null)
 		{
 			// Set the torrent data
-			$client->peer_id = Input::get('peer_id');
+			$client->peer_id = $peerId;
 			$client->ip = Request::getClientIp();
 			$client->port = Input::get('port');
 			$client->left = Input::get('left');
@@ -208,6 +209,8 @@ class TorrentController extends BaseController {
 		$resp['complete'] = $torrent->seeders;
 		$resp['incomplete'] = $torrent->leechers;
 		$resp['peers'] = $peers;
+
+		Log::info($resp);
 
 		return Response::make(Bencode::bencode($resp), 200, array('Content-Type' => 'text/plain'));
 	}
@@ -307,6 +310,20 @@ class TorrentController extends BaseController {
 		file_put_contents(getcwd() . '/files/tmp/' . $tmpFileName, $fileToDownload);
 		return Response::download(getcwd() . '/files/tmp/' . $tmpFileName);
 	}
-}
 
-?>
+	public function api_torrent($id)
+	{
+		// Find the right torrent
+		$torrent = Torrent::find($id);
+		// Format the description
+		$torrent->descriptionHtml = $torrent->getDescriptionHtml();
+		// Set username
+		$torrent->username = $torrent->user->username;
+		// Set user id
+		$torrent->user_id = $torrent->user->id;
+		// Define the size
+		$torrent->size = $torrent->getSize();
+
+		return Response::json($torrent);
+	}
+} ?>

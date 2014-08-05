@@ -2,15 +2,16 @@
 
 namespace Admin;
 
-use \View;
-use \Request;
-use \Input;
-use \Auth;
-use \Redirect;
-use \Validator;
+use View;
+use Request;
+use Input;
+use Auth;
+use Redirect;
+use Validator;
 
-use \Illuminate\Support\Str;
-use \Category;
+use Illuminate\Support\Str;
+use Category;
+use Torrent;
 
 class TorrentController extends \BaseController {
 
@@ -21,25 +22,43 @@ class TorrentController extends \BaseController {
      */
 	public function index()
 	{
-		$torrents = \Torrent::all();
+		$torrents = Torrent::all();
         return View::make('Admin.torrent.index', array('torrents' => $torrents));
 	}
 
-public function edit($slug, $id)
+	public function edit($slug, $id)
 	{
-		$tor = \Torrent::find($id);
+		$torrent = Torrent::find($id);
 
 		if(Request::isMethod('post'))
 		{
-			$id = Input::get('id');
 			$name = Input::get('name');
-			$torrent = \Torrent::find($id);
+
 			$torrent->name = $name;
+			$torrent->description = Input::get('description');
 			$torrent->save();
 			return Redirect::route('admin_torrent_index')->with('message', 'Torrent sucessfully modified');
 		}
 
-		return View::make('Admin.torrent.edit', array('tor' => $tor));
+		return View::make('Admin.torrent.edit', array('tor' => $torrent));
 	}
 
+	public function delete($slug, $id)
+	{
+		$torrent = Torrent::find($id);
+
+		foreach($torrent->files as $f)
+		{
+			$f->delete();
+		}
+
+		if(file_exists(getcwd() . '/files/torrents/' . $torrent->file_name))
+		{
+			unlink(getcwd() . '/files/torrents/' . $torrent->file_name));
+		}
+
+		$torrent->delete();
+
+		return Redirect::route('admin_torrent_index')->with('message', 'Torrent sucessfully modified');
+	}
 } ?>

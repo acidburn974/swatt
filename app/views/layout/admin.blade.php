@@ -40,7 +40,7 @@
                     <li><a href="{{ route('admin_home') }}">Overview</a></li>
                     <li><a href="{{ route('admin_article_index') }}">Articles</a></li>
                     <li><a href="{{ route('admin_category_index') }}">Categories</a></li>
-                    <li><a href="{{ route('admin_torrent_index') }}">torrents</a></li>
+                    <li><a href="{{ route('admin_torrent_index') }}">Torrents</a></li>
                     <li><a href="{{ route('admin_forum_index') }}">Forums</a></li>
                 </ul>
             </div>

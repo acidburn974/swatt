@@ -1,3 +1,5 @@
+// npm install grunt grunt-contrib-less grunt-contrib-watch grunt-contrib-coffee
+
 module.exports = function(grunt) {
   grunt.initConfig({
     less: {
@@ -13,10 +15,28 @@ module.exports = function(grunt) {
         }
       }
     },
+    coffee: {
+        compile: {
+            options: {
+              bare: true
+            },
+            files: {
+              "js/torrents.js": "coffee/torrents.coffee"
+            }
+        }
+    },
+
     watch: {
       styles: {
         files: ['less/**/*.less'], // which files to watch
         tasks: ['less'],
+        options: {
+          nospawn: true
+        }
+      },
+      scripts: {
+        files: ['coffee/**/*.coffee'], // which files to watch
+        tasks: ['coffee'],
         options: {
           nospawn: true
         }
@@ -26,6 +46,7 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-coffee');
 
   grunt.registerTask('default', ['watch']);
 };
