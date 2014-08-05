@@ -212,6 +212,8 @@ class TorrentController extends BaseController {
 		$resp['incomplete'] = $torrent->leechers;
 		$resp['peers'] = $peers;
 
+		Log::info($resp);
+
 		return Response::make(Bencode::bencode($resp), 200, array('Content-Type' => 'text/plain'));
 	}
 
