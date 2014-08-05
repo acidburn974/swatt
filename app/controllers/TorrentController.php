@@ -122,7 +122,7 @@ class TorrentController extends BaseController {
 		if(Config::get('other.freeleech') == true)
 		{
 			// Finding the current peer (client) by torrent_id and ip
-			$client = Peer::whereRaw('torrent_id = ? AND ip = ?', array($torrent->id, Request::getClientIp()))->first();
+			//$client = Peer::whereRaw('torrent_id = ? AND ip = ?', array($torrent->id, Request::getClientIp()))->first();
 		}
 		else
 		{
@@ -136,9 +136,10 @@ class TorrentController extends BaseController {
 			}
 			
 			// Finding the current peer by his torrent_id and peer_id
-			$client = Peer::whereRaw('peer_id = ? AND torrent_id = ?', array(urldecode(Input::get('peer_id')), $torrent->id))->first();
+			//$client = Peer::whereRaw('peer_id = ? AND torrent_id = ?', array(urldecode(Input::get('peer_id')), $torrent->id))->first();
 		}
 
+		$client = Peer::whereRaw('torrent_id = ? AND ip = ?', array($torrent->id, Request::getClientIp()))->first();
 		// First time the client connect
 		if($client == null)
 		{
