@@ -39,6 +39,8 @@
 			<p>Registered: {{ date('d M Y', strtotime($user->created_at)) }}</p> 
 			<p>Upload: {{ $user->getUploaded() }} - Download: {{ $user->getDownloaded() }}</p>
 			<p>Ratio: {{ $user->getUploaded() / $user->getDownloaded() }}</p>
+			<p>About :</p>
+			<textarea class="form-control" name="about" rows="3" readonly="1" placeholder="{{ $user->about }}" ></textarea>
 		</div>
 
 		<div class="col-md-5">
@@ -51,8 +53,17 @@
 					</div>
 					<button type="submit" class="btn btn-default">Save</button>
 				{{ Form::close() }}
-			@endif
 		</div>
+		<div class="col-md-10">
+		{{ Form::open(['route' => array('user_infos','username' => $user->username, 'id' => $user->id)]) }}
+		<div class="form-group">
+			<label for="image">Some informations about you :</label>
+				<textarea class="form-control" name="about" rows="3">{{ $user->about }}</textarea>
+			</div>
+		<button type="submit" class="btn btn-default">Save</button>
+		{{ Form::close() }}
+		</div>
+			@endif
 
 		<div class="clearfix"></div>
 	</div>

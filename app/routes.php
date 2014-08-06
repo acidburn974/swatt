@@ -23,6 +23,7 @@ Route::get('/members', ['uses' => 'UserController@members', 'as' => 'members']);
 Route::get('/members/{username}.{id}', ['uses' => 'UserController@profil', 'as' => 'profil']);
 //Route::post('/members/{username}.{id}/edit', ['uses' => 'UserController@editProfil', 'as' => 'user_edit_profil', 'before' => 'auth']);
 Route::post('/members/{username}.{id}/photo', ['uses' => 'UserController@changePhoto', 'as' => 'user_change_photo', 'before' => 'auth']);
+Route::post('/members/{username}.{id}/', ['uses' => 'UserController@infos', 'as' => 'user_infos', 'before' => 'auth']);
 
 
 // Torrent

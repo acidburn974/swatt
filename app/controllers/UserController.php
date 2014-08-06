@@ -118,4 +118,26 @@ class UserController extends BaseController {
             Redirect::route('profil', ['username' => $user->username, 'id' => $user->id])->with('message', 'You must upload an image');
         }
     }
+    /**
+     * Change les infos
+     *
+     */
+
+    public function infos($slug, $id)
+    {
+        $user = Auth::user();
+        $infos = User::find($id);
+        if(Request::isMethod('post'))
+        {
+            $about = Input::get('about');
+            $infos->about = $about;
+            $infos->save();
+
+            return View::make('user.profil',['user' => $user])->with('message', 'Your informations are successfully saved');
+        }
+
+        return View::make('user.profil', ['user' => $user]);
+    }
+
+
 } ?>
