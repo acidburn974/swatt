@@ -280,4 +280,22 @@ class ForumController extends BaseController {
 		}
 		return View::make('forum.post_edit', ['user' => $user, 'topic' => $topic, 'forum' => $forum, 'post' => $post, 'category' => $category, 'parsedContent' => $parsedContent]);
 	}
+
+	public function closeTopic($slug,$id)
+	{
+		$topic = Topic::find($id);
+		$topic->state = "close";
+		$topic->save();
+
+		return Redirect::route('forum_index')->with('message', 'The topic is now closed');
+	}
+
+		public function openTopic($slug,$id)
+	{
+		$topic = Topic::find($id);
+		$topic->state = "open";
+		$topic->save();
+		return Redirect::route('forum_index')->with('message', 'The topic is now open');
+	}
+
 } ?>

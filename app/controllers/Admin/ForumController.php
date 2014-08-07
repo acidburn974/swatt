@@ -200,5 +200,4 @@ class ForumController extends \BaseController {
 		}
 		return Redirect::route('admin_forum_index');
 	}
-
 } ?>
