@@ -57,11 +57,7 @@
                         <td class="f-display-topic-last-post">
                             <ul>
                                 <li class="f-display-topic-last-post-item">
-                                    @if($t->last_post_user_username != null && $t->last_post_user_id != null)
-                                        <a href="{{ route('profil', ['username' => $t->last_post_user_username, 'id' => $t->last_post_user_id]) }}">{{ $t->last_post_user_username }}</a>
-                                    @else
-                                        {{ $t->last_post_user_username }}
-                                    @endif
+                                    <a href="{{ route('profil', ['username' => $t->last_post_user_username, 'id' => $t->last_post_user_id]) }}">{{ $t->last_post_user_username }}</a>
                                 </li>
                                 <li class="f-display-topic-last-post-item">
                                     <time datetime="{{ date('d-m-Y h:m', strtotime($t->updated_at)) }}">
