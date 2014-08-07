@@ -151,24 +151,23 @@ class UserController extends BaseController {
         }
     }
     /**
-     * Change les infos
+     * Change les infos de l'utilisateur
      *
+     * @access public
+     * @param $username Nom d'utilisateur
+     * @param $id Id de l'utilisateur
      */
-
-    public function infos($slug, $id)
+    public function changeAbout($username, $id)
     {
         $user = Auth::user();
-        $infos = User::find($id);
         if(Request::isMethod('post'))
         {
-            $about = Input::get('about');
-            $infos->about = $about;
-            $infos->save();
-
-            return View::make('user.profil',['user' => $user])->with('message', 'Your informations are successfully saved');
+            $user->about = Input::get('about');
+            $user->save();
+            Session::put('message', 'Your informations are successfully saved');
         }
 
-        return View::make('user.profil', ['user' => $user]);
+        return Redirect::route('profil', ['username' => $user->username, 'id' => $user->id]);
     }
 
 } ?>

@@ -24,7 +24,7 @@ Route::get('/members/{username}.{id}', ['uses' => 'UserController@profil', 'as' 
 //Route::post('/members/{username}.{id}/edit', ['uses' => 'UserController@editProfil', 'as' => 'user_edit_profil', 'before' => 'auth']);
 Route::post('/members/{username}.{id}/photo', ['uses' => 'UserController@changePhoto', 'as' => 'user_change_photo', 'before' => 'auth']);
 Route::get('/members/{username}.{id}/activate/{token}', ['uses' => 'UserController@activate', 'as' => 'user_activate']);
-Route::post('/members/{username}.{id}/info', ['uses' => 'UserController@infos', 'as' => 'user_infos', 'before' => 'auth']);
+Route::post('/members/{username}.{id}/about', ['uses' => 'UserController@changeAbout', 'as' => 'user_change_about', 'before' => 'auth']);
 
 // Torrent
 Route::get('/torrents', array('uses' => 'TorrentController@torrents', 'as' => 'torrents'));
