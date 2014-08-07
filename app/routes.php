@@ -61,8 +61,8 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth|admin', 'namespace' =>
     Route::get('/torrents/delete/{slug}.{id}', ['uses' => 'TorrentController@delete', 'as' => 'admin_torrent_delete']);
 
     // ToDo
-    Route::any('/members', array('uses' => 'UserController@admin_user_index', 'as' => 'admin_indexUser'));
-    Route::any('/members/edit/{username}.{id}', array('uses' => 'UserController@admin_editUser', 'as' => 'admin_user_edit'));
+    Route::any('/members', array('uses' => 'UserController@index', 'as' => 'admin_user_index'));
+    Route::any('/members/edit/{username}.{id}', array('uses' => 'UserController@edit', 'as' => 'admin_user_edit'));
 
     Route::any('/categories', array('uses' => 'CategoryController@index', 'as' => 'admin_category_index'));
     Route::any('/categories/new', array('uses' => 'CategoryController@add', 'as' => 'admin_category_add'));
@@ -71,7 +71,6 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth|admin', 'namespace' =>
 
     Route::get('/forums', array('uses' => 'ForumController@index', 'as' => 'admin_forum_index'));
     Route::any('/forums/new', array('uses' => 'ForumController@add', 'as' => 'admin_forum_add'));
-    Route::any('/forums/perm', array('uses' => 'ForumController@perm', 'as' => 'admin_forum_perm'));
     Route::any('/forums/edit/{slug}.{id}', array('uses' => 'ForumController@edit', 'as' => 'admin_forum_edit'));
     Route::get('/forums/delete/{slug}.{id}', array('uses' => 'ForumController@delete', 'as' => 'admin_forum_delete'));
 });
