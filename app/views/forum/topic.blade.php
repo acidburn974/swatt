@@ -49,8 +49,8 @@
                         @if($topic->state == "close")
                             <a href="{{ route('forum_open', ['slug' => $topic->slug, 'id' => $topic->id, ])}}" class="btn btn-default btn-xs"> &#128077; Open the topic</a>
                          @else
-                        <a href="{{ route('forum_close', ['slug' => $topic->slug, 'id' => $topic->id, ])}}" class="btn btn-default btn-xs"> &#128077; Mark it as resolved</a>
-                    @endif
+                             <a href="{{ route('forum_close', ['slug' => $topic->slug, 'id' => $topic->id, ])}}" class="btn btn-default btn-xs"> &#128077; Mark it as resolved</a>
+                         @endif
                     @endif
                     </p>
             </div>
