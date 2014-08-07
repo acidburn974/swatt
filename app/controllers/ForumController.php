@@ -77,7 +77,7 @@ class ForumController extends BaseController {
 		$category = $forum->getCategory();
 
 		// Get all posts
-		$posts = $topic->posts;
+		$posts = $topic->posts()->paginate(20);
 
 		// The user can post a topic here ?
 		if($category->getPermission()->read_topic != true)

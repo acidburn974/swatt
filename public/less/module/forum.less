@@ -81,24 +81,51 @@
 	}
 	.topic-posts {
 		background: #ebf0f3;
-		.topic-posts-head { background: linear-gradient(#34d474, #25b05d); padding: 0.75em; .border-radius(4px, 0, 0, 4px); color: #fff; }
-		.topic-posts-p {
-			margin: 0.75em;
-			background: #d8e7f5;
-			border: 1px solid #ccc;
-			.topic-posts-p-info { 
-				p.topic-posts-p-username { padding: 0.75em 1.25em; }
-			}
-			.topic-posts-p-content { padding: 1.25em; background: #f1f5fa; word-wrap: break-word; line-height: 1.75em; color: #5a5a5a; }
+		padding: 0 0 0.75em 0;
+		.topic-posts-head { 
+			background: linear-gradient(#34d474, #25b05d); 
+			padding: 0.75em; 
+			.border-radius(4px, 0, 0, 4px); 
+			color: #fff;
 		}
-		.topic-moderation {
-			padding: 1.25em;
+		.post {
+			margin: 0.75em;
+			padding: 0;
+			border: 1px solid #ccc;
+			.drop-shadow();
+			aside.post-info { 
+				padding: 1.25em 1em; 
+				background: #d8e7f5;
+				border-right: 1px solid #ccc;
+				.post-info-username { 
+					display: block;
+					text-align: center;
+				}
+				p {
+					text-align: center;
+				}
+			}
+			article.post-content { 
+				padding: 1.25em 1em;
+				background: #f1f5fa; 
+				word-wrap: break-word; 
+				line-height: 1.75em; 
+				color: #5a5a5a; 
+			}
+			.post-control {
+				text-align: right;
+				padding: 0.75em;
+				border-top: 1px solid #ccc;
+				a {
+					padding: 0 0.75em;
+				}
+			}
 		}
 	}
 	.topic-new-post {
 		background: #ebf0f3;
+		padding: 0.75em;
 		.topic-new-post-form {
-			padding: 0.75em;
 		}
 	}
 }
