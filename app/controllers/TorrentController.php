@@ -4,6 +4,12 @@ use Lib\Bencode;
 use Lib\TorrentTools;
 use Illuminate\Support\Str;
 
+/**
+ * Gestion des torrents
+ *
+ * @version $Id$
+ *
+ */
 class TorrentController extends BaseController {
 
 	/**

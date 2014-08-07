@@ -21,7 +21,7 @@ class UserController extends BaseController {
             }
             else
             {
-                $group = Group::where('slug', '=', 'members')->first();
+                $group = Group::where('slug', '=', 'validating')->first();
                 $user->username = $input['username'];
                 $user->email = $input['email'];
                 $user->password = Hash::make($input['password']);
@@ -29,7 +29,13 @@ class UserController extends BaseController {
                 $user->uploaded = 2147483648; // 2GB
                 $user->downloaded = 1073741824; // 1GB
                 $group->users()->save($user);
-                Session::put('message', 'You are now registered and can login without email confirmation');
+
+                Mail::send('emails.welcome', array('user' => $user), function($message) use ($user) {
+                    $message->from(Config::get('other.email'), Config::get('other.title'));
+                    $message->to($user->email, '')->subject('Welcome to ' . Config::get('other.title'));
+                });
+
+                Session::put('message', 'An e-mail was sent to this address now you can activate your account');
                 return Redirect::route('login');
             }
         }
@@ -116,6 +122,29 @@ class UserController extends BaseController {
         else
         {
             Redirect::route('profil', ['username' => $user->username, 'id' => $user->id])->with('message', 'You must upload an image');
+        }
+    }
+
+    /**
+     * Activate the user account
+     *
+     *
+     *
+     */
+    public function activate($username, $id, $token)
+    {
+        $user = User::find($id);
+        $group = Group::where('slug', '=', 'members')->first();
+
+        if(md5($user->username) == $token)
+        {
+            $user->group_id = $group->id;
+            $user->save();
+            return Redirect::to('/login')->with('message', 'Now you can login');
+        }
+        else
+        {
+            return Redirect::to('/')->with('message', 'This link is unavailable');
         }
     }
 } ?>
