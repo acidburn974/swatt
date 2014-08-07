@@ -200,4 +200,28 @@ class ForumController extends \BaseController {
 		}
 		return Redirect::route('admin_forum_index');
 	}
+
+
+	public function perm()
+	{
+		$user = \User::all();
+		$perm = Group::all();
+		if(Request::isMethod('post'))
+		{
+			$name = Input::get('name');
+			$perm = Input::get('perm');
+			$user = \User::where('username', '=', $name)->get();
+			foreach($user as $k)
+				{
+					$k->group_id = $perm;
+					$k->save();
+				}
+
+			return Redirect::route('admin_forum_index')->with('message', 'User sucessfully modified');
+
+		}
+
+		return View::make('Admin.forum.perm', array('user' => $user, 'perm' => $perm));
+	}
+
 } ?>

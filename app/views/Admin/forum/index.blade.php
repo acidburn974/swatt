@@ -6,6 +6,7 @@
 	<div class="col-md-10">
 		<h2>Forums</h2>
 		<a href="{{ route('admin_forum_add') }}" class="btn btn-primary">Add new forum</a>
+		<a href="{{ route('admin_forum_perm') }}" class="btn btn-primary">Add user permissions</a>
 		<table class="table table-striped">
 			<thead>
 				<tr>
