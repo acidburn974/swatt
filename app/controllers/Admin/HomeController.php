@@ -1,6 +1,11 @@
-<?php  
+<?php
 
 namespace Admin;
+
+use User;
+use Torrent;
+use Article;
+use View;
 
 class HomeController extends \BaseController {
 
@@ -11,21 +16,11 @@ class HomeController extends \BaseController {
 	 */
 	public function home()
 	{
-		$user = \User::orderBy('id', 'DESC')->first();
-		$torrent = \Torrent::orderBy('id', 'DESC')->first();
-		$post = \Post::orderBy('id', 'DESC')->first();
-		$users = $user->id;
-		$torrents = $torrent->id;
-			if($post == false){
+		$num_user = User::all()->count();
+		$num_article = Article::all()->count();
+		$num_torrent = Torrent::all()->count();
 
-				$post = 0;
-			}
-			else {
-				$post = $post->id;
-			}
-		$posts = $post;
-
-		return \View::make('Admin.home.home', array('users'=>$users, 'torrents'=>$torrents, 'posts'=>$posts));
+		return View::make('Admin.home.home', array('num_user' => $num_user, 'num_torrent' => $num_torrent, 'num_article'=> $num_article));
 	}
 
 } ?>
