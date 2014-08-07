@@ -38,22 +38,24 @@
         <h2>{{{ $topic->name }}}</h2>
 
         <div class="topic-info">
-            <p>Started by <a href="{{ route('profil', ['username' => $topic->first_post_user_username, 'id' => $topic->first_post_user_id]) }}">{{ $topic->first_post_user_username }}</a>, {{ date('d M Y H:m', strtotime($topic->created_at)) }}</p>
+            <p>
+                Started by <a href="{{ route('profil', ['username' => $topic->first_post_user_username, 'id' => $topic->first_post_user_id]) }}">{{ $topic->first_post_user_username }}</a>, {{ date('d M Y H:m', strtotime($topic->created_at)) }}
+
+                @if(Auth::check() && (Auth::user()->group->is_modo || $p->user_id == Auth::user()->id))
+                    @if($topic->state == "close")
+                        <a href="{{ route('forum_open', ['slug' => $topic->slug, 'id' => $topic->id, ])}}" class="btn btn-default">Open this topic</a>
+                     @else
+                        <a href="{{ route('forum_close', ['slug' => $topic->slug, 'id' => $topic->id, ])}}" class="btn btn-default">Mark as resolved</a>
+                    @endif
+                @endif
+            </p>
 
             {{ $posts->links() }}
         </div>
 
         <div class="topic-posts">
             <div class="topic-posts-head">
-                <p>{{ $topic->num_post - 1 }} replies to this topic
-                    @if(Auth::check() && (Auth::user()->group->is_modo || $p->user_id == Auth::user()->id))
-                        @if($topic->state == "close")
-                            <a href="{{ route('forum_open', ['slug' => $topic->slug, 'id' => $topic->id, ])}}" class="btn btn-default btn-xs"> &#128077; Open the topic</a>
-                         @else
-                        <a href="{{ route('forum_close', ['slug' => $topic->slug, 'id' => $topic->id, ])}}" class="btn btn-default btn-xs"> &#128077; Mark it as resolved</a>
-                    @endif
-                    @endif
-                    </p>
+                <p>{{ $topic->num_post - 1 }} replies to this topic</p>
             </div>
 
             @foreach($posts as $p)
@@ -77,7 +79,7 @@
 
                     <div class="col-md-10 post-control">
                         @if(Auth::check() && (Auth::user()->group->is_modo || $p->user_id == Auth::user()->id) && $topic->state == 'open')
-                            <a href="{{ route('forum_post_edit', ['slug' => $topic->slug, 'id' => $topic->id, 'postId' => $p->id]) }}" class="btn btn-default btn-xs">Edit</a>
+                            <a href="{{ route('forum_post_edit', ['slug' => $topic->slug, 'id' => $topic->id, 'postId' => $p->id]) }}">Edit</a>
                         @endif
                     </div>
 
@@ -90,10 +92,10 @@
 
         <div class="topic-new-post">
             @if($topic->state == "close")
+                <div class="col-md-12 alert alert-danger">This topic is closed</div>
+            @else
                 {{ Form::open(array('route' => array('forum_reply', 'slug' => $topic->slug, 'id' => $topic->id))) }}
                     <div class="from-group">
-                    <div class="col-md-12 alert alert-danger">This topic is now closed</div>
-                    @else
                         <textarea name="content" id="topic-response" cols="30" rows="10"></textarea>
                     </div>
                     @if(Auth::check())
@@ -103,8 +105,10 @@
                     @endif
                 {{ Form::close() }}
             @endif
+
+            <div class="clearfix"></div>
         </div>
-        
+
     </div>
 </div>
 @stop
