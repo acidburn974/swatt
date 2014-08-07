@@ -81,18 +81,16 @@
         </div>
 
         <div class="topic-new-post">
-            <div class="topic-new-post-form">
-                {{ Form::open(array('route' => array('forum_reply', 'slug' => $topic->slug, 'id' => $topic->id))) }}
-                    <div class="from-group">
-                        <textarea name="content" id="topic-response" cols="30" rows="10"></textarea>
-                    </div>
-                    @if(Auth::check())
-                        <button type="submit" class="btn btn-default">Post</button>
-                    @else
-                        <button type="submit" class="btn btn-default disabled">You must be connected</button>
-                    @endif
-                {{ Form::close() }}
-            </div>
+            {{ Form::open(array('route' => array('forum_reply', 'slug' => $topic->slug, 'id' => $topic->id))) }}
+                <div class="from-group">
+                    <textarea name="content" id="topic-response" cols="30" rows="10"></textarea>
+                </div>
+                @if(Auth::check())
+                    <button type="submit" class="btn btn-default">Post</button>
+                @else
+                    <button type="submit" class="btn btn-default disabled">You must be connected</button>
+                @endif
+            {{ Form::close() }}
         </div>
     </div>
 </div>

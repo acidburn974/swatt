@@ -42,6 +42,7 @@
 								<td class="f-category-forums-icon">
 									<img src="{{ url('img/f_icon_read.png') }}">
 								</td><!-- /Icon -->
+								
 								<!-- Forum title -->
 								<td>
 									<h4 class="f-category-forums-title">
@@ -50,6 +51,7 @@
 									<br>
 									<p class="f-category-forums-description">{{{ $f->description }}}</p>
 								</td><!-- /Forum title -->
+
 								<!-- Stats -->
 								<td class="f-category-forums-stats">
 									<ul>
@@ -57,16 +59,14 @@
 										<li class="f-category-forums-item"><strong>{{ $f->num_post }}</strong> replies</li>
 									</ul>
 								</td><!-- /Stats -->
+
 								<!-- Last post -->
 								<td>
 									<ul class="f-category-forums-last-post">
 										<li class="f-category-forums-last-post-item"><a href="{{ route('forum_topic', array('slug' => $f->last_topic_slug, 'id' => $f->last_topic_id)) }}">{{ $f->last_topic_name }}</a></li>
 										<li class="f-category-forums-last-post-item">
-											@if($f->last_topic_user_username != null && $f->last_topic_user_id != null)
-												By <a href="{{ route('profil', ['username' => $f->last_topic_user_username, 'id' => $f->last_topic_user_id]) }}">{{ $f->last_topic_user_username }}</a>
-											@else
-												By {{ $f->last_topic_user_username }}
-											@endif
+											By 
+											<a href="{{ route('profil', ['username' => $f->last_post_user_username, 'id' => $f->last_post_user_id]) }}">{{ $f->last_post_user_username }}</a>
 										</li>
 										<li class="f-category-forums-last-post-item">
 											<time datetime="{{ date('d-m-Y h:m', strtotime($f->updated_at)) }}">
@@ -75,6 +75,7 @@
 										</li>
 									</ul>
 								</td><!-- /Last post -->
+
 							</tr>
 						@endforeach
 					</tbody><!-- /Liste des forums -->

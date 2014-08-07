@@ -131,12 +131,17 @@ class ForumController extends BaseController {
 			$topic->last_post_user_username = $user->username;
 			// Count post i topic
 			$topic->num_post = Post::where('topic_id', '=', $topic->id)->count();
+			// Save
 			$topic->save();
 
 			// Count posts
 			$forum->num_post = $forum->getPostCount($forum->id);
 			// Count topics
 			$forum->num_topic = $forum->getTopicCount($forum->id);
+			// Save last post user data to the forum table
+			$forum->last_post_user_id = $user->id;
+			$forum->last_post_user_username = $user->username;
+			// Save
 			$forum->save();
 
 			// Find the user who initated the topic
@@ -189,11 +194,9 @@ class ForumController extends BaseController {
 			$topic = new Topic();
 			$topic->name = Input::get('title');
 			$topic->slug = Str::slug(Input::get('title'));
-			$topic->state = "open";
-			$topic->first_post_user_id = $user->id;
-			$topic->first_post_user_username = $user->username;
-			$topic->last_post_user_id = $user->id;
-			$topic->last_post_user_username = $user->username;
+			$topic->state = 'open';
+			$topic->first_post_user_id = $topic->last_post_user_id = $user->id;
+			$topic->first_post_user_username = $topic->last_post_user_username = $user->username;
 			$topic->views = 0;
 			$topic->pinned = false;
 			$topic->forum_id = $forum->id;
@@ -217,8 +220,8 @@ class ForumController extends BaseController {
 					$forum->last_topic_id = $topic->id;
 					$forum->last_topic_name = $topic->name;
 					$forum->last_topic_slug = $topic->slug;
-					$forum->last_topic_user_id = $user->id;
-					$forum->last_topic_user_username = $user->username;
+					$forum->last_post_user_id = $user->id;
+					$forum->last_post_user_username = $user->username;
 					$forum->save();
 					return Redirect::route('forum_topic', array('slug' => $topic->slug, 'id' => $topic->id));
 				}
