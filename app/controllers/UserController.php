@@ -126,9 +126,12 @@ class UserController extends BaseController {
     }
 
     /**
-     * Activate the user account
+     * Active le compte utilisateur (validating -> members)
      *
-     *
+     * @access public
+     * @param $username Nom d'utilisateur
+     * @param $id Id de l'utilisateur
+     * @param $token Token pour l'activation unique du compte utilisateur
      *
      */
     public function activate($username, $id, $token)
@@ -147,4 +150,25 @@ class UserController extends BaseController {
             return Redirect::to('/')->with('message', 'This link is unavailable');
         }
     }
+    /**
+     * Change les infos
+     *
+     */
+
+    public function infos($slug, $id)
+    {
+        $user = Auth::user();
+        $infos = User::find($id);
+        if(Request::isMethod('post'))
+        {
+            $about = Input::get('about');
+            $infos->about = $about;
+            $infos->save();
+
+            return View::make('user.profil',['user' => $user])->with('message', 'Your informations are successfully saved');
+        }
+
+        return View::make('user.profil', ['user' => $user]);
+    }
+
 } ?>

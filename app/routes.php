@@ -24,6 +24,7 @@ Route::get('/members/{username}.{id}', ['uses' => 'UserController@profil', 'as' 
 //Route::post('/members/{username}.{id}/edit', ['uses' => 'UserController@editProfil', 'as' => 'user_edit_profil', 'before' => 'auth']);
 Route::post('/members/{username}.{id}/photo', ['uses' => 'UserController@changePhoto', 'as' => 'user_change_photo', 'before' => 'auth']);
 Route::get('/members/{username}.{id}/activate/{token}', ['uses' => 'UserController@activate', 'as' => 'user_activate']);
+Route::post('/members/{username}.{id}/info', ['uses' => 'UserController@infos', 'as' => 'user_infos', 'before' => 'auth']);
 
 // Torrent
 Route::get('/torrents', array('uses' => 'TorrentController@torrents', 'as' => 'torrents'));
@@ -70,6 +71,7 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth|admin', 'namespace' =>
 
     Route::get('/forums', array('uses' => 'ForumController@index', 'as' => 'admin_forum_index'));
     Route::any('/forums/new', array('uses' => 'ForumController@add', 'as' => 'admin_forum_add'));
+    Route::any('/forums/perm', array('uses' => 'ForumController@perm', 'as' => 'admin_forum_perm'));
     Route::any('/forums/edit/{slug}.{id}', array('uses' => 'ForumController@edit', 'as' => 'admin_forum_edit'));
     Route::get('/forums/delete/{slug}.{id}', array('uses' => 'ForumController@delete', 'as' => 'admin_forum_delete'));
 });
