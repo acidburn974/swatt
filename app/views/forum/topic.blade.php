@@ -45,7 +45,7 @@
             <p>
                 Started by <a href="{{ route('profil', ['username' => $topic->first_post_user_username, 'id' => $topic->first_post_user_id]) }}">{{ $topic->first_post_user_username }}</a>, {{ date('d M Y H:m', strtotime($topic->created_at)) }}
 
-                @if(Auth::check() && (Auth::user()->group->is_modo || $p->user_id == Auth::user()->id))
+                @if(Auth::check() && (Auth::user()->group->is_modo || $topic->user_id == Auth::user()->id))
                     @if($topic->state == "close")
                         <a href="{{ route('forum_open', ['slug' => $topic->slug, 'id' => $topic->id, ])}}" class="btn btn-default">Open this topic</a>
                      @else
