@@ -21,7 +21,7 @@
         <div class="container">
 
             <!-- Logo -->
-            <header class="l-header-logo col-md-3">
+            <header class="l-header-logo col-md-3 animated pulse">
                 <h1><a href="{{ route('home') }}">{{ Config::get('other.title') }}</a></h1>
             </header><!-- /Logo -->
 

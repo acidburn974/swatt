@@ -1,7 +1,7 @@
 @extends('layout.default')
 
 @section('title')
-<title>Login - {{ Config::get('other.title') }}</title>
+<title>{{{ trans('common.login') }}} - {{ Config::get('other.title') }}</title>
 @stop
 
 @section('meta_description')
@@ -11,7 +11,7 @@
 @section('breadcrumb')
 <div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
     <a href="{{ url('/login') }}" itemprop="url" class="l-breadcrumb-item-link">
-        <span itemprop="title" class="l-breadcrumb-item-link-title">Login</span>
+        <span itemprop="title" class="l-breadcrumb-item-link-title">{{{ trans('common.login') }}}</span>
     </a>
 </div>
 @stop
@@ -19,19 +19,19 @@
 @section('content')
 <div class="box container">
     <div class="col-md-4">
-        <h3>{{ trans('messages.login') }}</h3>
+        <h3>{{{ trans('common.login') }}}</h3>
         {{ Form::open(array('route' => 'login')) }}
             <div class="form-group">
-                <label for="username">{{ trans('messages.username') }}</label>
+                <label for="username">{{ trans('common.username') }}</label>
                 <input type="text" name="username" class="form-control">
             </div>
 
             <div class="form-group">
-                <label for="password">{{ trans('messages.password') }}</label>
+                <label for="password">{{ trans('common.password') }}</label>
                 <input type="password" name="password" class="form-control">
             </div>
 
-            <button type="submit" class="btn btn-default">{{ trans('messages.login') }}</button>
+            <button type="submit" class="btn btn-default">{{{ trans('common.login') }}}</button>
         {{ Form::close() }}
     </div>
 </div>

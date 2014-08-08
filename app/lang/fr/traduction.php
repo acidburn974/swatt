@@ -22,7 +22,7 @@ return array(
 	'latest_torrents' => 'Derniers torrents',
 	'title' => 'Titre',
 	'size' => 'Taille',
-	'times_completed' => 'Nom de téléchargement',
+	'times_completed' => 'Nombre de téléchargement',
 
 	// Torrent
 	'name' => 'Nom',

@@ -42,6 +42,7 @@ var PostView = Backbone.View.extend({
     render: function() {
         this.$el.find('.right').hide();
         this.template = _.template($("#article_template").html(), {'article': this.article.toJSON(), 'comments': this.comments.toJSON() });
+        this.$el.find('.right').show();
         this.$el.find('.right').html(this.template);
         this.$el.find('.right').fadeIn("fast");
     },
