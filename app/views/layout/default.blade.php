@@ -2,16 +2,18 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
     @section('title')
         <title>{{{ Config::get('other.title') }}} - Torrent Tracker</title>
     @show
     @section('meta_description')
         <meta name="description" content="{{{ Config::get('other.meta_description') }}}">
     @show
+    
     <link rel="stylesheet" href="{{ url('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url('css/main.css') }}">
     <link rel="stylesheet" href="{{ url('css/font-awesome.min.css') }}">
-    <link href='http://fonts.googleapis.com/css?family=Lato|Cabin+Condensed|Open+Sans' rel='stylesheet' type='text/css'>
 
     @yield('stylesheets')
 </head>
