@@ -8,6 +8,10 @@
 <meta name="description" content="{{{ 'Edit post in ' . $forum->name }}}">
 @stop
 
+@section('stylesheets')
+<link rel="stylesheet" href="{{ url('files/wysibb/theme/default/wbbtheme.css') }}">
+@stop
+
 @section('breadcrumb')
 <div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
     <a href="{{ route('forum_index') }}" itemprop="url" class="l-breadcrumb-item-link">
@@ -49,7 +53,7 @@
 		{{ Form::open(array('route' => array('forum_post_edit', 'slug' => $topic->slug, 'id' => $topic->id, 'postId' => $post->id))) }}
 			
 			<div class="form-group">
-				<textarea id="new-thread-content" name="content" cols="30" rows="10" class="form-control">{{{ $post->content }}}</textarea>
+				<textarea id="content" name="content" cols="30" rows="10" class="form-control">{{{ $post->content }}}</textarea>
 			</div>
 
 			
@@ -61,6 +65,15 @@
 @stop
 
 @section('javascripts')
-<script type="text/javascript" src="{{ url('files/ckeditor_bbcode/ckeditor.js') }}"></script>
-<script>CKEDITOR.replace('new-thread-content');</script>
+<script type="text/javascript" src="{{ url('js/vendor/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ url('files/wysibb/jquery.wysibb.min.js') }}"></script>
+
+<script>
+$(document).ready(function() {
+    var wbbOpt = {
+        buttons: "bold,italic,underline,strike,sup,sub,|,img,video,link,|,bullist,numlist,|,fontcolor,fontsize,fontfamily,|, justifyleft, justifycenter,justifyright,|, quote,code,table,removeFormat"
+    }
+    $("#content").wysibb(wbbOpt);
+});
+</script>
 @stop
