@@ -10,7 +10,7 @@
 
     @yield('stylesheets')
 </head>
-<body>
+<body class="admin">
 
     <div class="navbar navbar-inverse">
         <div class="container-fluid">
