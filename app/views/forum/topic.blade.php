@@ -8,6 +8,10 @@
 <meta name="description" content="{{{ 'Read the topic ' . $topic->name }}}">
 @stop
 
+@section('stylesheets')
+<link rel="stylesheet" href="{{ url('files/wysibb/theme/default/wbbtheme.css') }}">
+@stop
+
 @section('breadcrumb')
 <div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
     <a href="{{ route('forum_index') }}" itemprop="url" class="l-breadcrumb-item-link">
@@ -114,6 +118,14 @@
 @stop
 
 @section('javascripts')
-<script type="text/javascript" src="{{ url('files/ckeditor_bbcode/ckeditor.js') }}"></script>
-<script>CKEDITOR.replace('topic-response');</script>
+<script type="text/javascript" src="{{ url('js/vendor/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ url('files/wysibb/jquery.wysibb.min.js') }}"></script>
+<script>
+$(document).ready(function() {
+    var wbbOpt = {
+        buttons: "bold,italic,underline,strike,sup,sub,|,img,video,link,|,bullist,numlist,|,fontcolor,fontsize,fontfamily,|, justifyleft, justifycenter,justifyright,|, quote,code,table,removeFormat"
+    }
+    $("#topic-response").wysibb(wbbOpt);
+});
+</script>
 @stop

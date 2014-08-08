@@ -4,6 +4,10 @@
 <title>Upload - {{{ Config::get('other.title') }}}</title>
 @stop
 
+@section('stylesheets')
+<link rel="stylesheet" href="{{ url('files/wysibb/theme/default/wbbtheme.css') }}">
+@stop
+
 @section('breadcrumb')
 <div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
     <a href="{{ url('/upload') }}" itemprop="url" class="l-breadcrumb-item-link">
@@ -14,7 +18,7 @@
 
 @section('content')
 <div class="box container">
-	<div class="upload col-md-7">
+	<div class="upload col-md-12">
 		<h3 class="upload-title">Upload a torrent</h3>
 		{{ Form::open(['route' => 'upload', 'files' => true, 'class' => 'upload-form']) }}
 
@@ -26,6 +30,8 @@
 			<div class="form-group">
 				<label for="torrent">Torrent file</label>
 				<input class="upload-form-file" type="file" name="torrent">
+
+				<code>Announce: {{ route('announce') }}</code>
 			</div>
 
 			<div class="form-group">
@@ -50,15 +56,18 @@
 			<button type="submit" class="btn btn-default">Upload</button>
 		{{ Form::close() }}
 	</div>
-
-	<div class="col-md-4">
-		<h4>Announce URL</h4>
-		<code>{{ route('announce') }}</code>
-	</div>
 </div>
 @stop
 
 @section('javascripts')
-<script type="text/javascript" src="{{ url('files/ckeditor_bbcode/ckeditor.js') }}"></script>
-<script>CKEDITOR.replace('upload-form-description');</script>
+<script type="text/javascript" src="{{ url('js/vendor/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ url('files/wysibb/jquery.wysibb.min.js') }}"></script>
+<script>
+$(document).ready(function() {
+    var wbbOpt = {
+        buttons: "bold,italic,underline,strike,sup,sub,|,img,video,link,|,bullist,numlist,|,fontcolor,fontsize,fontfamily,|, justifyleft, justifycenter,justifyright,|, quote,code,table,removeFormat"
+    }
+    $("#upload-form-description").wysibb(wbbOpt);
+});
+</script>
 @stop

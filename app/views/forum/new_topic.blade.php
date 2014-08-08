@@ -9,7 +9,7 @@
 @stop
 
 @section('stylesheets')
-<!-- <link rel="stylesheet" href="{{ url('css/xbbcode.js') }}"> -->
+<link rel="stylesheet" href="{{ url('files/wysibb/theme/default/wbbtheme.css') }}">
 @stop
 
 @section('breadcrumb')
@@ -60,10 +60,8 @@
 @stop
 
 @section('javascripts')
-<script type="text/javascript" src="{{ url('files/ckeditor_bbcode/ckeditor.js') }}"></script>
-<script>CKEDITOR.replace('new-thread-content');</script>
-<script type="text/javascript" src="{{ url('js/vendor/zepto.min.js') }}"></script>
-
+<script type="text/javascript" src="{{ url('js/vendor/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ url('files/wysibb/jquery.wysibb.min.js') }}"></script>
 
 <script type="text/javascript">
 var title = '{{ $title }}';
@@ -74,6 +72,13 @@ if(title.length != 0)
 
 $('#input-thread-title').on('input', function() {
 	$('#thread-title').text(': ' + $('#input-thread-title').val());
+});
+
+$(document).ready(function() {
+    var wbbOpt = {
+        buttons: "bold,italic,underline,strike,sup,sub,|,img,video,link,|,bullist,numlist,|,fontcolor,fontsize,fontfamily,|, justifyleft, justifycenter,justifyright,|, quote,code,table,removeFormat"
+    }
+    $("#new-thread-content").wysibb(wbbOpt);
 });
 </script>
 @stop
