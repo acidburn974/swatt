@@ -1,7 +1,7 @@
 @extends('layout.default')
 
 @section('title')
-<title>Members - {{{ Config::get('other.title') }}}</title>
+<title>{{{ trans('common.members') }}} - {{{ Config::get('other.title') }}}</title>
 @stop
 
 @section('meta_description')
@@ -11,7 +11,7 @@
 @section('breadcrumb')
 <div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
 	<a href="{{ route('members') }}" itemprop="url" class="l-breadcrumb-item-link">
-		<span itemprop="title" class="l-breadcrumb-item-link-title">Members</span>
+		<span itemprop="title" class="l-breadcrumb-item-link-title">{{{ trans('common.members') }}}</span>
 	</a>
 </div>
 @stop
@@ -20,7 +20,7 @@
 @section('content')
 <div class="box container">
 	<div class="members col-md-12">
-		<h2>Members</h2>
+		<h2>{{{ trans('common.members') }}}</h2>
 		<table class="members-table table table-striped">
 			<thead>
 				<tr>

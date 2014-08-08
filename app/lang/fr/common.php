@@ -4,5 +4,7 @@ return array(
 	'signup' => 'Inscription',
 	'username' => 'Nom d\'utilisateur',
 	'password' => 'Mot de passe',
+	'download' => 'Télécharger', 
+	'members' => 'Membres',
 );
 ?>

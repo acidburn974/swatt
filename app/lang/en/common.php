@@ -4,5 +4,7 @@ return array(
 	'signup' => 'Signup',
 	'username' => 'Username',
 	'password' => 'Password',
+	'download' => 'Download', 
+	'members' => 'Members',
 	); 
 ?>
