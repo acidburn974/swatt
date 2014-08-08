@@ -62,12 +62,17 @@
                 <p>{{ $topic->num_post - 1 }} replies to this topic</p>
             </div>
 
-            @foreach($posts as $p)
-                <div class="post" id="post_{{ $p->id }}">
-                    <aside class="col-md-2 post-info">
+            @foreach($posts as $k => $p)
+                <div class="post" id="post_{{ $p->id }}" data-id="{{ $p->id }}">
+                    <div class="col-md-12 post-head">
                         <a href="{{ route('profil', ['username' => $p->user->username, 'id' => $p->user->id]) }}" class="post-info-username">
                             {{ $p->user->username }}
                         </a>
+                        <span class="post-head-date">{{ date('d/m/Y H:m:s', strtotime($p->created_at)) }}</span>
+                    </div>
+
+                    <aside class="col-md-2 post-info">
+                        
                         @if($p->user->image != null)
                             <img src="{{ url('files/img/' . $p->user->image) }}" alt="{{{ $p->user->username }}}" class="members-table-img img-thumbnail">
                         @else
@@ -75,13 +80,14 @@
                         @endif
 
                         <p>{{ $p->user->group->name }}</p>
+                        <p>{{ trans('traduction.join_date')}}: {{ date('d/m/Y', strtotime($p->user->created_at)) }}</p>
                     </aside>
 
                     <article class="col-md-10 post-content">
                         {{ $p->getContentHtml() }}
                     </article>
 
-                    <div class="col-md-10 post-control">
+                    <div class="col-md-12 post-control">
                         @if(Auth::check() && (Auth::user()->group->is_modo || $p->user_id == Auth::user()->id) && $topic->state == 'open')
                             <a href="{{ route('forum_post_edit', ['slug' => $topic->slug, 'id' => $topic->id, 'postId' => $p->id]) }}">Edit</a>
                         @endif
@@ -103,7 +109,7 @@
                         <textarea name="content" id="topic-response" cols="30" rows="10"></textarea>
                     </div>
                     @if(Auth::check())
-                        <button type="submit" class="btn btn-default">Post</button>
+                        <button type="submit" class="btn btn-default">{{ trans('traduction.add') }}</button>
                     @else
                         <button type="submit" class="btn btn-default disabled">You must be connected</button>
                     @endif

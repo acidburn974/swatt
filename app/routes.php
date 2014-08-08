@@ -50,25 +50,28 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth|admin', 'namespace' =>
 {
     Route::any('/', array('uses' => 'HomeController@home', 'as' => 'admin_home'));
 
+    // Articles
     Route::any('/articles', array('uses' => 'ArticleController@index', 'as' => 'admin_article_index'));
     Route::any('/articles/new', array('uses' => 'ArticleController@add', 'as' => 'admin_article_add'));
     Route::any('/articles/edit/{slug}.{id}', array('uses' => 'ArticleController@edit', 'as' => 'admin_article_edit'));
     Route::any('/articles/delete/{slug}.{id}', array('uses' => 'ArticleController@delete', 'as' => 'admin_article_delete'));
 
-    //torrent
+    // Torrent
     Route::any('/torrents', array('uses' => 'TorrentController@index', 'as' => 'admin_torrent_index'));
     Route::any('/torrents/edit/{slug}.{id}', array('uses' => 'TorrentController@edit', 'as' => 'admin_torrent_edit'));
     Route::get('/torrents/delete/{slug}.{id}', ['uses' => 'TorrentController@delete', 'as' => 'admin_torrent_delete']);
 
-    // ToDo
+    // Users
     Route::any('/members', array('uses' => 'UserController@index', 'as' => 'admin_user_index'));
     Route::any('/members/edit/{username}.{id}', array('uses' => 'UserController@edit', 'as' => 'admin_user_edit'));
 
+    // Categories
     Route::any('/categories', array('uses' => 'CategoryController@index', 'as' => 'admin_category_index'));
     Route::any('/categories/new', array('uses' => 'CategoryController@add', 'as' => 'admin_category_add'));
     Route::any('/categories/edit/{slug}.{id}', array('uses' => 'CategoryController@edit', 'as' => 'admin_category_edit'));
     Route::any('/categories/delete/{slug}.{id}', array('uses' => 'CategoryController@delete', 'as' => 'admin_category_delete'));
 
+    // Forum+
     Route::get('/forums', array('uses' => 'ForumController@index', 'as' => 'admin_forum_index'));
     Route::any('/forums/new', array('uses' => 'ForumController@add', 'as' => 'admin_forum_add'));
     Route::any('/forums/edit/{slug}.{id}', array('uses' => 'ForumController@edit', 'as' => 'admin_forum_edit'));
@@ -80,17 +83,25 @@ Route::get('/forums', function() { return Redirect::to('/community'); }); // Old
 Route::group(array('prefix' => 'community'), function()
 {
     Route::get('/', array('uses' => 'ForumController@index', 'as' => 'forum_index'));
-    Route::get('/category/{slug}.{id}', array('uses' => 'ForumController@category', 'as' => 'forum_category')); // Affiche la categorie
-    Route::get('/forum/{slug}.{id}', array('uses' => 'ForumController@display', 'as' => 'forum_display')); // Affiche le forum et les topics
+    // Affiche la categorie
+    Route::get('/category/{slug}.{id}', array('uses' => 'ForumController@category', 'as' => 'forum_category'));
+    // Affiche le forum et les topics
+    Route::get('/forum/{slug}.{id}', array('uses' => 'ForumController@display', 'as' => 'forum_display'));
+    // Crée un nouveau topic
     Route::any('/forum/{slug}.{id}/new-topic', array('uses' => 'ForumController@newTopic', 'as' => 'forum_new_topic', 'before' => 'auth'));
+    // Affiche le topic
     Route::get('/topic/{slug}.{id}', array('uses' => 'ForumController@topic', 'as' => 'forum_topic'));
-    Route::get('/close/{slug}.{id}', array('uses' => 'ForumController@closeTopic', 'as' => 'forum_close'));
-    Route::get('/open/{slug}.{id}', array('uses' => 'ForumController@openTopic', 'as' => 'forum_open'));
+    // Ferme le topic
+    Route::get('/topic/{slug}.{id}/close', array('uses' => 'ForumController@closeTopic', 'as' => 'forum_close'));
+    // Ouvre le topic
+    Route::get('/topic/{slug}.{id}/open', array('uses' => 'ForumController@openTopic', 'as' => 'forum_open'));
+    // Edit un post
     Route::any('/topic/{slug}.{id}/post-{postId}/edit', array('uses' => 'ForumController@postEdit', 'as' => 'forum_post_edit', 'before' => 'auth'));
+    // Ajoute une réponse au topic
     Route::post('/topic/{slug}.{id}/reply', array('uses' => 'ForumController@reply', 'as' => 'forum_reply', 'before' => 'auth'));
 });
 
-
+// Api
 Route::any('/api/article/{id}', 'ArticleController@api_article');
 Route::get('/api/comments', 'CommentController@api_getComments');
 Route::post('/api/comments', ['uses' => 'CommentController@api_postComments', 'before' => 'auth']);

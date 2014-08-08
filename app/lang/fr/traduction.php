@@ -33,5 +33,7 @@ return array(
 
 	// Forum
 	'start_a_new_topic' => 'Crée un nouveau sujet',
+	'join_date' => 'Date d\'inscription',
+	'add' => 'Ajouter',
 	);
 ?>
