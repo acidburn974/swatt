@@ -50,8 +50,8 @@
                         <td></td>
                         <td class="f-display-topic-stats">
                             <ul>
-                                <li class="f-display-topic-stats-item"><strong>{{ $t->num_post - 1 }}</strong> replies</li>
-                                <li class="f-display-topic-stats-item"><strong>{{{ $t->views }}}</strong> views</li>
+                                <li class="f-display-topic-stats-item"><strong>{{ $t->num_post - 1 }}</strong> {{{ trans('forum.topics') }}}</li>
+                                <li class="f-display-topic-stats-item"><strong>{{{ $t->views }}}</strong> {{{ trans('forum.replies') }}}</li>
                             </ul>
                         </td>
                         <td class="f-display-topic-last-post">
