@@ -21,7 +21,8 @@ module.exports = function(grunt) {
               bare: true
             },
             files: {
-              "js/torrents.js": "coffee/torrents.coffee"
+              "js/torrents.js": "coffee/torrents.coffee",
+              "js/login.js": "coffee/login.coffee",
             }
         }
     },
