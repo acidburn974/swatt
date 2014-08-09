@@ -211,8 +211,8 @@ class TorrentController extends BaseController {
 			}
 		}
 
-		$resp['interval'] = 60;
-		$resp['min interval'] = 30;
+		$resp['interval'] = 600; // Set to 60 for debug
+		$resp['min interval'] = 300; // Set to 30 for debug
 		$resp['tracker_id'] = $client->md5_peer_id; // A string that the client should send back on its next announcements.
 		$resp['complete'] = $torrent->seeders;
 		$resp['incomplete'] = $torrent->leechers;
