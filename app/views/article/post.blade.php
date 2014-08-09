@@ -4,6 +4,10 @@
 <title>{{{ $post->title }}} - Articles - {{ Config::get('other.title') }}</title>
 @stop
 
+@section('meta_description')
+<meta name="description" content="{{{ substr(strip_tags($post->content), 0, 256) }}}">
+@stop
+
 @section('breadcrumb')
 <div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
     <a href="{{ route('articles') }}" itemprop="url" class="l-breadcrumb-item-link">
