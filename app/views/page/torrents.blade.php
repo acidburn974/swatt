@@ -5,7 +5,7 @@
 @stop
 
 @section('meta_description')
-<meta name="description" content="{{{ 'All torrents uploaded on ' . Config::get('other.title') }}}">
+<meta name="description" content="{{{ 'Liste des torrents disponible gratuitement et en illimité sur' . Config::get('other.title') }}}">
 @stop
 
 @section('breadcrumb')

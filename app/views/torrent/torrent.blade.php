@@ -1,7 +1,11 @@
 @extends('layout.default')
 
 @section('title')
-<title>{{{ $torrent->name }}} - {{{ Config::get('other.title') }}}</title>
+    <title>{{{ $torrent->name }}} - Torrents - {{{ Config::get('other.title') }}}</title>
+@stop
+
+@section('meta_description')
+    <meta name="description" content="{{{ 'Télécharger ' . $torrent->name . ' en illimité à la vitesse maximum' }}}">
 @stop
 
 @section('breadcrumb')
