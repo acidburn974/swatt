@@ -26,7 +26,7 @@ class HomeController extends BaseController {
 		if(Request::isMethod('post'))
 		{
 			$search = Input::get('search');
-			$torrents = Torrent::where('name', 'LIKE', '%' . $search . '%')->get();
+			$torrents = Torrent::where('name', 'LIKE', '%' . $search . '%')->paginate(20);
 			return View::make('page.torrents', array('torrents' => $torrents));
 		}
 		else
