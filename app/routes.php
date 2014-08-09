@@ -100,6 +100,8 @@ Route::group(array('prefix' => 'community'), function()
     Route::any('/topic/{slug}.{id}/post-{postId}/edit', array('uses' => 'ForumController@postEdit', 'as' => 'forum_post_edit', 'before' => 'auth'));
     // Ajoute une réponse au topic
     Route::post('/topic/{slug}.{id}/reply', array('uses' => 'ForumController@reply', 'as' => 'forum_reply', 'before' => 'auth'));
+
+    Route::any('/topic/{slug}.{id}/delete', array('uses' => 'ForumController@deleteTopic', 'as' => 'forum_delete_topic', 'before' => 'auth'));
 });
 
 // Api

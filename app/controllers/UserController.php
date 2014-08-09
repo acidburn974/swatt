@@ -53,10 +53,9 @@ class UserController extends BaseController {
         if(Request::isMethod('post'))
         {
             $input = Input::all();
-            if (Auth::attempt(array('username' => $input['username'],
-            'password' => $input['password'])))
+            if (Auth::attempt(array('username' => $input['username'], 'password' => $input['password'])))
             {
-                return Redirect::to('/');
+                return Redirect::intended('/');
             }
             else
             {

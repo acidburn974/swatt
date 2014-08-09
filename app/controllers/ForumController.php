@@ -308,4 +308,24 @@ class ForumController extends BaseController {
 		return Redirect::route('forum_topic', ['slug' => $topic->slug, 'id' => $topic->id])->with('message', 'The topic is now open');
 	}
 
+	/**
+	 * Delete le topic et les posts associées
+	 *
+	 */
+	public function deleteTopic($slug, $id)
+	{
+		$user = Auth::user();
+		$topic = Topic::find($id);
+		if($user->group->is_modo == true)
+		{
+			$posts = $topic->posts();
+			$posts->delete();
+			$topic->delete();
+			return Redirect::route('forum_display', ['slug' => $topic->forum->slug, 'id' => $topic->forum->id])->with('message', 'Topic sucessfully deleted');
+		}
+		else
+		{
+			return Redirect::route('forum_topic', ['slug' => $topic->slug, 'id' => $topic->id])->with('message', 'You haven\'t access to this functionality');
+		}
+	}
 } ?>

@@ -52,6 +52,9 @@
                         <a href="{{ route('forum_close', ['slug' => $topic->slug, 'id' => $topic->id, ])}}" class="btn btn-default">Mark as resolved</a>
                     @endif
                 @endif
+                @if(Auth::check() && Auth::user()->group->is_modo)
+                    <a href="{{ route('forum_delete_topic', ['slug' => $topic->slug, 'id' => $topic->id]) }}">Delete this topic</a>
+                @endif
             </p>
 
             {{ $posts->links() }}
