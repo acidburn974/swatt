@@ -63,7 +63,7 @@ class ForumController extends BaseController {
 	 * Show the topic
 	 *
 	 * @param $slug Slug du  topic
-	 * @param $id Id topic
+	 * @param $id Id du topic
 	 */
 	public function topic($slug, $id)
 	{
@@ -82,10 +82,11 @@ class ForumController extends BaseController {
 		// The user can post a topic here ?
 		if($category->getPermission()->read_topic != true)
 		{
-			// Reditect him to the forum index
+			// Redirect him to the forum index
 			return Redirect::route('forum_index')->with('message', 'You can\'t read this topic');
 		}
 
+		// Increment view
 		$topic->views++;
 		$topic->save();
 

@@ -137,8 +137,9 @@ class TorrentController extends BaseController {
 			}
 		}
 
-		// Finding the correct client/peer
-		$client = Peer::whereRaw('torrent_id = ? AND ip = ? AND port = ?', array($torrent->id, Request::getClientIp(), Input::get('port')))->first();
+		//$client = Peer::whereRaw('torrent_id = ? AND ip = ? AND port = ?', array($torrent->id, Request::getClientIp(), Input::get('port')))->first();
+		// Finding the correct client/peer by the md5 of the peer_id
+		$client = Peer::whereRaw('md5_peer_id = ?', [md5(Input::get('peer_id'))])->first();
 
 		// First time the client connect
 		if($client == null)
@@ -153,6 +154,7 @@ class TorrentController extends BaseController {
 		foreach($peers as $k => $p)
 		{
 			unset($p['uploaded']); unset($p['downloaded']); unset($p['left']); unset($p['seeder']); unset($p['connectable']); unset($p['user_id']); unset($p['torrent_id']); unset($p['client']);unset($p['created_at']); unset($p['updated_at']);
+			unset($p['md5_peer_id']);
 			$peers[$k] = $p;
 		}
 
@@ -161,6 +163,7 @@ class TorrentController extends BaseController {
 		{
 			// Set the torrent data
 			$client->peer_id = Input::get('peer_id');
+			$client->md5_peer_id = md5($client->peer_id);
 			$client->ip = Request::getClientIp();
 			$client->port = Input::get('port');
 			$client->left = Input::get('left');
@@ -208,11 +211,14 @@ class TorrentController extends BaseController {
 			}
 		}
 
+		$resp['interval'] = 60;
+		$resp['min interval'] = 30;
+		$resp['tracker_id'] = $client->md5_peer_id; // A string that the client should send back on its next announcements.
 		$resp['complete'] = $torrent->seeders;
 		$resp['incomplete'] = $torrent->leechers;
 		$resp['peers'] = $peers;
 
-		Log::info($resp);
+		//Log::info($resp);
 
 		return Response::make(Bencode::bencode($resp), 200, array('Content-Type' => 'text/plain'));
 	}
