@@ -13,6 +13,7 @@
 
 Route::get('/', ['uses' => 'HomeController@home', 'as' => 'home']);
 Route::any('/search', ['uses' => 'HomeController@search', 'as' => 'search']);
+Route::any('/contact', ['uses' => 'HomeController@contact', 'as' => 'contact']);
 
 
 // User

@@ -17,18 +17,18 @@
 @stop
 
 @section('content')
-<div class="box container">
-    <div class="col-md-4">
+<div class="container">
+    <div class="col-md-4 box centered-form">
         <h3>{{{ trans('common.login') }}}</h3>
         {{ Form::open(array('route' => 'login')) }}
             <div class="form-group">
                 <label for="username">{{ trans('common.username') }}</label>
-                <input type="text" name="username" class="form-control">
+                <input id="input-username" type="text" name="username" class="form-control">
             </div>
 
             <div class="form-group">
                 <label for="password">{{ trans('common.password') }}</label>
-                <input type="password" name="password" class="form-control">
+                <input id="input-password" type="password" name="password" class="form-control">
             </div>
 
             <button type="submit" class="btn btn-default">{{{ trans('common.login') }}}</button>
@@ -36,3 +36,10 @@
     </div>
 </div>
 @stop
+
+@section('javascripts')
+<script type="text/javascript" src="{{ url('js/vendor/jquery.min.js') }}"></script>
+
+<script type="text/javascript" src="{{ url('js/login.js') }}"></script>
+@stop
+

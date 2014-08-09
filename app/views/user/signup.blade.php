@@ -17,8 +17,8 @@
 @stop
 
 @section('content')
-<div class="box container">
-    <div class="col-md-4">
+<div class="container">
+    <div class="col-md-4 box centered-form">
         <h3>{{{ trans('common.signup') }}}</h3>
         {{ Form::open(array('route' => 'signup')) }}
             <div class="form-group">
