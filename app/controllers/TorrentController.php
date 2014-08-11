@@ -147,6 +147,15 @@ class TorrentController extends BaseController {
 			$client = new Peer();
 		}
 
+		// Deleting old peers from the database
+		foreach(Peer::all() as $peer)
+		{
+			if((time() - strtotime($peer->updated_at)) > (5 * 60))
+			{
+				$peer->delete();
+			}
+		}
+
 		// Finding peers for this torrent on the database
 		$peers = Peer::whereRaw('torrent_id = ?', array($torrent->id))->get()->toArray();
 

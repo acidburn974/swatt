@@ -12,3 +12,4 @@ composer.lock
 Thumbs.db
 tracker.wxproj
 tracker.wxtask
+phpunit.phar
