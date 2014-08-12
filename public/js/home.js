@@ -1,11 +1,11 @@
 var Comment = Backbone.Model.extend({
     initialize: function() {},
-    urlRoot: '/api/comments'
+    urlRoot: '/api/comments/article'
 });
 
 var Comments = Backbone.Collection.extend({
     model: Comment,
-    url: '/api/comments',
+    url: '/api/comments/article',
 });
 
 var Article = Backbone.Model.extend({

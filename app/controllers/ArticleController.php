@@ -37,13 +37,4 @@ class ArticleController extends BaseController {
 
         return View::make('article.post', array('post' => $post, 'comments' => $comments));
     }
-
-    public function api_article($id)
-    {
-        // Find de right post
-        $post = Article::find($id);
-        // Get comments on this post
-        $comments = $post->comments()->orderBy('created_at', 'DESC')->get();
-        return Response::json($post);
-    }
 } ?>
