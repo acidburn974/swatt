@@ -105,7 +105,19 @@ Route::group(array('prefix' => 'community'), function()
 });
 
 // Api
-Route::any('/api/article/{id}', 'ArticleController@api_article');
-Route::get('/api/comments', 'CommentController@api_getComments');
-Route::post('/api/comments', ['uses' => 'CommentController@api_postComments', 'before' => 'auth']);
-Route::any('/api/torrents/{id}', 'TorrentController@api_torrent');
+Route::group(['prefix' => 'api', 'namespace' => 'Api'], function(){
+
+    // Affiche l'article
+    Route::any('/article/{id}', 'ArticleController@article'); 
+    // Affiche le torrent
+    Route::any('/torrents/{id}', 'TorrentController@torrent');
+    
+    // Commentaire sur articles
+    Route::get('/comments/article/{id?}', 'CommentController@getArticleComments');
+    Route::post('/comments/article{id?}', ['uses' => 'CommentController@addArticleComment', 'before' => 'auth']);
+
+    // Commentaire sur torrents
+    Route::get('/comments/torrent', 'CommentController@getTorrentComments');
+    Route::post('/comments/torrent', ['uses' => 'CommentController@addTorrentComment', 'before' => 'auth']);
+});
+

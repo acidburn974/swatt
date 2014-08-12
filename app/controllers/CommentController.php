@@ -57,46 +57,4 @@ class CommentController extends BaseController {
 		}
 		return Redirect::route('torrent', array('slug' => $torrent->slug, 'id' => $torrent->id));
 	}
-
-	/**
-	 * Retourne les commentaires sur l'article
-	 *
-	 *
-	 */
-	public function api_getComments()
-	{
-		if(Input::get('article_id'))
-		{
-			$article = Article::find(Input::get('article_id'));
-			$comments = $article->comments;
-		}
-		else
-		{
-			$comments = Comment::all();
-		}
-		// Ajout de l'username
-		foreach($comments as $k => $comment)
-		{
-			$comments[$k]['username'] = $comment->user->username;
-		}
-        return Response::json($comments);
-	}
-
-	public function api_postComments()
-	{
-		$user = Auth::user();
-		$article = Article::find(Input::get('article_id'));
-		$comment = new Comment();
-		$comment->content = Input::get('content');
-		$comment->article_id = $article->id;
-		$comment->user_id = $user->id;
-		$v = Validator::make($comment->toArray(), array('content' => 'required', 'user_id' => 'required', 'article_id' => 'required'));
-		if($v->passes())
-		{
-			$comment->save();
-		}
-		else
-		{
-		}
-	}
 } ?>

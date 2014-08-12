@@ -1,6 +1,34 @@
-var Torrent, TorrentView, Torrents, torrentView,
+var Comment, Comments, Torrent, TorrentView, Torrents, torrentView,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+Comment = (function(_super) {
+  __extends(Comment, _super);
+
+  function Comment() {
+    return Comment.__super__.constructor.apply(this, arguments);
+  }
+
+  Comment.prototype.urlRoot = '/api/comments/torrent';
+
+  return Comment;
+
+})(Backbone.Model);
+
+Comments = (function(_super) {
+  __extends(Comments, _super);
+
+  function Comments() {
+    return Comments.__super__.constructor.apply(this, arguments);
+  }
+
+  Comments.prototype.model = Comment;
+
+  Comments.prototype.url = '/api/comments/torrent';
+
+  return Comments;
+
+})(Backbone.Collection);
 
 Torrent = (function(_super) {
   __extends(Torrent, _super);
@@ -50,11 +78,14 @@ TorrentView = (function(_super) {
   TorrentView.prototype.template = null;
 
   TorrentView.prototype.events = {
-    "click .view-torrent": "viewTorrent"
+    "click .view-torrent": "viewTorrent",
+    "submit #add-comment": "addComment"
   };
 
   TorrentView.prototype.initialize = function() {
-    return console.log('TorrentView initialized');
+    console.log('TorrentView initialized');
+    this.comments = new Comments();
+    return this.comments.on('change', this.render, this);
   };
 
   TorrentView.prototype.viewTorrent = function(event) {
@@ -69,7 +100,15 @@ TorrentView = (function(_super) {
     });
     return this.torrent.fetch({
       success: function() {
-        return self.render();
+        return self.comments.fetch({
+          data: {
+            torrent_id: self.torrent_id,
+            torrent_slug: self.torrent_slug
+          },
+          success: function() {
+            return self.render();
+          }
+        });
       }
     });
   };
@@ -79,10 +118,32 @@ TorrentView = (function(_super) {
     $(this.el).find('.right').hide();
     template = $("#torrent_template").html();
     this.template = _.template(template, {
-      torrent: this.torrent.toJSON()
+      torrent: this.torrent.toJSON(),
+      comments: this.comments.toJSON()
     });
     $(this.el).find('.right').html(this.template);
     return $(this.el).find('.right').fadeIn("slow");
+  };
+
+  TorrentView.prototype.addComment = function(event) {
+    var comment, self;
+    event.preventDefault();
+    self = this;
+    comment = new Comment({
+      torrent_id: self.torrent_id,
+      torrent_slug: self.torrent_slug,
+      content: $(event.currentTarget).find('[name=content]').val()
+    });
+    comment.save();
+    return this.comments.fetch({
+      data: {
+        torrent_id: self.torrent_id,
+        torrent_slug: self.torrent_slug
+      },
+      success: function() {
+        return self.render();
+      }
+    });
   };
 
   return TorrentView;
