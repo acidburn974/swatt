@@ -8,7 +8,9 @@
             @foreach($posts as $p)
             <section class="post">
                 <h2 class="post-title"><a data-id="{{ $p->id }}" class="post-read-more" href="{{ route('post', array('slug' => $p->slug, 'id' => $p->id)) }}">{{{ $p->title }}}</a></h2>
-                <div class="post-time"><time datetime="{{ date('d-m-Y h:m', strtotime($p->created_at)) }}">{{ date('d M Y', strtotime($p->created_at)) }}</time></div>
+                <div class="post-time">
+                    <time itemprop="datePublished" datetime="{{ date('Y-m-d', strtotime($p->created_at)) }}">{{ date('d M Y', strtotime($p->created_at)) }}</time>
+                </div>
                 <div class="post-brief">
                     <p>{{{ substr(strip_tags($p->content), 0, 256) }}}...</p>
                 </div>
