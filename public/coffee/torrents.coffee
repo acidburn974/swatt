@@ -55,15 +55,14 @@ class TorrentView extends Backbone.View
 			)
 
 	render: ->
-		$(@el).find('.right').hide()
-
+		$(@el).find('.right').slideUp()
 		template = $("#torrent_template").html()
 		@template = _.template(template, 
 			torrent: @torrent.toJSON()
 			comments: @comments.toJSON()
 			)
 		$(@el).find('.right').html(@template)
-		$(@el).find('.right').fadeIn("slow")
+		$(@el).find('.right').slideDown()
 
 	addComment: (event) ->
 		event.preventDefault()

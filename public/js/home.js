@@ -40,11 +40,10 @@ var PostView = Backbone.View.extend({
         });
     },
     render: function() {
-        this.$el.find('.right').hide();
+        this.$el.find('.right').slideUp();
         this.template = _.template($("#article_template").html(), {'article': this.article.toJSON(), 'comments': this.comments.toJSON() });
-        this.$el.find('.right').show();
         this.$el.find('.right').html(this.template);
-        this.$el.find('.right').fadeIn("fast");
+        this.$el.find('.right').slideDown();
     },
     addComment: function(event) {
         event.preventDefault();

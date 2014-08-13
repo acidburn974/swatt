@@ -115,14 +115,14 @@ TorrentView = (function(_super) {
 
   TorrentView.prototype.render = function() {
     var template;
-    $(this.el).find('.right').hide();
+    $(this.el).find('.right').slideUp();
     template = $("#torrent_template").html();
     this.template = _.template(template, {
       torrent: this.torrent.toJSON(),
       comments: this.comments.toJSON()
     });
     $(this.el).find('.right').html(this.template);
-    return $(this.el).find('.right').fadeIn("slow");
+    return $(this.el).find('.right').slideDown();
   };
 
   TorrentView.prototype.addComment = function(event) {

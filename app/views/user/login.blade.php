@@ -37,9 +37,3 @@
 </div>
 @stop
 
-@section('javascripts')
-<script type="text/javascript" src="{{ url('js/vendor/jquery.min.js') }}"></script>
-
-<script type="text/javascript" src="{{ url('js/login.js') }}"></script>
-@stop
-

@@ -18,26 +18,28 @@
     @yield('stylesheets')
 </head>
 <body>
-    @if(Auth::check())
-    
-@else
-<div id="l-header" class="toggle" style="display: none">
-<div class="container">
-    <div class="col-md-4 centered-form" class="bg-info">
-        <h3>{{{ trans('common.login') }}}</h3>
-        {{ Form::open(array('route' => 'login')) }}
-            <div class="form-group">
-                <label class="l-header-menu-item" for="username">{{ trans('common.username') }}</label>
-                <input id="input-username" type="text" name="username" class="form-control">
-                <label class="l-header-menu-item" for="password">{{ trans('common.password') }}</label>
-                <input id="input-password" type="password" name="password" class="form-control">
-            <button type="submit" class="btn btn-primary btn-xs">{{{ trans('common.login') }}}</button>
+    @if( ! Auth::check())
+    <!-- Top login -->
+    <div id="l-toplogin">
+        <div class="container">
+            <div class="col-md-4 centered-form" class="bg-info">
+                {{ Form::open(array('route' => 'login')) }}
+                    <div class="form-group">
+                        <label class="l-header-menu-item" for="username">{{ trans('common.username') }}</label>
+                        <input id="input-username" type="text" name="username" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="l-header-menu-item" for="password">{{ trans('common.password') }}</label>
+                        <input id="input-password" type="password" name="password" class="form-control">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">{{{ trans('common.login') }}}</button>
+                {{ Form::close() }}
             </div>
-        {{ Form::close() }}
-    </div>
-    </div>
-</div>
-@endif
+        </div>
+    </div><!-- /Top login -->
+    @endif
 
     <!-- header -->
     <div id="l-header">
@@ -75,7 +77,8 @@
                     <a href="{{ route('upload') }}" class="l-header-menu-item">Upload</a>
                     <a href="{{ route('logout') }}" class="l-header-menu-item">{{ trans('traduction.logout') }}</a>
                 @else
-                     <button type="button" class="btn btn-default btn-xs">Login</button>
+                     <a href="{{ route('login') }}" class="l-header-menu-item" id="header-login">{{ trans('traduction.login') }}</a>
+                     <a href="{{ route('signup') }}" class="l-header-menu-item">{{ trans('traduction.signup') }}</a>
                 @endif
             </nav><!-- Bar de navigation -->
         </div>
@@ -150,15 +153,17 @@
 
         </div>
     </div><!-- /footer -->
-    <script type="text/javascript" src="{{ url('js/vendor/jquery.min.js') }}"></script>
-    <script>
-        $( "button" ).click(function() {
-          $( ".toggle" ).toggle( "slow" );
-        });
-</script>
+    
+    <!-- Scripts -->
     <script type="text/javascript">
-    var url = "{{ url('/') }}";
+        var url = "{{ url('/') }}";
     </script>
+    
+    <script type="text/javascript" src="{{ url('js/vendor/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url('js/login.js') }}"></script>
+    
     @yield('javascripts')
+    <!-- /Scripts -->
+
 </body>
 </html>
