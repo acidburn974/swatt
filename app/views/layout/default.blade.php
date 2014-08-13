@@ -39,6 +39,32 @@
             </div>
         </div>
     </div><!-- /Top login -->
+    <!-- Top Signup -->
+    <div id="l-topsignup"> 
+        <div class="container">
+            <div class="col-md-4  centered-form">
+                <h3>{{{ trans('common.signup') }}}</h3>
+                {{ Form::open(array('route' => 'signup')) }}
+                    <div class="form-group">
+                        <label for="username">{{{ trans('common.username') }}}</label>
+                        <input type="text" name="username" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="text" name="email" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">{{{ trans('common.password') }}}</label>
+                        <input type="password" name="password" class="form-control">
+                    </div>
+
+                    <button type="submit" class="btn btn-default">Go !</button>
+                {{ Form::close() }}
+            </div>
+        </div> 
+    </div> <!-- /Top Signup -->
     @endif
 
     <!-- header -->
@@ -78,7 +104,7 @@
                     <a href="{{ route('logout') }}" class="l-header-menu-item">{{ trans('traduction.logout') }}</a>
                 @else
                      <a href="{{ route('login') }}" class="l-header-menu-item" id="header-login">{{ trans('traduction.login') }}</a>
-                     <a href="{{ route('signup') }}" class="l-header-menu-item">{{ trans('traduction.signup') }}</a>
+                     <a href="{{ route('signup') }}" class="l-header-menu-item" id="header-signup">{{ trans('traduction.signup') }}</a>
                 @endif
             </nav><!-- Bar de navigation -->
         </div>
@@ -161,6 +187,7 @@
     
     <script type="text/javascript" src="{{ url('js/vendor/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ url('js/login.js') }}"></script>
+    <script type="text/javascript" src="{{ url('js/signup.js') }}"></script>
     
     @yield('javascripts')
     <!-- /Scripts -->
