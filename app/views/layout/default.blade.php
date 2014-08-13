@@ -22,16 +22,16 @@
     <!-- Top login -->
     <div id="l-toplogin">
         <div class="container">
-            <div class="col-md-4 centered-form" class="bg-info">
+            <div class="col-md-4 centered-form bg-info">
                 {{ Form::open(array('route' => 'login')) }}
                     <div class="form-group">
                         <label class="l-header-menu-item" for="username">{{ trans('common.username') }}</label>
-                        <input id="input-username" type="text" name="username" class="form-control">
+                        <input type="text" name="username" class="form-control">
                     </div>
 
                     <div class="form-group">
                         <label class="l-header-menu-item" for="password">{{ trans('common.password') }}</label>
-                        <input id="input-password" type="password" name="password" class="form-control">
+                        <input type="password" name="password" class="form-control">
                     </div>
 
                     <button type="submit" class="btn btn-primary">{{{ trans('common.login') }}}</button>
