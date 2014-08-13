@@ -24,6 +24,7 @@
         <div class="container">
             <div class="col-md-4 centered-form">
                 {{ Form::open(array('route' => 'login')) }}
+                    <p>{{{ trans('common.login') }}}</p>
                     <div class="form-group">
                         <label class="l-header-menu-item" for="username">{{ trans('common.username') }}</label>
                         <input name="username" type="text"  class="form-control">
@@ -43,7 +44,7 @@
     <div id="l-topsignup"> 
         <div class="container">
             <div class="col-md-4  centered-form">
-                <h3>{{{ trans('common.signup') }}}</h3>
+                <p>{{{ trans('common.signup') }}}</p>
                 {{ Form::open(array('route' => 'signup')) }}
                     <div class="form-group">
                         <label for="username">{{{ trans('common.username') }}}</label>
