@@ -293,7 +293,7 @@ class ForumController extends BaseController {
 		$topic->state = "close";
 		$topic->save();
 
-		return Redirect::route('forum_topic', ['slug' => $topic->slug, 'id' => $topic->id])->with('message', 'The topic is now closed');
+		return Redirect::route('forum_topic', ['slug' => $topic->slug, 'id' => $topic->id])->with('message', 'This topic is now closed');
 	}
 
 	/**
@@ -305,7 +305,7 @@ class ForumController extends BaseController {
 		$topic = Topic::find($id);
 		$topic->state = "open";
 		$topic->save();
-		return Redirect::route('forum_topic', ['slug' => $topic->slug, 'id' => $topic->id])->with('message', 'The topic is now open');
+		return Redirect::route('forum_topic', ['slug' => $topic->slug, 'id' => $topic->id])->with('message', 'This topic is now open');
 	}
 
 	/**

@@ -5,7 +5,7 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     @section('title')
-        <title>{{{ 'Téléchargement gratuit' }}} - Torrent Tracker -{{{ Config::get('other.title') }}}</title>
+        <title>{{{ 'Téléchargement gratuit' }}} - Torrent Tracker - {{{ Config::get('other.title') }}}</title>
     @show
     @section('meta_description')
         <meta name="description" content="{{{ Config::get('other.meta_description') }}}">
