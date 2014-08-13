@@ -13,7 +13,7 @@ class ArticleController extends \BaseController {
 	 * Retourne les info JSON de l'article
 	 *
 	 */
-	public function article()
+	public function article($id = null)
 	{
 		 // Find de right post
         $post = Article::find($id);

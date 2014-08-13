@@ -1,22 +1,22 @@
 
 .f-category {
 	.f-category-title {
+		margin: 0.75em auto;
+		background: linear-gradient(#2ca0ce, #37add9);
+		//.border-radius(4px, 0, 0, 4px);
+		border: 1px solid #1E92C0;
+		.rounded(4px);
 		h2 { 
-			margin: 0.75em auto;
 			text-shadow: 0px 1px 2px #000;
 			> a { color: #fff; .transition(); &:hover { text-decoration: none; } } 
 		} 
-		//background: linear-gradient(#34d474, #25b05d); 
-		background: linear-gradient(#4774a2, #2c5687);
-		.border-radius(4px, 0, 0, 4px);
 	}
 	
 	.f-category-table-wrapper {
-		background: rgb(233, 233, 233);
+		//background: rgb(233, 233, 233);
 		margin: 0 auto 0.75em; 
+		padding: 0 0;
 		table.f-category-forums {
-			margin-top: 0.75em;
-			margin-bottom: 0.75em;
 			background: white;
 			.bordered(1px solid #dbe4ef);
 			.rounded(4px);
@@ -24,6 +24,7 @@
 			.f-category-forums-hidden { background: #D8DDE8; display: none; }
 			h4.f-category-forums-title { margin: 0; }
 			p.f-category-forums-description { color: #777777; }
+			tr { background: #f7f9fa; }
 			.f-category-forums-stats {
 				vertical-align: middle;
 				ul { list-style: none; li.f-category-forums-item { } }
@@ -85,7 +86,7 @@
 		padding: 0 0 0.75em 0;
 		.topic-posts-head { 
 			//background: linear-gradient(#34d474, #25b05d); 
-			background: linear-gradient(#4774a2, #2c5687);
+			background: linear-gradient(#2ca0ce, #37add9);
 			padding: 0.75em; 
 			.border-radius(4px, 0, 0, 4px); 
 			color: #fff;
@@ -98,7 +99,7 @@
 			//.rounded(4px);
 			.drop-shadow();
 			.post-head {
-				background: #D8DDE8;
+				background: #F5F6F7;
 				padding: 0.75em 1.25em;
 				border-bottom: 1px solid #ccc;
 				text-transform: uppercase;

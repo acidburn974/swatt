@@ -42,7 +42,6 @@
     <!-- header -->
     <div id="l-header">
         <div class="container">
-
             <!-- Logo -->
             <header class="l-header-logo col-md-3 animated pulse">
                 <h1><a href="{{ route('home') }}">{{ Config::get('other.title') }}</a></h1>
