@@ -12,9 +12,9 @@ class CommentController extends \BaseController {
 	/**
 	 * Retourne les commentaires sur l'article
 	 */
-	public function getArticleComments($id = null)
+	public function getArticleComments()
 	{
-		if(Input::get('article_id') && $id == null)
+		if(Input::get('article_id'))
 		{
 			$article = Article::find(Input::get('article_id'));
 			$comments = $article->comments;
@@ -34,7 +34,7 @@ class CommentController extends \BaseController {
 	/**
 	 * Ajoute un commentaire sur un article
 	 */
-	public function addArticleComment($id = null)
+	public function addArticleComment()
 	{
 		$user = Auth::user();
 		$article = Article::find(Input::get('article_id'));
@@ -73,7 +73,7 @@ class CommentController extends \BaseController {
 	 * Ajoute un commentaire sur le torrent
 	 *
 	 */
-	public function addTorrentComment($id = null)
+	public function addTorrentComment()
 	{
 		$user = Auth::user();
 		$torrent = Torrent::find(Input::get('torrent_id'));

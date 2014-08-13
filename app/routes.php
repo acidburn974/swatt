@@ -113,8 +113,8 @@ Route::group(['prefix' => 'api', 'namespace' => 'Api'], function(){
     Route::any('/torrents/{id}', 'TorrentController@torrent');
     
     // Commentaire sur articles
-    Route::get('/comments/article/{id?}', 'CommentController@getArticleComments');
-    Route::post('/comments/article{id?}', ['uses' => 'CommentController@addArticleComment', 'before' => 'auth']);
+    Route::get('/comments/article', 'CommentController@getArticleComments');
+    Route::post('/comments/article', ['uses' => 'CommentController@addArticleComment', 'before' => 'auth']);
 
     // Commentaire sur torrents
     Route::get('/comments/torrent', 'CommentController@getTorrentComments');
