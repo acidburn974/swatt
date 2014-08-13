@@ -24,7 +24,7 @@
 			</div><!-- /Titre de la categorie -->
 			<!-- Wrapper -->
 			<div class="f-category-table-wrapper col-md-12">
-				<table class="f-category-forums table col-md-12">
+				<table class="f-category-forums table">
 					<!-- Hidden thead -->
 					<thead class="f-category-forums-hidden">
 						<tr>
