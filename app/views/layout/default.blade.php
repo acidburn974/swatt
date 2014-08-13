@@ -18,7 +18,10 @@
     @yield('stylesheets')
 </head>
 <body>
-    <div id="l-header" class="toggle" style="display: none">
+    @if(Auth::check())
+    
+@else
+<div id="l-header" class="toggle" style="display: none">
 <div class="container">
     <div class="col-md-4 centered-form" class="bg-info">
         <h3>{{{ trans('common.login') }}}</h3>
@@ -34,6 +37,7 @@
     </div>
     </div>
 </div>
+@endif
 
     <!-- header -->
     <div id="l-header">
