@@ -285,7 +285,10 @@ class ForumController extends BaseController {
 	/**
 	 * Ferme le topic
 	 *
-	 *
+	 * @access public
+	 * @param $slug Slug du topic
+	 * @param $id Id du topic
+	 * @return Redirect to forum_topic
 	 */
 	public function closeTopic($slug,$id)
 	{
@@ -299,6 +302,10 @@ class ForumController extends BaseController {
 	/**
 	 * Ouvre le topic
 	 *
+	 * @access public
+	 * @param $slug Slug du topic
+	 * @param $id Id du topic
+	 * @return Redirect to forum_topic
 	 */
 	public function openTopic($slug,$id)
 	{
