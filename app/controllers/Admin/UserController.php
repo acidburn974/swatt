@@ -47,4 +47,5 @@ class UserController extends \BaseController {
 
 		return View::make('Admin.user.edit', ['user' => $user, 'groups' => $groups]);
 	}
+
 } ?>

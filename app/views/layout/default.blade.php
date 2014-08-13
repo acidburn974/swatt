@@ -18,6 +18,23 @@
     @yield('stylesheets')
 </head>
 <body>
+    <div id="l-header" class="toggle" style="display: none">
+<div class="container">
+    <div class="col-md-4 centered-form" class="bg-info">
+        <h3>{{{ trans('common.login') }}}</h3>
+        {{ Form::open(array('route' => 'login')) }}
+            <div class="form-group">
+                <label class="l-header-menu-item" for="username">{{ trans('common.username') }}</label>
+                <input id="input-username" type="text" name="username" class="form-control">
+                <label class="l-header-menu-item" for="password">{{ trans('common.password') }}</label>
+                <input id="input-password" type="password" name="password" class="form-control">
+            <button type="submit" class="btn btn-primary btn-xs">{{{ trans('common.login') }}}</button>
+            </div>
+        {{ Form::close() }}
+    </div>
+    </div>
+</div>
+
     <!-- header -->
     <div id="l-header">
         <div class="container">
@@ -52,11 +69,11 @@
                     @if(Auth::user()->group->is_admin == true)
                         <a href="{{ route('admin_home') }}" class="l-header-menu-item">ACP</a>
                     @endif
-                	<a href="{{ route('upload') }}" class="l-header-menu-item">Upload</a>
+                    <a href="{{ route('upload') }}" class="l-header-menu-item">Upload</a>
                     <a href="{{ route('logout') }}" class="l-header-menu-item">{{ trans('traduction.logout') }}</a>
                 @else
-                    <a href="{{ route('login') }}" class="l-header-menu-item">{{ trans('traduction.login') }}</a>
-                    <a href="{{ route('signup') }}" class="l-header-menu-item">{{ trans('traduction.register') }}</a>
+                     <a href="{{ route('login') }}" class="l-header-menu-item">{{ trans('traduction.login') }}</a>
+                     <button type="button" class="btn btn-default btn-xs">Login</button>
                 @endif
             </nav><!-- Bar de navigation -->
         </div>
@@ -64,24 +81,24 @@
 
     <!-- breadcrumb -->
     <div id="l-breadcrumb">
-    	<div class="container">
-    		<div class="col-md-9">
-    			<div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
-					<a href="{{ url('/') }}" itemprop="url" class="l-breadcrumb-item-link">
-						<span itemprop="title" class="l-breadcrumb-item-link-title">{{ trans('traduction.home') }}</span>
-					</a>
-				</div>
-				@yield('breadcrumb')
-    		</div>
-    	</div>
+        <div class="container">
+            <div class="col-md-9">
+                <div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <a href="{{ url('/') }}" itemprop="url" class="l-breadcrumb-item-link">
+                        <span itemprop="title" class="l-breadcrumb-item-link-title">{{ trans('traduction.home') }}</span>
+                    </a>
+                </div>
+                @yield('breadcrumb')
+            </div>
+        </div>
     </div><!-- /breadcrumb -->
 
-	@if(Session::has('message'))
+    @if(Session::has('message'))
     <!-- flash -->
     <div id="l-flash">
-    	<div class="container">
-    		<div class="col-md-12 alert alert-success">{{ Session::pull('message') }}</div>
-    	</div>
+        <div class="container">
+            <div class="col-md-12 alert alert-success">{{ Session::pull('message') }}</div>
+        </div>
     </div><!-- /flash -->
     @endif
 
@@ -131,12 +148,15 @@
 
         </div>
     </div><!-- /footer -->
-
-    
+    <script type="text/javascript" src="{{ url('js/vendor/jquery.min.js') }}"></script>
+    <script>
+        $( "button" ).click(function() {
+          $( ".toggle" ).toggle( "slow" );
+        });
+</script>
     <script type="text/javascript">
     var url = "{{ url('/') }}";
     </script>
-    
     @yield('javascripts')
 </body>
 </html>
