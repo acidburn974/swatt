@@ -72,7 +72,6 @@
                     <a href="{{ route('upload') }}" class="l-header-menu-item">Upload</a>
                     <a href="{{ route('logout') }}" class="l-header-menu-item">{{ trans('traduction.logout') }}</a>
                 @else
-                     <a href="{{ route('login') }}" class="l-header-menu-item">{{ trans('traduction.login') }}</a>
                      <button type="button" class="btn btn-default btn-xs">Login</button>
                 @endif
             </nav><!-- Bar de navigation -->
