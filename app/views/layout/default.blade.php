@@ -193,7 +193,7 @@
     @yield('javascripts')
     <!-- /Scripts -->
 	
-
+	@if(Config::get('debug') == false)
 	<!-- Piwik -->
 	<script type="text/javascript">
 	  var _paq = _paq || [];
@@ -209,5 +209,6 @@
 	</script>
 	<noscript><p><img src="http://stats.ralamoin.com/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
 	<!-- End Piwik Code -->
+	@endif
 </body>
 </html>
