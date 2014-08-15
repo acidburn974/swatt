@@ -61,7 +61,7 @@
                         <input type="password" name="password" class="form-control">
                     </div>
 
-                    <button type="submit" class="btn btn-default">Go !</button>
+                    <button type="submit" class="btn btn-default">Let's go !</button>
                 {{ Form::close() }}
             </div>
         </div> 
@@ -193,22 +193,8 @@
     @yield('javascripts')
     <!-- /Scripts -->
 	
-	@if(Config::get('debug') == false)
-	<!-- Piwik -->
-	<script type="text/javascript">
-	  var _paq = _paq || [];
-	  _paq.push(['trackPageView']);
-	  _paq.push(['enableLinkTracking']);
-	  (function() {
-	    var u=(("https:" == document.location.protocol) ? "https" : "http") + "://stats.ralamoin.com/";
-	    _paq.push(['setTrackerUrl', u+'piwik.php']);
-	    _paq.push(['setSiteId', 1]);
-	    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript';
-	    g.defer=true; g.async=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-	  })();
-	</script>
-	<noscript><p><img src="http://stats.ralamoin.com/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
-	<!-- End Piwik Code -->
+	@if(Config::get('app.debug') == false)
+	   <!-- INSERT YOUR ANALYTICS CODE HERE -->
 	@endif
 </body>
 </html>

@@ -10,6 +10,9 @@ class CommentController extends BaseController {
 
 	/**
 	 * Ajoute un commentaire sur un article
+	 * 
+	 * @param $slug Slug de l'article
+	 * @param $id Id de l'article
 	 *
 	 */
 	public function article($slug, $id)
@@ -35,7 +38,9 @@ class CommentController extends BaseController {
 
 	/**
 	 * Ajoute un commentaire sur un torrent
-	 *
+	 * 
+	 * @param $slug Slug du torrent
+	 * @param $id Id tu torrent
 	 */
 	public function torrent($slug, $id)
 	{

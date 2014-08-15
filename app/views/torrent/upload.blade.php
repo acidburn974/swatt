@@ -60,7 +60,6 @@
 @stop
 
 @section('javascripts')
-<script type="text/javascript" src="{{ url('js/vendor/jquery.min.js') }}"></script>
 <script type="text/javascript" src="{{ url('files/wysibb/jquery.wysibb.min.js') }}"></script>
 <script>
 $(document).ready(function() {

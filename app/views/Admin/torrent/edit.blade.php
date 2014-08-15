@@ -1,5 +1,9 @@
 @extends('layout.admin')
 
+@section('stylesheets')
+<link rel="stylesheet" href="{{ url('files/wysibb/theme/default/wbbtheme.css') }}">
+@stop
+
 @section('content')
 <div class="container">
     <div class="col-md-10">
@@ -21,6 +25,14 @@
 @stop
 
 @section('javascripts')
-<script type="text/javascript" src="{{ url('files/ckeditor_bbcode/ckeditor.js') }}"></script>
-<script>CKEDITOR.replace('upload-form-description');</script>
+<script type="text/javascript" src="{{ url('js/vendor/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ url('files/wysibb/jquery.wysibb.min.js') }}"></script>
+<script>
+$(document).ready(function() {
+    var wbbOpt = {
+        buttons: "bold,italic,underline,strike,sup,sub,|,img,video,link,|,bullist,numlist,|,fontcolor,fontsize,fontfamily,|, justifyleft, justifycenter,justifyright,|, quote,code,table,removeFormat"
+    }
+    $("#upload-form-description").wysibb(wbbOpt);
+});
+</script>
 @stop
