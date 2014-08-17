@@ -10,6 +10,7 @@
     @section('meta_description')
         <meta name="description" content="{{{ Config::get('other.meta_description') }}}">
     @show
+    <meta name="keywords" content="{{{ 'torrents, films, movies, series, tv, show, téléchargement, download, albums, logiciels, jeux, games' }}}">
     
     <link rel="stylesheet" href="{{ url('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url('css/main.css') }}">
