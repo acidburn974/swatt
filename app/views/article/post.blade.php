@@ -5,7 +5,7 @@
 @stop
 
 @section('meta_description')
-<meta name="description" content="{{{ substr(strip_tags($post->content), 0, 256) }}}">
+<meta name="description" content="{{{ substr(strip_tags($post->content), 0, 200) }}}...">
 @stop
 
 @section('breadcrumb')

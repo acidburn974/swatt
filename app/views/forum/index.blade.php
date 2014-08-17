@@ -4,6 +4,11 @@
 <title>Forums  - {{{ Config::get('other.title') }}}</title>
 @stop
 
+@section('meta_description')
+<meta name="description" content="{{{ 'Forum de partage et d\'échange de ' . Config::get('other.title') . '. Téléchargez vos films et séries préférez en torrent. Rejoignez la communauté.' }}}">
+@stop
+
+
 @section('breadcrumb')
 <div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
 	<a href="{{ route('forum_index') }}" itemprop="url" class="l-breadcrumb-item-link">

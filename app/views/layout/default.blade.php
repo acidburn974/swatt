@@ -114,7 +114,7 @@
     <!-- breadcrumb -->
     <div id="l-breadcrumb">
         <div class="container">
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
                     <a href="{{ url('/') }}" itemprop="url" class="l-breadcrumb-item-link">
                         <span itemprop="title" class="l-breadcrumb-item-link-title">{{ trans('traduction.home') }}</span>
