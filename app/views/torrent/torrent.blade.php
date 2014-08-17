@@ -42,7 +42,7 @@
         {{ $torrent->getDescriptionHtml() }}
     </div>
     <div class="torrent-bottom col-md-12">
-        <a href="{{ route('download', array('slug' => $torrent->slug, 'id' => $torrent->id)) }}" class="torrent-bottom-download btn btn-primary">Download</a>
+        <a href="{{ route('download', array('slug' => $torrent->slug, 'id' => $torrent->id)) }}" class="torrent-bottom-download btn btn-primary">{{{ trans('common.download') }}}</a>
         <hr>
         @if($torrent->nfo != null)
             <h4>NFO</h4>

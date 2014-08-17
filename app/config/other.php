@@ -44,7 +44,7 @@ return array(
     | Partage pour tous
     |
     */
-    'freeleech' => false,
+    'freeleech' => true,
 
     /*
     |--------------------------------------------------------------------------

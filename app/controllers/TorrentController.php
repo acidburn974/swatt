@@ -27,7 +27,7 @@ class TorrentController extends BaseController {
 				$this->decodedTorrent = TorrentTools::$decodedTorrent;
 				$this->fileName = TorrentTools::$fileName;
 				$info = Bencode::bdecode_getinfo(getcwd() . '/files/torrents/' . $this->fileName, true);
-				if($this->decodedTorrent['announce'] == route('announce')) // Verifie que l'url d'announce est la bonne
+				if($this->decodedTorrent['announce'] == route('announce', ['passkey' => $user->passkey]) || Config::get('other.freeleech') == true) // Verifie que l'url d'announce est la bonne
 				{
 					$input = Input::all();
 					$category = Category::find(Input::get('category_id'));
@@ -84,7 +84,7 @@ class TorrentController extends BaseController {
 							unset($f);
 						}
 						return Redirect::route('torrent', ['slug' => $torrent->slug, 'id' => $torrent->id])
-						->with('message', 'Now you can download your torrent and re-seed it');
+						->with('message', trans('torrent.your_torrent_is_now_seeding'));
 					}
 				}
 				else
@@ -98,7 +98,7 @@ class TorrentController extends BaseController {
 				}
 			}
 		}
-		return View::make('torrent.upload', array('categories' => Category::all()));
+		return View::make('torrent.upload', array('categories' => Category::all(), 'user' => $user));
 	}
 
 	/**
@@ -294,7 +294,7 @@ class TorrentController extends BaseController {
 		}
 		else
 		{
-			// Delete the last torrent tpm file
+			// Delete the last torrent tmp file
 			if(file_exists(getcwd() . '/files/tmp/' . $tmpFileName))
 			{
 				unlink(getcwd() . '/files/tmp/' . $tmpFileName);

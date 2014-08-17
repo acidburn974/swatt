@@ -30,8 +30,13 @@
 			<div class="form-group">
 				<label for="torrent">Torrent file</label>
 				<input class="upload-form-file" type="file" name="torrent">
-
-				<code>Announce: {{ route('announce') }}</code>
+				
+				@if(Config::get('freeleech') == true)
+					<!-- Pas de passkey si le tracker est en Freeleech -->
+					<code>Announce: {{ route('announce') }}</code>
+				@else
+					<code>Announce: {{ route('announce', ['passkey' => $user->passkey]) }}</code>
+				@endif
 			</div>
 
 			<div class="form-group">
