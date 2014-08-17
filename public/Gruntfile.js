@@ -15,7 +15,7 @@ module.exports = function(grunt) {
         }
       }
     },
-    coffee: {
+/*    coffee: {
         compile: {
             options: {
               bare: true
@@ -25,7 +25,7 @@ module.exports = function(grunt) {
               "js/login.js": "coffee/login.coffee",
             }
         }
-    },
+    },*/
 
     watch: {
       styles: {
