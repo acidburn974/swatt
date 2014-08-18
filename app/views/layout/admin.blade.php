@@ -43,6 +43,7 @@
                     <li><a href="{{ route('admin_torrent_index') }}">Torrents</a></li>
                     <li><a href="{{ route('admin_forum_index') }}">Forums</a></li>
                     <li><a href="{{ route('admin_user_index') }}">{{ trans('traduction.members') }}</a></li>
+                    <li><a href="{{ route('admin_page_index') }}">Pages</a></li>
                 </ul>
             </div>
 

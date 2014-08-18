@@ -241,7 +241,7 @@ class TorrentController extends BaseController {
 	public function torrents()
 	{
 		$torrents = Torrent::orderBy('created_at', 'DESC')->paginate(20);
-		return View::make('page.torrents', array('torrents' => $torrents));
+		return View::make('torrent.torrents', array('torrents' => $torrents));
 	}
 
 	/**

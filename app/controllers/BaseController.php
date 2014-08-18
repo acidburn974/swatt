@@ -8,7 +8,9 @@ class BaseController extends Controller {
 	*
 	*/
 	public function __construct()
-	{
+	{	
+		// Récupère les pages pour l'affichage dans le layout
+		View::share('pages', Page::all());
 	}
 
 	/**

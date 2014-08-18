@@ -5,7 +5,7 @@
  *
  *
  */
-class Page extends BaseController {
+class Page extends Eloquent {
 
 
 } ?>

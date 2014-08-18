@@ -103,7 +103,7 @@
                         <a href="{{ route('admin_home') }}" class="l-header-menu-item">ACP</a>
                     @endif
                     <a href="{{ route('upload') }}" class="l-header-menu-item">Upload</a>
-                    <a href="{{ route('logout') }}" class="l-header-menu-item">{{ trans('traduction.logout') }}</a>
+                    <!-- <a href="{{ route('logout') }}" class="l-header-menu-item">{{ trans('traduction.logout') }}</a> -->
                 @else
                      <a href="{{ route('login') }}" class="l-header-menu-item" id="header-login">{{ trans('traduction.login') }}</a>
                      <a href="{{ route('signup') }}" class="l-header-menu-item" id="header-signup">{{ trans('traduction.signup') }}</a>
@@ -152,6 +152,7 @@
                 <h3 class="l-footer-section-title">{{ trans('traduction.account') }}</h3>
                 <ul>
                     @if(Auth::check())
+                        <li><a href="{{ route('profil', ['username' => Auth::user()->username, 'id' => Auth::user()->id]) }}">{{ Auth::user()->username }}</a></li>
                         <li><a href="{{ route('logout') }}">{{ trans('traduction.logout') }}</a></li>
                     @else
                         <li><a href="{{ route('signup') }}">{{ trans('traduction.register') }}</a></li>
@@ -178,7 +179,17 @@
                     @endforeach
                 </ul>
             </div>
-
+            
+            @if($pages != null)
+            <div class="l-footer-section col-md-2">
+                <h3 class="l-footer-section-title">Pages</h3>
+                <ul>
+                    @foreach($pages as $page)
+                        <li><a href="{{ route('page', ['slug' => $page->slug, 'id' => $page->id]) }}">{{ $page->name }}</a></li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
         </div>
     </div><!-- /footer -->
     

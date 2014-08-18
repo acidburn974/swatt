@@ -23,7 +23,8 @@
                 <div class="clearfix"></div>
             </article>
         @endforeach
-
+        
+        {{ $articles->links() }}
     </div>
 </div>
 @stop
