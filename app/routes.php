@@ -15,7 +15,6 @@ Route::get('/', ['uses' => 'HomeController@home', 'as' => 'home']);
 Route::any('/search', ['uses' => 'HomeController@search', 'as' => 'search']);
 Route::any('/contact', ['uses' => 'HomeController@contact', 'as' => 'contact']);
 
-
 // User
 Route::any('/login', ['uses' => 'UserController@login', 'as' => 'login']);
 Route::any('/signup', ['uses' => 'UserController@signup', 'as' => 'signup']);
@@ -26,6 +25,9 @@ Route::get('/members/{username}.{id}', ['uses' => 'UserController@profil', 'as' 
 Route::post('/members/{username}.{id}/photo', ['uses' => 'UserController@changePhoto', 'as' => 'user_change_photo', 'before' => 'auth']);
 Route::get('/members/{username}.{id}/activate/{token}', ['uses' => 'UserController@activate', 'as' => 'user_activate']);
 Route::post('/members/{username}.{id}/about', ['uses' => 'UserController@changeAbout', 'as' => 'user_change_about', 'before' => 'auth']);
+
+// Page
+Route::get('/p/{slug}.{id}', ['uses' => 'PageController@page', 'as' => 'page']);
 
 // Torrent
 Route::get('/torrents', array('uses' => 'TorrentController@torrents', 'as' => 'torrents'));
@@ -67,16 +69,21 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth|admin', 'namespace' =>
     Route::any('/members/edit/{username}.{id}', array('uses' => 'UserController@edit', 'as' => 'admin_user_edit'));
 
     // Categories
-    Route::any('/categories', array('uses' => 'CategoryController@index', 'as' => 'admin_category_index'));
+    Route::get('/categories', array('uses' => 'CategoryController@index', 'as' => 'admin_category_index'));
     Route::any('/categories/new', array('uses' => 'CategoryController@add', 'as' => 'admin_category_add'));
     Route::any('/categories/edit/{slug}.{id}', array('uses' => 'CategoryController@edit', 'as' => 'admin_category_edit'));
-    Route::any('/categories/delete/{slug}.{id}', array('uses' => 'CategoryController@delete', 'as' => 'admin_category_delete'));
+    Route::get('/categories/delete/{slug}.{id}', array('uses' => 'CategoryController@delete', 'as' => 'admin_category_delete'));
 
-    // Forum+
+    // Forum
     Route::get('/forums', array('uses' => 'ForumController@index', 'as' => 'admin_forum_index'));
     Route::any('/forums/new', array('uses' => 'ForumController@add', 'as' => 'admin_forum_add'));
     Route::any('/forums/edit/{slug}.{id}', array('uses' => 'ForumController@edit', 'as' => 'admin_forum_edit'));
     Route::get('/forums/delete/{slug}.{id}', array('uses' => 'ForumController@delete', 'as' => 'admin_forum_delete'));
+
+    Route::get('/pages', ['uses' => 'PageController@index', 'as' => 'admin_page_index']);
+    Route::any('/pages/new', ['uses' => 'PageController@add', 'as' => 'admin_page_add']);
+    Route::any('/pages/edit/{slug}.{id}', ['uses' => 'PageController@edit', 'as' => 'admin_page_edit']);
+    Route::get('/pages/delete/{slug}.{id}', ['uses' => 'PageController@delete', 'as' => 'admin_page_delete']);
 });
 
 // Forum
