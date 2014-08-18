@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Gestion des pages
+ * Gestion des pages basiques
  *
  */
 class HomeController extends BaseController {
@@ -12,8 +12,9 @@ class HomeController extends BaseController {
 	 */
 	public function home()
 	{
-		$posts = Article::orderBy('created_at', 'DESC')->paginate(5);
-		return View::make('home.home', array('posts' => $posts));
+        $articles = Article::orderBy('created_at', 'DESC')->paginate(5);
+
+        return View::make('home.home', array('articles' => $articles));
 	}
 
 	/**

@@ -17,10 +17,10 @@
 @stop
 
 @section('content')
-<div class="container-fluid">
+<div class="container">
 	<div class="row">
 
-		<div class="torrents col-md-6 box left">
+		<div class="torrents col-md-12 box">
 			<h1 class="torrents-title">{{ trans('traduction.latest_torrents') }}</h1>
 			<table class="torrents-table table table-striped">
 				<thead>
@@ -56,8 +56,6 @@
 
 			{{ $torrents->links() }}
 		</div>
-
-		<div class="col-md-6 right"></div>
 	</div>
 </div>
 @stop
@@ -111,7 +109,4 @@
     	<% }) %>
     </div><!-- Comments -->
 </script>
-
-<script type="text/javascript" src="{{ url('js/torrents.js') }}"></script>
-
 @stop

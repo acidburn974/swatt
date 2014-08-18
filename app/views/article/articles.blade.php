@@ -17,25 +17,28 @@
 @stop
 
 @section('content')
-<div class="box container">
-    <div class="home col-md-12">
-        @foreach($posts as $p)
-            <article class="post">
-                <h2 class="post-title"><a href="{{ route('post', array('slug' => $p->slug, 'id' => $p->id)) }}">{{{ $p->title }}}</a></h2>
-                <div class="post-time"><time datetime="{{ date('d-m-Y h:m', strtotime($p->created_at)) }}">{{ date('d M Y', strtotime($p->created_at)) }}</time></div>
-                <div class="post-brief">
-                    <p>{{{ substr(strip_tags($p->content), 0, 256) }}}...</p>
+<div class="container">
+    <div class="articles col-md-12">
+        
+        @foreach($articles as $a)
+            <article class="articles-article">
+                <div class="articles-article-title"><h1><a href="{{ route('article', ['slug' => $a->slug, 'id' => $a->id]) }}">{{{ $a->title }}}</a></h1></div>
+                <div class="articles-article-date">
+                    <time >{{{ date('d M Y', $a->created_at->getTimestamp())}}}</time>
                 </div>
-                <div class="post-more">
-                    <a href="{{ route('post', array('slug' => $p->slug, 'id' => $p->id)) }}" class="btn btn-default">Read More</a>
+
+                <div class="articles-article-brief">
+                    {{{ substr(strip_tags($a->content), 0, 255) }}}...
                 </div>
+
+                <div class="articles-article-more">
+                    <a href="{{ route('article', ['slug' => $a->slug, 'id' => $a->id]) }}" class="btn btn-default">{{ trans('traduction.read_more') }}</a>
+                </div>
+
                 <div class="clearfix"></div>
             </article>
         @endforeach
+
     </div>
-    <!-- Pagination -->
-    <div class="col-md-12">
-        {{ $posts->links() }}
-    </div><!-- /Pagination -->
 </div>
 @stop

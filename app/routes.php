@@ -40,7 +40,7 @@ Route::get('/categories/{slug}.{id}', ['uses' => 'CategoryController@category', 
 
 // Article
 Route::get('/articles', array('uses' => 'ArticleController@articles', 'as' => 'articles'));
-Route::get('/articles/{slug}.{id}', array('uses' => 'ArticleController@post', 'as' => 'post'));
+Route::get('/articles/{slug}.{id}', array('uses' => 'ArticleController@post', 'as' => 'article'));
 
 // Commentaires
 Route::any('/comment/article/{slug}.{id}', array('uses' => 'CommentController@article', 'as' => 'comment_article', 'before' => 'auth'));

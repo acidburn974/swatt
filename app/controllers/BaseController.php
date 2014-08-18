@@ -2,6 +2,15 @@
 
 class BaseController extends Controller {
 
+	/** 
+	* Constructeur
+	*
+	*
+	*/
+	public function __construct()
+	{
+	}
+
 	/**
 	 * Setup the layout used by the controller.
 	 *
