@@ -75,10 +75,7 @@ $('#input-thread-title').on('input', function() {
 });
 
 $(document).ready(function() {
-    var wbbOpt = {
-        buttons: "bold,italic,underline,strike,sup,sub,|,img,video,link,|,bullist,numlist,|,fontcolor,fontsize,fontfamily,|, justifyleft, justifycenter,justifyright,|, quote,code,table,removeFormat"
-    }
-    $("#new-thread-content").wysibb(wbbOpt);
+    $("#new-thread-content").wysibb();
 });
 </script>
 @stop

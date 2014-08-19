@@ -131,10 +131,7 @@
 <script type="text/javascript" src="{{ url('files/wysibb/jquery.wysibb.min.js') }}"></script>
 <script>
 $(document).ready(function() {
-    var wbbOpt = {
-        buttons: "bold,italic,underline,strike,sup,sub,|,img,video,link,|,bullist,numlist,|,fontcolor,fontsize,fontfamily,|, justifyleft, justifycenter,justifyright,|, quote,code,table,removeFormat"
-    }
-    $("#topic-response").wysibb(wbbOpt);
+    $("#topic-response").wysibb();
 });
 </script>
 @stop
