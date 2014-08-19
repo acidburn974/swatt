@@ -11,7 +11,7 @@
 @section('breadcrumb')
 <div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
 	<a href="{{ route('members') }}" itemprop="url" class="l-breadcrumb-item-link">
-		<span itemprop="title" class="l-breadcrumb-item-link-title">Members</span>
+		<span itemprop="title" class="l-breadcrumb-item-link-title">{{{ trans('common.members') }}}</span>
 	</a>
 </div>
 <div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
