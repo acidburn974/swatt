@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Chargé de la récupération de mot de passe
+ *
+ *
+ */
 class RemindersController extends Controller {
 
 	/**
@@ -9,7 +14,8 @@ class RemindersController extends Controller {
 	 */
 	public function getRemind()
 	{
-		return View::make('password.remind');
+		// Dir User
+		return View::make('user.remind');
 	}
 
 	/**
@@ -38,8 +44,8 @@ class RemindersController extends Controller {
 	public function getReset($token = null)
 	{
 		if (is_null($token)) App::abort(404);
-
-		return View::make('password.reset')->with('token', $token);
+		// Dir User
+		return View::make('user.reset')->with('token', $token);
 	}
 
 	/**
