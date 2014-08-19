@@ -169,4 +169,20 @@ class UserController extends BaseController {
         return Redirect::route('profil', ['username' => $user->username, 'id' => $user->id]);
     }
 
+    /**
+     * Permet à l'utilisateur de modifier son mot de passe
+     *
+     *
+     */
+    public function lostPassword($token = null)
+    {
+        if(Request::isMethod('post'))
+        {
+            $user = User::where('email', '=', Input::get('email'))->first();
+
+
+        }
+
+        return View::make('user.lost_password');
+    }
 } ?>

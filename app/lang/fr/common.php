@@ -13,5 +13,7 @@ return array(
 	'name' => 'Nom',
 	'times' => 'fois', // Times completed (fois)
 	'added_on' => 'Ajouté le',
+	'lost-password' => 'Mot de passe oublié ?',
+	'recover-my-password' => 'Récupération de mot de passe',
 );
 ?>

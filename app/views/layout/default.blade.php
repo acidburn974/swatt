@@ -135,6 +135,25 @@
     </div><!-- /flash -->
     @endif
 
+    @if(Session::has('status'))
+    <!-- Status -->
+    <div id="l-flash">
+        <div class="container">
+            <div class="col-md-12 alert alert-success">{{ Session::pull('status') }}</div>
+        </div>
+    </div><!-- Status -->
+    @endif
+    
+    
+    @if(Session::has('error'))
+    <!-- Error -->
+    <div id="l-flash">
+        <div class="container">
+            <div class="col-md-12 alert alert-danger">{{ Session::pull('error') }}</div>
+        </div>
+    </div><!-- /Error -->
+    @endif 
+
     <!-- content -->
     <div id="l-content">
         @yield('content')
@@ -143,11 +162,13 @@
     <!-- footer -->
     <div id="l-footer">
         <div class="container">
+            <!-- Info tracker -->
             <div class="l-footer-section col-md-3">
                 <h3 class="l-footer-section-title">{{{ Config::get('other.title') }}}</h3>
                 <footer>{{{ Config::get('other.meta_description') }}}</footer>
-            </div>
+            </div><!-- /Info tracker -->
 
+            <!-- Compte -->
             <div class="l-footer-section col-md-2">
                 <h3 class="l-footer-section-title">{{ trans('traduction.account') }}</h3>
                 <ul>
@@ -157,10 +178,12 @@
                     @else
                         <li><a href="{{ route('signup') }}">{{ trans('traduction.register') }}</a></li>
                         <li><a href="{{ route('login') }}">{{ trans('traduction.login') }}</a></li>
+                        <li><a href="{{ route('reminder_get_remind') }}">{{ trans('common.lost-password') }}</a></li>
                     @endif
                 </ul>
-            </div>
+            </div><!-- /Compte -->
 
+            <!-- Communauté -->
             <div class="l-footer-section col-md-2">
                 <h3 class="l-footer-section-title">{{ trans('traduction.community') }}</h3>
                 <ul>
@@ -169,8 +192,9 @@
                     <li><a href="{{ route('members') }}">{{ trans('traduction.members') }}</a></li>
                     <li><a href="{{ route('contact') }}">Contact</a></li>
                 </ul>
-            </div>
+            </div><!-- /Communauté -->
 
+            <!-- Categories -->
             <div class="l-footer-section col-md-2">
                 <h3 class="l-footer-section-title">{{ trans('traduction.categories') }}</h3>
                 <ul>
@@ -178,9 +202,10 @@
                         <li><a href="{{ route('category', array('slug' => $category->slug, 'id' => $category->id)) }}">{{{ $category->name }}} ({{ $category->num_torrent }})</a></li>
                     @endforeach
                 </ul>
-            </div>
-            
-            @if($pages != null)
+            </div><!-- /Categories -->
+
+            <!-- Page -->
+            @if(isset($pages) && $pages->isEmpty() == false)
             <div class="l-footer-section col-md-2">
                 <h3 class="l-footer-section-title">Pages</h3>
                 <ul>
@@ -189,7 +214,7 @@
                     @endforeach
                 </ul>
             </div>
-            @endif
+            @endif<!-- /Page -->
         </div>
     </div><!-- /footer -->
     
@@ -207,6 +232,8 @@
 	
 	@if(Config::get('app.debug') == false)
 	   <!-- INSERT YOUR ANALYTICS CODE HERE -->
+    @else
+        <!-- INSERT CODE FOR DEBUG HERE -->
 	@endif
 </body>
 </html>

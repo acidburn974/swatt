@@ -13,6 +13,7 @@ return array(
 	'name' => 'Name',
 	'times' => 'times', // Times completed (fois)
 	'added_on' => 'Added on',
-	
+	'lost-password' => 'Forgot your password ?',
+	'recover-my-password' => 'Recover my password',
 	); 
 ?>
