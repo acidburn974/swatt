@@ -99,9 +99,6 @@
                 <a href="{{ route('torrents') }}" class="l-header-menu-item">Torrents</a>
                 <a href="{{ route('forum_index') }}" class="l-header-menu-item">Forums</a>
                 @if(Auth::check())
-                    @if(Auth::user()->group->is_admin == true)
-                        <a href="{{ route('admin_home') }}" class="l-header-menu-item">ACP</a>
-                    @endif
                     <a href="{{ route('upload') }}" class="l-header-menu-item">Upload</a>
                     <!-- <a href="{{ route('logout') }}" class="l-header-menu-item">{{ trans('traduction.logout') }}</a> -->
                 @else
@@ -174,6 +171,9 @@
                 <ul>
                     @if(Auth::check())
                         <li><a href="{{ route('profil', ['username' => Auth::user()->username, 'id' => Auth::user()->id]) }}">{{ Auth::user()->username }}</a></li>
+                        @if(Auth::user()->group->is_admin == true)
+                            <a href="{{ route('admin_home') }}" class="l-header-menu-item">Admin Control Panel</a>
+                        @endif
                         <li><a href="{{ route('logout') }}">{{ trans('traduction.logout') }}</a></li>
                     @else
                         <li><a href="{{ route('signup') }}">{{ trans('traduction.register') }}</a></li>
