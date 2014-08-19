@@ -26,6 +26,12 @@ Route::post('/members/{username}.{id}/photo', ['uses' => 'UserController@changeP
 Route::get('/members/{username}.{id}/activate/{token}', ['uses' => 'UserController@activate', 'as' => 'user_activate']);
 Route::post('/members/{username}.{id}/about', ['uses' => 'UserController@changeAbout', 'as' => 'user_change_about', 'before' => 'auth']);
 
+// RemindersController (Récupération de mot de passe)
+Route::get('/lost-password', ['uses' => 'RemindersController@getRemind', 'as' => 'reminder_get_remind']);
+Route::post('/lost-password', ['uses' => 'RemindersController@postRemind', 'as' => 'reminder_post_remind']);
+Route::get('/password/reset/{token}', ['uses' => 'RemindersController@getReset', 'as' => 'reminder_get_passwordReset']);
+Route::post('/password/reset', ['uses' => 'RemindersController@postReset', 'as' => 'reminder_post_passwordReset']);
+
 // Page
 Route::get('/p/{slug}.{id}', ['uses' => 'PageController@page', 'as' => 'page']);
 
