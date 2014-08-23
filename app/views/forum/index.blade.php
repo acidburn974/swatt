@@ -1,7 +1,7 @@
 @extends('layout.default')
 
 @section('title')
-<title>Forums  - {{{ Config::get('other.title') }}}</title>
+<title>Forums - {{{ Config::get('other.title') }}}</title>
 @stop
 
 @section('meta_description')
@@ -21,7 +21,7 @@
 <div class="box container">
 	@foreach($categories as $c)
 		<!-- Verifie les permissions du groupe et du forum -->
-		@if($c->getPermission() != null && $c->getPermission()->show_forum == true && $c->getForumsInCategory()->count() > 0) 
+		@if($c->getPermission() != null && $c->getPermission()->show_forum == true && $c->getForumsInCategory()->count() > 0)
 		<div class="f-category" id="category_{{ $c->id }}">
 			<!-- Titre de la categorie -->
 			<div class="f-category-title col-md-12">
@@ -47,7 +47,7 @@
 								<td class="f-category-forums-icon">
 									<img src="{{ url('img/f_icon_read.png') }}">
 								</td><!-- /Icon -->
-								
+
 								<!-- Forum title -->
 								<td>
 									<h4 class="f-category-forums-title">
@@ -70,7 +70,7 @@
 									<ul class="f-category-forums-last-post">
 										<li class="f-category-forums-last-post-item"><a href="{{ route('forum_topic', array('slug' => $f->last_topic_slug, 'id' => $f->last_topic_id)) }}">{{ $f->last_topic_name }}</a></li>
 										<li class="f-category-forums-last-post-item">
-											By 
+											By
 											<a href="{{ route('profil', ['username' => $f->last_post_user_username, 'id' => $f->last_post_user_id]) }}">{{ $f->last_post_user_username }}</a>
 										</li>
 										<li class="f-category-forums-last-post-item">
