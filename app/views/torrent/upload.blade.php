@@ -10,6 +10,11 @@
 
 @section('breadcrumb')
 <div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+    <a href="{{ route('torrents') }}" itemprop="url" class="l-breadcrumb-item-link">
+        <span itemprop="title" class="l-breadcrumb-item-link-title">Torrents</span>
+    </a>
+</div>
+<div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
     <a href="{{ url('/upload') }}" itemprop="url" class="l-breadcrumb-item-link">
         <span itemprop="title" class="l-breadcrumb-item-link-title">Upload</span>
     </a>
@@ -23,19 +28,14 @@
 		{{ Form::open(['route' => 'upload', 'files' => true, 'class' => 'upload-form']) }}
 
 			<div class="form-group">
-				<label for="name">Title</label>
-				<input type="text" name="name" class="form-control">
-			</div>
-
-			<div class="form-group">
 				<label for="torrent">Torrent file</label>
 				<input class="upload-form-file" type="file" name="torrent">
-				
+
 				@if(Config::get('freeleech') == true)
 					<!-- Pas de passkey si le tracker est en Freeleech -->
-					<code>Announce: {{ route('announce') }}</code>
+					<code>Announce URL: {{ route('announce') }}</code>
 				@else
-					<code>Announce: {{ route('announce', ['passkey' => $user->passkey]) }}</code>
+					<code>Announce URL: {{ route('announce', ['passkey' => $user->passkey]) }}</code>
 				@endif
 			</div>
 
@@ -43,6 +43,11 @@
 				<label for="nfo">NFO file</label>
 				<input class="upload-form-file" type="file" name="nfo">
 			</div>
+
+            <div class="form-group">
+                <label for="name">Title</label>
+                <input type="text" name="name" class="form-control">
+            </div>
 
 			<div class="form-group">
 				<label for="category_id">Category</label>
@@ -68,9 +73,7 @@
 <script type="text/javascript" src="{{ url('files/wysibb/jquery.wysibb.min.js') }}"></script>
 <script>
 $(document).ready(function() {
-    var wbbOpt = {
-        buttons: "bold,italic,underline,strike,sup,sub,|,img,video,link,|,bullist,numlist,|,fontcolor,fontsize,fontfamily,|, justifyleft, justifycenter,justifyright,|, quote,code,table,removeFormat"
-    }
+    var wbbOpt = { }
     $("#upload-form-description").wysibb(wbbOpt);
 });
 </script>

@@ -11,7 +11,7 @@
         <meta name="description" content="{{{ Config::get('other.meta_description') }}}">
     @show
     <meta name="keywords" content="{{{ 'torrents, films, movies, series, tv, show, téléchargement, download, albums, logiciels, jeux, games' }}}">
-    
+
     <link rel="stylesheet" href="{{ url('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url('css/main.css') }}">
     <link rel="stylesheet" href="{{ url('css/font-awesome.min.css') }}">
@@ -42,7 +42,7 @@
         </div>
     </div><!-- /Top login -->
     <!-- Top Signup -->
-    <div id="l-topsignup"> 
+    <div id="l-topsignup">
         <div class="container">
             <div class="col-md-4  centered-form">
                 <p>{{{ trans('common.signup') }}}</p>
@@ -65,7 +65,7 @@
                     <button type="submit" class="btn btn-default">Let's go !</button>
                 {{ Form::close() }}
             </div>
-        </div> 
+        </div>
     </div> <!-- /Top Signup -->
     @endif
 
@@ -140,8 +140,8 @@
         </div>
     </div><!-- Status -->
     @endif
-    
-    
+
+
     @if(Session::has('error'))
     <!-- Error -->
     <div id="l-flash">
@@ -149,30 +149,23 @@
             <div class="col-md-12 alert alert-danger">{{ Session::pull('error') }}</div>
         </div>
     </div><!-- /Error -->
-    @endif 
+    @endif
 
     <!-- content -->
     <div id="l-content">
         @yield('content')
     </div><!-- /content -->
 
-    <!-- footer -->
-    <div id="l-footer">
+    <div id="l-prefooter">
         <div class="container">
-            <!-- Info tracker -->
-            <div class="l-footer-section col-md-3">
-                <h3 class="l-footer-section-title">{{{ Config::get('other.title') }}}</h3>
-                <footer>{{{ Config::get('other.meta_description') }}}</footer>
-            </div><!-- /Info tracker -->
-
             <!-- Compte -->
-            <div class="l-footer-section col-md-2">
-                <h3 class="l-footer-section-title">{{ trans('traduction.account') }}</h3>
+            <div class="l-prefooter-section col-md-2">
+                <h3 class="l-prefooter-section-title">{{ trans('traduction.account') }}</h3>
                 <ul>
                     @if(Auth::check())
                         <li><a href="{{ route('profil', ['username' => Auth::user()->username, 'id' => Auth::user()->id]) }}">{{ Auth::user()->username }}</a></li>
                         @if(Auth::user()->group->is_admin == true)
-                            <a href="{{ route('admin_home') }}" class="l-header-menu-item">Admin Control Panel</a>
+                            <a href="{{ route('admin_home') }}">Admin Control Panel</a>
                         @endif
                         <li><a href="{{ route('logout') }}">{{ trans('traduction.logout') }}</a></li>
                     @else
@@ -184,8 +177,8 @@
             </div><!-- /Compte -->
 
             <!-- Communauté -->
-            <div class="l-footer-section col-md-2">
-                <h3 class="l-footer-section-title">{{ trans('traduction.community') }}</h3>
+            <div class="l-prefooter-section col-md-2">
+                <h3 class="l-prefooter-section-title">{{ trans('traduction.community') }}</h3>
                 <ul>
                     <li><a href="{{ route('articles') }}">News</a></li>
                     <li><a href="{{ route('forum_index') }}">Forums</a></li>
@@ -195,8 +188,8 @@
             </div><!-- /Communauté -->
 
             <!-- Categories -->
-            <div class="l-footer-section col-md-2">
-                <h3 class="l-footer-section-title">{{ trans('traduction.categories') }}</h3>
+            <div class="l-prefooter-section col-md-2">
+                <h3 class="l-prefooter-section-title">{{ trans('traduction.categories') }}</h3>
                 <ul>
                     @foreach(Category::all() as $category)
                         <li><a href="{{ route('category', array('slug' => $category->slug, 'id' => $category->id)) }}">{{{ $category->name }}} ({{ $category->num_torrent }})</a></li>
@@ -206,8 +199,8 @@
 
             <!-- Page -->
             @if(isset($pages) && $pages->isEmpty() == false)
-            <div class="l-footer-section col-md-2">
-                <h3 class="l-footer-section-title">Pages</h3>
+            <div class="l-prefooter-section col-md-2">
+                <h3 class="l-prefooter-section-title">Pages</h3>
                 <ul>
                     @foreach($pages as $page)
                         <li><a href="{{ route('page', ['slug' => $page->slug, 'id' => $page->id]) }}">{{ $page->name }}</a></li>
@@ -216,20 +209,31 @@
             </div>
             @endif<!-- /Page -->
         </div>
+    </div>
+
+    <!-- footer -->
+    <div id="l-footer">
+        <div class="container">
+            <!-- Info tracker -->
+            <div class="l-footer-section col-md-12">
+                <h3 class="l-footer-section-title">{{{ Config::get('other.title') }}}</h3>
+                <footer>{{{ Config::get('other.meta_description') }}}</footer>
+            </div><!-- /Info tracker -->
+        </div>
     </div><!-- /footer -->
-    
+
     <!-- Scripts -->
     <script type="text/javascript">
         var url = "{{ url('/') }}";
     </script>
-    
+
     <script type="text/javascript" src="{{ url('js/vendor/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ url('js/login.js') }}"></script>
     <script type="text/javascript" src="{{ url('js/signup.js') }}"></script>
-    
+
     @yield('javascripts')
     <!-- /Scripts -->
-	
+
 	@if(Config::get('app.debug') == false)
 	   <!-- INSERT YOUR ANALYTICS CODE HERE -->
     @else

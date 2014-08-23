@@ -1,7 +1,12 @@
-<?php 
+<?php
 
 class Post extends Eloquent {
 
+	/**
+	 * Règles de validation
+	 *
+	 *
+	 */
 	public $rules = array(
 		'content' => 'required',
 		'user_id' => 'required',
@@ -28,7 +33,7 @@ class Post extends Eloquent {
 	}
 
 	/**
-	 * Parle le content et retourne du HTML valide
+	 * Parse le content et retourne du HTML valide
 	 *
 	 */
 	public function getContentHtml()

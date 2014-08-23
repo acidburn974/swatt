@@ -58,6 +58,16 @@ class Torrent extends Eloquent {
 	}
 
 	/**
+	 * Has many peers
+	 *
+	 *
+	 */
+	public function peers()
+	{
+		return $this->hasMany('Peer');
+	}
+
+	/**
 	 * Formate la sortie de la description
 	 *
 	 */
