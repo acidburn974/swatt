@@ -5,7 +5,7 @@
 @stop
 
 @section('meta_description')
-<meta name="description" content="{{{ 'Read the topic ' . $topic->name }}}">
+<meta name="description" content="{{{ trans('forum.read-topic') . ' ' . $topic->name }}}">
 @stop
 
 @section('stylesheets')
@@ -49,11 +49,11 @@
                     @if($topic->state == "close")
                         <a href="{{ route('forum_open', ['slug' => $topic->slug, 'id' => $topic->id, ])}}" class="btn btn-success">Open this topic</a>
                     @else
-                        <a href="{{ route('forum_close', ['slug' => $topic->slug, 'id' => $topic->id, ])}}" class="btn btn-success">Mark as resolved</a>
+                        <a href="{{ route('forum_close', ['slug' => $topic->slug, 'id' => $topic->id, ])}}" class="btn btn-success">{{{ trans('forum.mark-as-resolved') }}}</a>
                     @endif
                 @endif
                 @if(Auth::check() && Auth::user()->group->is_modo)
-                    <a href="{{ route('forum_delete_topic', ['slug' => $topic->slug, 'id' => $topic->id]) }}" class="btn btn-danger">Delete this topic</a>
+                    <a href="{{ route('forum_delete_topic', ['slug' => $topic->slug, 'id' => $topic->id]) }}" class="btn btn-danger">{{{ trans('forum.delete-topic') }}}</a>
                 @endif
             </p>
 
@@ -75,7 +75,7 @@
                     </div>
 
                     <aside class="col-md-2 post-info">
-                        
+
                         @if($p->user->image != null)
                             <img src="{{ url('files/img/' . $p->user->image) }}" alt="{{{ $p->user->username }}}" class="members-table-img img-thumbnail">
                         @else

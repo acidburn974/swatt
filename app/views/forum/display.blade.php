@@ -4,6 +4,10 @@
 <title>{{{ $forum->name }}} - Forums - {{{ Config::get('other.title') }}}</title>
 @stop
 
+@section('meta_description')
+<meta name="description" content="{{{ trans('forum.display-forum') . $forum->name }}}">
+@stop
+
 @section('breadcrumb')
 <div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
     <a href="{{ route('forum_index') }}" itemprop="url" class="l-breadcrumb-item-link">

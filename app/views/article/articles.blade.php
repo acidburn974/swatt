@@ -5,7 +5,7 @@
 @stop
 
 @section('meta_description')
-<meta name="description" content="{{{ 'Articles and news on the tracker and the community' }}}">
+<meta name="description" content="{{{ trans('articles.meta-articles') }}}">
 @stop
 
 @section('breadcrumb')
@@ -19,7 +19,7 @@
 @section('content')
 <div class="container">
     <div class="articles col-md-12">
-        
+
         @foreach($articles as $a)
             <article class="articles-article">
                 <div class="articles-article-title"><h1><a href="{{ route('article', ['slug' => $a->slug, 'id' => $a->id]) }}">{{{ $a->title }}}</a></h1></div>
@@ -32,13 +32,13 @@
                 </div>
 
                 <div class="articles-article-more">
-                    <a href="{{ route('article', ['slug' => $a->slug, 'id' => $a->id]) }}" class="btn btn-default">{{ trans('traduction.read_more') }}</a>
+                    <a href="{{ route('article', ['slug' => $a->slug, 'id' => $a->id]) }}" class="btn btn-default">{{ trans('articles.read-more') }}</a>
                 </div>
 
                 <div class="clearfix"></div>
             </article>
         @endforeach
-        
+
         {{ $articles->links() }}
     </div>
 </div>

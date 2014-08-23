@@ -4,6 +4,10 @@
 <title>{{{ $c->name }}} - Forums - {{{ Config::get('other.title') }}}</title>
 @stop
 
+@section('meta_description')
+<meta name="description" content="{{{ trans('forum.meta-category') . ' ' . $c->name }}}">
+@stop
+
 @section('breadcrumb')
 <div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
     <a href="{{ route('forum_index') }}" itemprop="url" class="l-breadcrumb-item-link">
@@ -24,7 +28,7 @@
         <div class="f-category-title col-md-12">
             <h2><a href="{{ route('forum_category', array('slug' => $c->slug, 'id' => $c->id)) }}">{{ $c->name }}</a></h2>
         </div><!-- Titre de la categorie -->
-            
+
         <div class="f-category-table-wrapper col-md-12">
             <table class="f-category-forums table col-md-12">
                 <thead class="f-category-forums-hidden">
@@ -45,7 +49,7 @@
                             <!-- Forum title -->
                             <td>
                                 <h4 class="f-category-forums-title">
-                                    <a href="{{ route('forum_display', array('slug' => $f->slug, 'id' => $f->id)) }}">{{{ $f->name }}}</a> 
+                                    <a href="{{ route('forum_display', array('slug' => $f->slug, 'id' => $f->id)) }}">{{{ $f->name }}}</a>
                                 </h4>
                                 <br>
                                 <p class="f-category-forums-description">{{{ $f->description }}}</p>
@@ -62,7 +66,7 @@
                                 <ul class="f-category-forums-last-post">
                                     <li class="f-category-forums-last-post-item"><a href="{{ route('forum_topic', array('slug' => $f->last_topic_slug, 'id' => $f->last_topic_id)) }}">{{ $f->last_topic_name }}</a></li>
                                     <li class="f-category-forums-last-post-item">
-                                        By 
+                                        By
                                         <a href="{{ route('profil', ['username' => $f->last_post_user_username, 'id' => $f->last_post_user_id]) }}">{{ $f->last_post_user_username }}</a>
                                     </li>
                                     <li class="f-category-forums-last-post-item">
