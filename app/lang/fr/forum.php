@@ -12,7 +12,7 @@ return array(
 	'topic-title' => 'Titre du topic',
 	'send-new-topic' => 'Sauvegarder la discussion',
 	'read-topic' => 'Lire le sujet',
-	'mark-as-resolved' => 'Marqué comme résolu / Fermer',
+	'mark-as-resolved' => 'Marquer comme résolu / Fermer',
 	'delete-topic' => 'Supprimer ce sujet',
 	'display-forum' => 'Affiche les sujets dans ',
 	);

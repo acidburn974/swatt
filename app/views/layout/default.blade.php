@@ -1,21 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html prefix="og: http://ogp.me/ns#">
 <head>
     <meta charset="UTF-8">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
     @section('title')
         <title>{{{ Config::get('other.subTitle') }}} - {{{ Config::get('other.title') }}}</title>
     @show
-    @section('meta_description')
+
+    <!-- Meta -->
+    @section('meta')
         <meta name="description" content="{{{ Config::get('other.meta_description') }}}">
+        <meta name="keywords" content="{{{ 'torrents, films, movies, series, tv, show, téléchargement, download, albums, logiciels, jeux, games' }}}">
+
+        <meta property="og:title" content="{{{ Config::get('other.title') }}}">
+        <meta property="og:type" content="website">
+        <meta property="og:image" content="{{ url('/img/rlm.png') }}">
+        <meta property="og:url" content="{{ url('/') }}">
     @show
-    <meta name="keywords" content="{{{ 'torrents, films, movies, series, tv, show, téléchargement, download, albums, logiciels, jeux, games' }}}">
+    <!-- /Meta -->
+
+    <link rel="shortcut icon" href="{{ url('/favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url('/favicon.ico') }}" type="image/x-icon">
 
     <link rel="stylesheet" href="{{ url('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url('css/main.css') }}">
     <link rel="stylesheet" href="{{ url('css/font-awesome.min.css') }}">
-
+    
     @yield('stylesheets')
 </head>
 <body>

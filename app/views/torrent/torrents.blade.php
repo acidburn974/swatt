@@ -4,8 +4,8 @@
 <title>Torrents - {{{ Config::get('other.title') }}}</title>
 @stop
 
-@section('meta_description')
-<meta name="description" content="{{{ 'Liste des torrents disponible gratuitement et en illimité sur' . Config::get('other.title') }}}">
+@section('meta')
+<meta name="description" content="{{{ 'Liste des torrents disponible gratuitement et en illimité sur ' . Config::get('other.title') }}}">
 @stop
 
 @section('breadcrumb')

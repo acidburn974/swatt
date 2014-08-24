@@ -21,6 +21,11 @@ class TorrentController extends BaseController {
 		$user = Auth::user();
 		if(Request::isMethod('post'))
 		{
+			if( ! Input::hasFile('torrent'))
+			{
+				return Redirect::route('upload')->with('message', 'You must provide a torrent for the upload');
+			}
+
 			if(Input::file('torrent')->getError() == 0 && Input::file('torrent')->getClientOriginalExtension() == 'torrent')
 			{
 				TorrentTools::moveAndDecode(Input::file('torrent'));
@@ -49,7 +54,6 @@ class TorrentController extends BaseController {
 					{
 						$torrent->nfo = '';
 					}
-					//$torrent->created_by = $this->decodedTorrent['created by'];
 					$torrent->category_id = $category->id;
 					$torrent->user_id = $user->id;
 					$torrent->leechers = 0;
@@ -63,7 +67,7 @@ class TorrentController extends BaseController {
 						{
 							unlink(getcwd() . '/files/torrents/' . $this->fileName);
 						}
-						Session::put('message', 'An error has occured may ben this file is already online ?');
+						Session::put('message', 'An error has occured may bee this file is already online ?');
 					}
 					else
 					{
@@ -83,8 +87,7 @@ class TorrentController extends BaseController {
 							$f->save();
 							unset($f);
 						}
-						return Redirect::route('torrent', ['slug' => $torrent->slug, 'id' => $torrent->id])
-						->with('message', trans('torrent.your_torrent_is_now_seeding'));
+						return Redirect::route('torrent', ['slug' => $torrent->slug, 'id' => $torrent->id])->with('message', trans('torrent.your_torrent_is_now_seeding'));
 					}
 				}
 				else
@@ -159,7 +162,7 @@ class TorrentController extends BaseController {
 		// Finding peers for this torrent on the database
 		$peers = Peer::whereRaw('torrent_id = ?', array($torrent->id))->get()->toArray();
 
-		// Removing useless data from the 
+		// Removing useless data from the
 		foreach($peers as $k => $p)
 		{
 			unset($p['uploaded']); unset($p['downloaded']); unset($p['left']); unset($p['seeder']); unset($p['connectable']); unset($p['user_id']); unset($p['torrent_id']); unset($p['client']);unset($p['created_at']); unset($p['updated_at']);
@@ -279,7 +282,7 @@ class TorrentController extends BaseController {
 		{
 			$user = null;
 		}
-		
+
 		// Find th etorrent in the
 		$torrent = Torrent::find($id);
 
@@ -322,7 +325,7 @@ class TorrentController extends BaseController {
 				return Redirect::to('/login');
 			}
 		}
-		
+
 		$fileToDownload = Bencode::bencode($dict);
 		file_put_contents(getcwd() . '/files/tmp/' . $tmpFileName, $fileToDownload);
 		return Response::download(getcwd() . '/files/tmp/' . $tmpFileName);

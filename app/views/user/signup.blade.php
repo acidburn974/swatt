@@ -4,7 +4,7 @@
 <title>{{{ trans('common.signup') }}} - {{ Config::get('other.title') }}</title>
 @stop
 
-@section('meta_description')
+@section('meta')
 <meta name="description" content="Signup to the torrent tracker in less than 30s. Get access to exclusive HD movies and tv shows.">
 @stop
 

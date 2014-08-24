@@ -4,7 +4,7 @@
 <title>{{{ trans('forum.create-new-topic') }}} - {{{ Config::get('other.title') }}}</title>
 @stop
 
-@section('meta_description')
+@section('meta')
 <meta name="description" content="{{{ 'Create a new topic in ' . $forum->name }}}">
 @stop
 

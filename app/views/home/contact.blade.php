@@ -4,7 +4,7 @@
 	<title>Contact - {{{ Config::get('other.title') }}}</title>
 @stop
 
-@section('meta_description')
+@section('meta')
 	<meta name="description" content="Page de contact de {{{ Config::get('other.title') }}}. {{{ 'Une requête ? Une question ? Contactez nous ici !' }}}">
 @stop
 

@@ -1,6 +1,6 @@
 <?php
 
-class Forum extends \Eloquent {
+class Forum extends Eloquent {
 
 	/**
 	 * Has many topics

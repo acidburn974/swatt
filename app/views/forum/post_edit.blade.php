@@ -4,7 +4,7 @@
 <title>Edit post - {{{ $topic->name }}} - {{{ Config::get('other.title') }}}</title>
 @stop
 
-@section('meta_description')
+@section('meta')
 <meta name="description" content="{{{ 'Edit post in ' . $forum->name }}}">
 @stop
 
