@@ -40,6 +40,9 @@ class Post extends Eloquent {
 	{
 		$code = new Decoda\Decoda($this->content);
 		$code->defaults();
+		$code->setXhtml(false);
+		$code->setStrict(false);
+		$code->setLineBreaks(true);
 		return $code->parse();
 	}
 } ?>

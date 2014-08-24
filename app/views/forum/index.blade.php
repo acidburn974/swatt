@@ -5,7 +5,7 @@
 @stop
 
 @section('meta_description')
-<meta name="description" content="{{{ 'Forum de partage et d\'échange de ' . Config::get('other.title') . '. Téléchargez vos films et séries préférez en torrent. Rejoignez la communauté.' }}}">
+<meta name="description" content="{{{ 'Forum de partage et d\'échange de ' . Config::get('other.title') . '. Téléchargez vos films et séries préférer en torrent. Rejoignez la communauté.' }}}">
 @stop
 
 
