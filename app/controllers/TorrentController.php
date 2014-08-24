@@ -148,12 +148,18 @@ class TorrentController extends BaseController {
 		}
 
 		// Deleting old peers from the database
-		Peer::whereRaw('TIME_TO_SEC(NOW() - updated_at) > 300')->delete();
+		foreach(Peer::all() as $peer)
+		{
+			if((time() - strtotime($peer->updated_at)) > (5 * 60))
+			{
+				$peer->delete();
+			}
+		}
 
 		// Finding peers for this torrent on the database
 		$peers = Peer::whereRaw('torrent_id = ?', array($torrent->id))->get()->toArray();
 
-		// Removing useless data from the
+		// Removing useless data from the 
 		foreach($peers as $k => $p)
 		{
 			unset($p['uploaded']); unset($p['downloaded']); unset($p['left']); unset($p['seeder']); unset($p['connectable']); unset($p['user_id']); unset($p['torrent_id']); unset($p['client']);unset($p['created_at']); unset($p['updated_at']);
@@ -273,7 +279,7 @@ class TorrentController extends BaseController {
 		{
 			$user = null;
 		}
-
+		
 		// Find th etorrent in the
 		$torrent = Torrent::find($id);
 
@@ -316,7 +322,7 @@ class TorrentController extends BaseController {
 				return Redirect::to('/login');
 			}
 		}
-
+		
 		$fileToDownload = Bencode::bencode($dict);
 		file_put_contents(getcwd() . '/files/tmp/' . $tmpFileName, $fileToDownload);
 		return Response::download(getcwd() . '/files/tmp/' . $tmpFileName);
