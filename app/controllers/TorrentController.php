@@ -7,99 +7,92 @@ use Illuminate\Support\Str;
 /**
  * Gestion des torrents
  *
- * @version $Id$
  *
  */
 class TorrentController extends BaseController {
 
 	/**
 	 * Upload un torrent
+	 * 
+	 * @access public
+	 * @return View torrent.upload
 	 *
 	 */
 	public function upload()
 	{
 		$user = Auth::user();
+		// Post et fichier upload
 		if(Request::isMethod('post'))
 		{
-			if( ! Input::hasFile('torrent'))
+			// No torrent file uploaded OR an Error has occurred
+			if(Input::hasFile('torrent') == false && Input::file('torrent')->getError() != 0 && Input::file('torrent')->getClientOriginalExtension() != 'torrent')
 			{
-				return Redirect::route('upload')->with('message', 'You must provide a torrent for the upload');
+				Session::put('message', 'You must provide a torrent for the upload');
+				return View::make('torrent.upload', array('categories' => Category::all(), 'user' => $user));
 			}
+			// Deplace et decode le torrent temporairement
+			TorrentTools::moveAndDecode(Input::file('torrent'));
+			// Array from decoded from torrent
+			$decodedTorrent = TorrentTools::$decodedTorrent;
+			// Tmp filename
+            $fileName = TorrentTools::$fileName;
+            // Info sur le torrent
+            $info = Bencode::bdecode_getinfo(getcwd() . '/files/torrents/' . $fileName, true);
 
-			if(Input::file('torrent')->getError() == 0 && Input::file('torrent')->getClientOriginalExtension() == 'torrent')
-			{
-				TorrentTools::moveAndDecode(Input::file('torrent'));
-				$this->decodedTorrent = TorrentTools::$decodedTorrent;
-				$this->fileName = TorrentTools::$fileName;
-				$info = Bencode::bdecode_getinfo(getcwd() . '/files/torrents/' . $this->fileName, true);
-				if($this->decodedTorrent['announce'] == route('announce', ['passkey' => $user->passkey]) || Config::get('other.freeleech') == true) // Verifie que l'url d'announce est la bonne
-				{
-					$input = Input::all();
-					$category = Category::find(Input::get('category_id'));
+            // Si l'announce est invalide ou si le tracker et privée
+            if($decodedTorrent['announce'] != route('announce', ['passkey' => $user->passkey]) && Config::get('other.freeleech') == true)
+            {
+            	Session::put('message', 'Your announce URL is invalid');
+				return View::make('torrent.upload', array('categories' => Category::all(), 'user' => $user));
+            }
 
-					$torrent = new Torrent();
-					$torrent->name = $input['name'];
-					$torrent->slug = Str::slug($torrent->name);
-					$torrent->description = $input['description'];
-					$torrent->info_hash = $info['info_hash'];
-					$torrent->file_name = $this->fileName;
-					$torrent->num_file = $info['info']['filecount'];
-					$torrent->announce = $this->decodedTorrent['announce'];
-					$torrent->size = $info['info']['size'];
-					if(Input::hasFile('nfo'))
-					{
-						$torrent->nfo = TorrentTools::getNfo(Input::file('nfo'));
-					}
-					else
-					{
-						$torrent->nfo = '';
-					}
-					$torrent->category_id = $category->id;
-					$torrent->user_id = $user->id;
-					$torrent->leechers = 0;
-					$torrent->seeders = 0;
-					$torrent->times_completed = 0;
+            // Find the right category
+            $category = Category::find(Input::get('category_id'));
+            // Create the torrent (DB)
+            $torrent = new Torrent([
+            	'name' => Input::get('name'),
+            	'slug' => Str::slug(Input::get('name')),
+            	'description' => Input::get('description'),
+            	'info_hash' => $info['info_hash'],
+            	'file_name' => $fileName,
+            	'num_file' => $info['info']['filecount'],
+            	'announce' => $decodedTorrent['announce'],
+            	'size' => $info['info']['size'],
+            	'nfo' => (Input::hasFile('nfo')) ? TorrentTools::getNfo(Input::file('nfo')) : '',
+            	'category_id' => $category->id,
+            	'user_id' => $user->id,
+            ]);
+            // Validation
+            $v = Validator::make($torrent->toArray(), $torrent->rules);
+            if($v->fails())
+            {
+            	if(file_exists(getcwd() . '/files/torrents/' . $fileName))
+            	{
+            		unlink(getcwd() . '/files/torrents/' . $fileName);
+            	}
+            	Session::put('message', 'An error has occured may bee this file is already online ?');
+            }
+            else
+            {
+            	// Save le torrent
+            	$torrent->save(); 
+            	// Compte et sauvegarde le nombre de torrent dans  cette catégorie
+                $category->num_torrent = Torrent::where('category_id', '=', $category->id)->count();
+                $category->save();
 
-					$v = Validator::make($torrent->toArray(), $torrent->rules);
-					if($v->fails())
-					{
-						if(file_exists(getcwd() . '/files/torrents/' . $this->fileName))
-						{
-							unlink(getcwd() . '/files/torrents/' . $this->fileName);
-						}
-						Session::put('message', 'An error has occured may bee this file is already online ?');
-					}
-					else
-					{
-						$torrent->save(); // Save le torrent
-						// Compte et sauvegarde le nombre de torrent dans  cette catégorie
-						$category->num_torrent = Torrent::where('category_id', '=', $category->id)->count();
-						$category->save();
-
-						// Sauvegarde les fichiers que contient le torrent
-						$fileList = TorrentTools::getTorrentFiles($this->decodedTorrent);
-						foreach($fileList as $file)
-						{
-							$f = new TorrentFile();
-							$f->name = $file['name'];
-							$f->size = $file['size'];
-							$f->torrent_id = $torrent->id;
-							$f->save();
-							unset($f);
-						}
-						return Redirect::route('torrent', ['slug' => $torrent->slug, 'id' => $torrent->id])->with('message', trans('torrent.your_torrent_is_now_seeding'));
-					}
-				}
-				else
-				{
-					// Delete le fichier torrent inutile car non save dans la DB
-					if(file_exists(getcwd() . '/files/torrents/' . $this->fileName))
-					{
-						unlink(getcwd() . '/files/torrents/' . $this->fileName);
-					}
-					Session::put('message', 'You announce URL is invalid');
-				}
-			}
+                // Sauvegarde les fichiers que contient le torrent
+                $fileList = TorrentTools::getTorrentFiles($decodedTorrent);
+                foreach($fileList as $file)
+                {
+                    $f = new TorrentFile();
+                    $f->name = $file['name'];
+                    $f->size = $file['size'];
+                    $f->torrent_id = $torrent->id;
+                    $f->save();
+                    unset($f);
+                }
+                return Redirect::route('torrent', ['slug' => $torrent->slug, 'id' => $torrent->id])->with('message', trans('torrent.your_torrent_is_now_seeding'));
+            }
 		}
 		return View::make('torrent.upload', array('categories' => Category::all(), 'user' => $user));
 	}

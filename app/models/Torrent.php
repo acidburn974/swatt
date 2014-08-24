@@ -3,6 +3,12 @@
 class Torrent extends Eloquent {
 
 	/**
+	 * Mass assignment fields
+	 *
+	 */
+	protected $fillable = array('name', 'slug', 'description', 'info_hash', 'file_name', 'num_file', 'announce', 'size', 'nfo', 'category_id', 'user_id');
+
+	/**
 	 * Règles de validation
 	 *
 	 */
