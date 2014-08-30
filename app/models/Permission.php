@@ -10,7 +10,7 @@ class Permission extends Eloquent {
      */
     public function group()
     {
-        return $this->belongsTo('Group');
+      return $this->belongsTo('Group');
     }
 
     /**
@@ -20,6 +20,6 @@ class Permission extends Eloquent {
      */
     public function forum()
     {
-        return $this->belongsTo('Forum');
+      return $this->belongsTo('Forum');
     }
 } ?>

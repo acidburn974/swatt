@@ -121,10 +121,10 @@ Route::group(array('prefix' => 'community'), function()
 Route::group(['prefix' => 'api', 'namespace' => 'Api'], function(){
 
     // Affiche l'article
-    Route::any('/article/{id}', 'ArticleController@article'); 
+    Route::any('/article/{id}', 'ArticleController@article');
     // Affiche le torrent
     Route::any('/torrents/{id}', 'TorrentController@torrent');
-    
+
     // Commentaire sur articles
     Route::get('/comments/article', 'CommentController@getArticleComments');
     Route::post('/comments/article', ['uses' => 'CommentController@addArticleComment', 'before' => 'auth']);
@@ -132,5 +132,10 @@ Route::group(['prefix' => 'api', 'namespace' => 'Api'], function(){
     // Commentaire sur torrents
     Route::get('/comments/torrent', 'CommentController@getTorrentComments');
     Route::post('/comments/torrent', ['uses' => 'CommentController@addTorrentComment', 'before' => 'auth']);
-});
 
+    // Affiches les topics dans le forum Like Display
+    Route::get('/forums/display',  ['uses' => 'ForumController@display']);
+
+    // Retourne le contenue BBCode en HTMl
+    Route::post('/forums/preview', ['uses' => 'ForumController@getPreview']);
+});

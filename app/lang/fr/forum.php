@@ -5,8 +5,9 @@
  *
  */
 return array(
-	'topics' => 'Sujets',
-	'replies' => 'Réponses',
+	'topics' => 'sujets',
+	'replies' => 'réponses',
+	'views' => 'vues',
 	'meta-category' => 'Liste des forum dans la catégorie',
 	'create-new-topic' => 'Créer un nouveau sujet',
 	'topic-title' => 'Titre du topic',

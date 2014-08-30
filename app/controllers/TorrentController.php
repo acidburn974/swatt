@@ -25,9 +25,15 @@ class TorrentController extends BaseController {
 		if(Request::isMethod('post'))
 		{
 			// No torrent file uploaded OR an Error has occurred
-			if(Input::hasFile('torrent') == false && Input::file('torrent')->getError() != 0 && Input::file('torrent')->getClientOriginalExtension() != 'torrent')
+			if(Input::hasFile('torrent') == false)
 			{
 				Session::put('message', 'You must provide a torrent for the upload');
+				return View::make('torrent.upload', array('categories' => Category::all(), 'user' => $user));
+			}
+			else if(Input::file('torrent')->getError() != 0 && Input::file('torrent')->getClientOriginalExtension() != 'torrent')
+			{
+				
+				Session::put('message', 'An error has occurred');
 				return View::make('torrent.upload', array('categories' => Category::all(), 'user' => $user));
 			}
 			// Deplace et decode le torrent temporairement
@@ -75,10 +81,15 @@ class TorrentController extends BaseController {
             else
             {
             	// Save le torrent
-            	$torrent->save(); 
+            	//$torrent->save(); 
             	// Compte et sauvegarde le nombre de torrent dans  cette catégorie
                 $category->num_torrent = Torrent::where('category_id', '=', $category->id)->count();
                 $category->save();
+
+                foreach(explode(',', Input::get('tags')) as $k => $v)
+                {
+
+                }
 
                 // Sauvegarde les fichiers que contient le torrent
                 $fileList = TorrentTools::getTorrentFiles($decodedTorrent);
@@ -88,7 +99,7 @@ class TorrentController extends BaseController {
                     $f->name = $file['name'];
                     $f->size = $file['size'];
                     $f->torrent_id = $torrent->id;
-                    $f->save();
+                    //$f->save();
                     unset($f);
                 }
                 return Redirect::route('torrent', ['slug' => $torrent->slug, 'id' => $torrent->id])->with('message', trans('torrent.your_torrent_is_now_seeding'));
@@ -132,8 +143,6 @@ class TorrentController extends BaseController {
 				return Response::make(Bencode::bencode(array('failure reason' => 'This user does not exist'), 200, array('Content-Type' => 'text/plain')));
 			}
 		}
-
-		//$client = Peer::whereRaw('torrent_id = ? AND ip = ? AND port = ?', array($torrent->id, Request::getClientIp(), Input::get('port')))->first();
 		// Finding the correct client/peer by the md5 of the peer_id
 		$client = Peer::whereRaw('md5_peer_id = ?', [md5(Input::get('peer_id'))])->first();
 

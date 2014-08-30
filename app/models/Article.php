@@ -1,7 +1,6 @@
 <?php
 
 class Article extends Eloquent {
-
     public $rules = array(
         'title' => 'required',
         'slug' => 'required',
@@ -10,9 +9,9 @@ class Article extends Eloquent {
     );
 
     /**
-     * Belongs to User
-     *
-     */
+    * Belongs to User
+    *
+    */
     public function user()
     {
         return $this->belongsTo('User');
@@ -22,8 +21,8 @@ class Article extends Eloquent {
      * Has many Comment
      *
      */
-    public function comments()
-    {
+     public function comments()
+     {
         return $this->hasMany('Comment');
-    }
+     }
 } ?>

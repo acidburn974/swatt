@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Gestion des utilisateurs
+ *
+ *
+ *
+ */
 class UserController extends BaseController {
 
     /**

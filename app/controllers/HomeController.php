@@ -19,7 +19,9 @@ class HomeController extends BaseController {
 
 	/**
 	 * Search for torrents
-	 *
+	 * 
+	 * @access public
+	 * @return View page.torrents
 	 *
 	 */
 	public function search()
@@ -28,7 +30,7 @@ class HomeController extends BaseController {
 		{
 			$search = Input::get('search');
 			$torrents = Torrent::where('name', 'LIKE', '%' . $search . '%')->paginate(20);
-			return View::make('page.torrents', array('torrents' => $torrents));
+			return View::make('home.search', array('torrents' => $torrents));
 		}
 		else
 		{

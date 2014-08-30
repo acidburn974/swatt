@@ -15,17 +15,18 @@ module.exports = function(grunt) {
         }
       }
     },
-/*    coffee: {
+    coffee: {
         compile: {
             options: {
               bare: true
             },
             files: {
-              "js/torrents.js": "coffee/torrents.coffee",
-              "js/login.js": "coffee/login.coffee",
+              //"js/torrents.js": "coffee/torrents.coffee",
+              //"js/login.js": "coffee/login.coffee",
+              "js/forum.js": "coffee/forum.coffee",
             }
         }
-    },*/
+    },
 
     watch: {
       styles: {

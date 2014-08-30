@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="{{ url('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url('css/main.css') }}">
     <link rel="stylesheet" href="{{ url('css/font-awesome.min.css') }}">
-    
+
     @yield('stylesheets')
 </head>
 <body>
@@ -239,14 +239,13 @@
     <script type="text/javascript" src="{{ url('js/vendor/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ url('js/login.js') }}"></script>
     <script type="text/javascript" src="{{ url('js/signup.js') }}"></script>
+    @yield('javascripts')<!-- /Scripts -->
 
-    @yield('javascripts')
-    <!-- /Scripts -->
 
 	@if(Config::get('app.debug') == false)
 	   <!-- INSERT YOUR ANALYTICS CODE HERE -->
     @else
-        <!-- INSERT CODE FOR DEBUG HERE -->
+        <!-- INSERT DEBUG CODE HERE -->
 	@endif
 </body>
 </html>

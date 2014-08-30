@@ -102,7 +102,6 @@ class ForumController extends \BaseController {
 			$forum->save();
 
 			// Sauvegarde des permissions dans la DB
-			// Sauvegarde les permission<s></s>
 			foreach($groups as $k => $group)
 			{
 				$perm = Permission::whereRaw('forum_id = ? AND group_id = ?', array($forum->id, $group->id))->first();

@@ -39,21 +39,27 @@ class ForumController extends BaseController {
 	/**
 	 * Affiche le forums et les topics à l'intérieur
 	 *
-	 *
+	 * @access public
+	 * @param $slug Slug du forum
+	 * @param $id Id du forum
+	 * @return View forum.display
 	 */
 	public function display($slug, $id)
 	{
+		// Find the topic
 		$forum = Forum::find($id);
+		// Verifie si c'est une catégorie ou un forum
 		if($forum->parent_id == 0)
 		{
 			return Redirect::route('forum_category', array('slug' => $forum->slug, 'id' => $forum->id));
 		}
 		$category = Forum::find($forum->parent_id);
-		// Permission
+		// Verifie si l'utilisateur à la permission de voir le forum
 		if($category->getPermission()->show_forum != true)
 		{
 			return Redirect::route('forum_index')->with('message', 'You haven\'t access to this forum');
 		}
+		// Fetch les topics par ordre décroissant
 		$topics = $forum->topics()->orderBy('created_at', 'DESC')->paginate();
 
 		return View::make('forum.display', array('forum' => $forum, 'topics' => $topics, 'category' => $category));
@@ -62,8 +68,10 @@ class ForumController extends BaseController {
 	/**
 	 * Show the topic
 	 *
+	 * @access public
 	 * @param $slug Slug du  topic
 	 * @param $id Id du topic
+	 * @return forum.topic
 	 */
 	public function topic($slug, $id)
 	{

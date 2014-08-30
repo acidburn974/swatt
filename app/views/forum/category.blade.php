@@ -57,8 +57,8 @@
                             <!-- Stats -->
                             <td class="f-category-forums-stats">
                                 <ul>
-                                    <li class="f-category-forums-item"><strong>{{ $f->num_topic }}</strong> {{{ trans('forum.topics') }}}</li>
-                                    <li class="f-category-forums-item"><strong>{{ $f->num_post }}</strong> {{{ trans('forum.replies') }}}</li>
+                                    <li class="f-category-forums-item">{{ $f->num_topic }} {{{ trans('forum.topics') }}}</li>
+                                    <li class="f-category-forums-item">{{ $f->num_post }} {{{ trans('forum.replies') }}}</li>
                                 </ul>
                             </td><!-- /Stats -->
                             <!-- Last post -->
