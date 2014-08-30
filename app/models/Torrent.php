@@ -3,6 +3,12 @@
 class Torrent extends Eloquent {
 
 	/**
+	 * Mass assignment fields
+	 *
+	 */
+	protected $fillable = array('name', 'slug', 'description', 'info_hash', 'file_name', 'num_file', 'announce', 'size', 'nfo', 'category_id', 'user_id');
+
+	/**
 	 * Règles de validation
 	 *
 	 */
@@ -15,8 +21,6 @@ class Torrent extends Eloquent {
 		'num_file' => 'required|numeric',
 		'announce' => 'required',
 		'size' => 'required',
-		//'nfo' => '',
-		//'created_by' => 'required',
 		'category_id' => 'required',
 		'user_id' => 'required',
 	);
@@ -65,6 +69,16 @@ class Torrent extends Eloquent {
 	public function peers()
 	{
 		return $this->hasMany('Peer');
+	}
+
+	/**
+	 * HABTM Tag
+	 *
+	 *
+	 */
+	public function tags()
+	{
+		return $this->belongsToMany('Tag');
 	}
 
 	/**

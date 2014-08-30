@@ -4,7 +4,7 @@
 <title>{{{ trans('common.lost-password') }}} - {{{ Config::get('other.title') }}}</title>
 @stop
 
-@section('meta_description')
+@section('meta')
 <meta name="description" content="{{{ 'Récupération de mot de passe' }}}">
 @stop
 

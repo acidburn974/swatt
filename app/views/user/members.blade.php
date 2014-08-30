@@ -4,7 +4,7 @@
 <title>{{{ trans('common.members') }}} - {{{ Config::get('other.title') }}}</title>
 @stop
 
-@section('meta_description')
+@section('meta')
 <meta name="description" content="List of users registered on {{{ Config::get('other.title') }}} with all groups. Find an user now.">
 @stop
 

@@ -4,7 +4,7 @@
 <title>{{{ $category->name }}} - Category - {{ Config::get('other.title') }}</title>
 @stop
 
-@section('meta_description')
+@section('meta')
 <meta name="description" content="{{{ 'Découvrez tout les torrents dans la catégorie ' . $category->name  . ' disponible en téléchargement gratuit' }}}">
 @stop
 

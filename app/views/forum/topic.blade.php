@@ -4,7 +4,7 @@
 <title>{{{ $topic->name }}} - Forums - {{{ Config::get('other.title') }}}</title>
 @stop
 
-@section('meta_description')
+@section('meta')
 <meta name="description" content="{{{ trans('forum.read-topic') . ' ' . $topic->name }}}">
 @stop
 

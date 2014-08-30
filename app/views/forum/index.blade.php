@@ -4,7 +4,7 @@
 <title>Forums - {{{ Config::get('other.title') }}}</title>
 @stop
 
-@section('meta_description')
+@section('meta')
 <meta name="description" content="{{{ 'Forum de partage et d\'échange de ' . Config::get('other.title') . '. Téléchargez vos films et séries préférer en torrent. Rejoignez la communauté.' }}}">
 @stop
 
@@ -51,7 +51,7 @@
 								<!-- Forum title -->
 								<td>
 									<h4 class="f-category-forums-title">
-										<a href="{{ route('forum_display', array('slug' => $f->slug, 'id' => $f->id)) }}">{{{ $f->name }}}</a>
+										<a class="f-category-forums-title-link" href="{{ route('forum_display', array('slug' => $f->slug, 'id' => $f->id)) }}" data-forum-id="{{ $f->id }}">{{{ $f->name }}}</a>
 									</h4>
 									<br>
 									<p class="f-category-forums-description">{{{ $f->description }}}</p>
@@ -60,8 +60,8 @@
 								<!-- Stats -->
 								<td class="f-category-forums-stats">
 									<ul>
-										<li class="f-category-forums-item"><strong>{{ $f->num_topic }}</strong> {{{ trans('forum.topics') }}}</li>
-										<li class="f-category-forums-item"><strong>{{ $f->num_post }}</strong> {{{ trans('forum.replies') }}}</li>
+										<li class="f-category-forums-item">{{ $f->num_topic }} {{{ trans('forum.topics') }}}</li>
+										<li class="f-category-forums-item">{{ $f->num_post }} {{{ trans('forum.replies') }}}</li>
 									</ul>
 								</td><!-- /Stats -->
 
@@ -90,4 +90,12 @@
 		@endif
 	@endforeach
 </div>
+@stop
+
+
+@section('javascripts')
+<!-- <script type="text/javascript" src="{{ url('js/vendor/lodash.min.js') }}"></script>
+<script type="text/javascript" src="{{ url('js/vendor/backbone.min.js') }}"></script>
+<script type="text/javascript" src="{{ url('js/vendor/handlebars.js') }}"></script>
+<script type="text/javascript" src="{{ url('js/forum.js') }}"></script> -->
 @stop

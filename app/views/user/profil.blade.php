@@ -4,7 +4,7 @@
 <title>{{{ $user->username }}} - Members - {{{ Config::get('other.title') }}}</title>
 @stop
 
-@section('meta_description')
+@section('meta')
 <meta name="description" content="The page of {{{ $user->username }}} on {{{ Config::get('other.title') }}}">
 @stop
 

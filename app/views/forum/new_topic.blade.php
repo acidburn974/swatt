@@ -4,7 +4,7 @@
 <title>{{{ trans('forum.create-new-topic') }}} - {{{ Config::get('other.title') }}}</title>
 @stop
 
-@section('meta_description')
+@section('meta')
 <meta name="description" content="{{{ 'Create a new topic in ' . $forum->name }}}">
 @stop
 
@@ -52,8 +52,8 @@
 				<textarea id="new-thread-content" name="content" cols="30" rows="10" class="form-control">{{{ $content }}}</textarea>
 			</div>
 
-			<button type="submit" name="post" value="true" class="btn btn-primary">{{{ trans('forum.send-new-topic') }}}</button>
-			<button type="submit" name="preview" value="true" class="btn btn-default">Preview</button>
+			<button type="submit" name="post" value="true" id="post" class="btn btn-primary">{{{ trans('forum.send-new-topic') }}}</button>
+			<button type="submit" name="preview" value="true" id="preview" class="btn btn-default">Preview</button>
 		{{ Form::close() }}
 	</div>
 </div>
@@ -64,18 +64,16 @@
 <script type="text/javascript" src="{{ url('files/wysibb/jquery.wysibb.min.js') }}"></script>
 
 <script type="text/javascript">
-var title = '{{ $title }}';
-if(title.length != 0)
-{
-	$('#thread-title').text(': ' + title);
-}
-
-$('#input-thread-title').on('input', function() {
-	$('#thread-title').text(': ' + $('#input-thread-title').val());
-});
-
 $(document).ready(function() {
-    $("#new-thread-content").wysibb();
+    var title = '{{ $title }}';
+    if(title.length != 0) { $('#thread-title').text(': ' + title); }
+
+    $('#input-thread-title').on('input', function() {
+        $('#thread-title').text(': ' + $('#input-thread-title').val());
+    });
+
+    var wysibb = $("#new-thread-content").wysibb();
 });
+
 </script>
 @stop

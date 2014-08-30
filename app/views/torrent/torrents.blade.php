@@ -4,8 +4,8 @@
 <title>Torrents - {{{ Config::get('other.title') }}}</title>
 @stop
 
-@section('meta_description')
-<meta name="description" content="{{{ 'Liste des torrents disponible gratuitement et en illimité sur' . Config::get('other.title') }}}">
+@section('meta')
+<meta name="description" content="{{{ 'Liste des torrents disponible gratuitement et en illimité sur ' . Config::get('other.title') }}}">
 @stop
 
 @section('breadcrumb')
@@ -54,55 +54,4 @@
 		{{ $torrents->links() }}
 	</div>
 </div>
-@stop
-
-@section('javascripts')
-<script type="text/javascript" src="{{ url('js/vendor/lodash.min.js') }}"></script>
-<script type="text/javascript" src="{{ url('js/vendor/backbone.min.js') }}"></script>
-
-<script type="text/template" id="torrent_template">
-    <h1 class="torrent-title"><a href="<%= url + '/download/' + torrent.slug + '.' + torrent.id %>" class="torrent-data-item">Download <%= torrent.name %></a></h1>
-
-    <!-- Données sur le torrent -->
-    <div class="torrent-data">
-        <span class="torrent-data-item">Seeders: <%= torrent.seeders %></span>
-        <span class="torrent-data-item">Leechers: <%= torrent.leechers %></span>
-        <span class="torrent-data-item">Times completed: <%= torrent.times_completed %></span>
-        <span class="torrent-data-item">Size: <%= torrent.size %></span>
-        <span class="torrent-data-item">By <a href="<%= url + '/members/' + torrent.username + '.' + torrent.user_id %>"><%= torrent.username %></a></span>
-    </div><!-- Données sur le torrent -->
-
-    <div class="torrent-description">
-        <%= torrent.descriptionHtml %>
-    </div>
-
-    <div class="torrent-bottom">
-    	<a href="<%= url + '/download/' + torrent.slug + '.' + torrent.id %>" class="torrent-bottom-download btn btn-primary">{{ trans('traduction.download') }}</a>
-    	<a href="<%= url + '/torrents/' + torrent.slug + '.' + torrent.id %>" class="torrent-data-item btn btn-default">{{ trans('traduction.read_more') }}</a>
-    </div>
-
-    <hr />
-
-    <form id="add-comment" data-id="<%= torrent.id %>" data-slug="<%= torrent.slug %>" method="POST" accept-charset="UTF-8">
-            <div class="form-group">
-                <label for="content">Your comment:</label>
-                <textarea name="content" cols="30" rows="5" class="form-control"></textarea>
-            </div>
-
-            <button type="submit" class="btn btn-default">Save my comment</button>
-    </form>
-
-    <hr/>
-
-    <!-- Comments -->
-    <div class="comments col-md-12">
-    	<% _.forEach(comments, function(comment) { %>
-    		<div class="comment">
-                <strong><%= comment.username %></strong> -
-                <span><time pubdate><%= comment.created_at %></time></span>
-                <blockquote><%= comment.content %></blockquote>
-            </div>
-    	<% }) %>
-    </div><!-- Comments -->
-</script>
 @stop

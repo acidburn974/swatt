@@ -4,7 +4,7 @@
 <title>{{{ trans('common.login') }}} - {{ Config::get('other.title') }}</title>
 @stop
 
-@section('meta_description')
+@section('meta')
 <meta name="description" content="Login now on {{{ Config::get('other.title') }}}. Download and share torrents. Not yet member ? Signup in less than 30s.">
 @stop
 

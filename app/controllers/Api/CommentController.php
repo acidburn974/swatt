@@ -11,6 +11,9 @@ class CommentController extends \BaseController {
 
 	/**
 	 * Retourne les commentaires sur l'article
+	 * 
+	 * @access public
+	 * @return $comments JSON format
 	 */
 	public function getArticleComments()
 	{

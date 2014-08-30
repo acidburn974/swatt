@@ -4,7 +4,7 @@
 <title>{{{ $post->title }}} - Articles - {{ Config::get('other.title') }}</title>
 @stop
 
-@section('meta_description')
+@section('meta')
 <meta name="description" content="{{{ substr(strip_tags($post->content), 0, 200) }}}...">
 @stop
 

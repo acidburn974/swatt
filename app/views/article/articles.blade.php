@@ -4,7 +4,7 @@
 <title>Articles - {{ Config::get('other.title') }}</title>
 @stop
 
-@section('meta_description')
+@section('meta')
 <meta name="description" content="{{{ trans('articles.meta-articles') }}}">
 @stop
 

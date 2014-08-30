@@ -4,7 +4,7 @@
     <title>{{{ $torrent->name }}} - Torrents - {{{ Config::get('other.title') }}}</title>
 @stop
 
-@section('meta_description')
+@section('meta')
     <meta name="description" content="{{{ 'Télécharger ' . $torrent->name . ' en illimité à la vitesse maximum' }}}">
 @stop
 
