@@ -9,6 +9,8 @@ class HomeController extends BaseController {
 	/**
 	 * Page d'accueil
 	 *
+	 * @access public
+	 * @return View home.home
 	 */
 	public function home()
 	{
