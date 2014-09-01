@@ -1,4 +1,9 @@
 <?php 
+/**
+ * Modèle relatif au fichiers de torrents
+ *
+ *
+ */
 class TorrentFile extends Eloquent {
 
 	/**

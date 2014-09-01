@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Pairs pour les clients torrents
+ *
+ */
 class Peer extends Eloquent {
 
 	/**

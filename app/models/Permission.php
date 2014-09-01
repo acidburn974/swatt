@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Permission des forums
+ *
+ */
 class Permission extends Eloquent {
 
     public $timestamps = false;

@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Modèle relatif aux torrents
+ *
+ */
 class Torrent extends Eloquent {
 
 	/**

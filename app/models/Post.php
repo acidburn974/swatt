@@ -1,5 +1,10 @@
 <?php
 
+/**
+ *  Post des utilisateurs du forum
+ *
+ *
+ */
 class Post extends Eloquent {
 
 	/**
