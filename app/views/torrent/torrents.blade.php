@@ -18,8 +18,12 @@
 
 @section('content')
 <div class="container box">
+    <div class="col-md-12 page-title">
+        <h1 class="torrents-title">{{ trans('traduction.latest_torrents') }}</h1>
+        <hr/>
+    </div>
+
 	<div class="torrents col-md-12">
-		<h1 class="torrents-title">{{ trans('traduction.latest_torrents') }}</h1>
 		<table class="torrents-table table table-striped">
 			<thead>
 				<tr>

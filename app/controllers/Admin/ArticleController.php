@@ -43,9 +43,36 @@ class ArticleController extends \BaseController {
             $post->slug = Str::slug($post->title);
             $post->content = $input['content'];
             //$post->user_id = Auth::user()->id;
+            // Verifie qu'une image à était upload
+            if(Input::hasFile('image') && Input::file('image')->getError() == 0)
+            {
+                // Le fichier est bien une image
+                if(in_array(Input::file('image')->getClientOriginalExtension(), array('jpg', 'jpeg', 'bmp', 'png', 'tiff')))
+                {
+                    // Déplace et ajoute le nom à l'objet qui sera sauvegarder
+                    $post->image = 'article-' . uniqid() . '.' . Input::file('image')->getClientOriginalExtension();
+                    Input::file('image')->move(getcwd() . '/files/img/', $post->image);
+                }
+                else
+                {
+                    // Image null car invalide ou mauvais format
+                    $post->image = null;
+                }
+            }
+            else
+            {
+                // Erreur sur l'image donc null
+                $post->image = null;
+            }
+            
             $v = Validator::make($post->toArray(), $post->rules);
             if($v->fails())
             {
+                // Suppression de l'image car la validation a échoué
+                if(file_exists(Input::file('image')->move(getcwd() . '/files/img/' . $post->image)))    
+                {
+                    unlink(Input::file('image')->move(getcwd() . '/files/img/' . $post->image));
+                }
                 Session::put('message', 'An error has occured');
             }
             else
@@ -75,6 +102,29 @@ class ArticleController extends \BaseController {
             $post->slug = Str::slug($post->title);
             $post->content = $input['content'];
             //$post->user_id = Auth::user()->id;
+
+            // Verifie qu'une image à était upload
+            if(Input::hasFile('image') && Input::file('image')->getError() == 0)
+            {
+                // Le fichier est bien une image
+                if(in_array(Input::file('image')->getClientOriginalExtension(), array('jpg', 'jpeg', 'bmp', 'png', 'tiff')))
+                {
+                    // Déplace et ajoute le nom à l'objet qui sera sauvegarder
+                    $post->image = 'article-' . uniqid() . '.' . Input::file('image')->getClientOriginalExtension();
+                    Input::file('image')->move(getcwd() . '/files/img/', $post->image);
+                }
+                else
+                {
+                    // Image null car invalide ou mauvais format
+                    $post->image = null;
+                }
+            }
+            else
+            {
+                // Erreur sur l'image donc null
+                $post->image = null;
+            }
+
             $v = Validator::make($post->toArray(), $post->rules);
             if($v->fails())
             {

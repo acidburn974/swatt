@@ -31,10 +31,10 @@ class ArticleController extends BaseController {
     public function post($slug, $id)
     {
         // Find de right post
-        $post = Article::find($id);
+        $article = Article::find($id);
         // Get comments on this post
-        $comments = $post->comments()->orderBy('created_at', 'DESC')->get();
+        $comments = $article->comments()->orderBy('created_at', 'DESC')->get();
 
-        return View::make('article.article', array('post' => $post, 'comments' => $comments));
+        return View::make('article.article', array('article' => $article, 'comments' => $comments));
     }
 } ?>

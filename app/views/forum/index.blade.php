@@ -19,6 +19,12 @@
 
 @section('content')
 <div class="box container">
+
+	<div class="col-md-12 page-title">
+		<h1>Forums</h1>
+		<hr>
+	</div>
+
 	@foreach($categories as $c)
 		<!-- Verifie les permissions du groupe et du forum -->
 		@if($c->getPermission() != null && $c->getPermission()->show_forum == true && $c->getForumsInCategory()->count() > 0)

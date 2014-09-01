@@ -2,6 +2,7 @@ CREATE TABLE `articles` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
 `title` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
 `slug` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+`image` varchar(255) NULL,
 `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
 `created_at` datetime NULL DEFAULT NULL,
 `updated_at` datetime NULL DEFAULT NULL,
@@ -11,7 +12,7 @@ INDEX `fk_articles_users1_idx` (`user_id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=3;
+AUTO_INCREMENT=1;
 
 CREATE TABLE `categories` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -22,7 +23,7 @@ PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=5;
+AUTO_INCREMENT=1;
 
 CREATE TABLE `comments` (
 `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -39,7 +40,7 @@ INDEX `fk_comments_articles_1` (`article_id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=4;
+AUTO_INCREMENT=1;
 
 CREATE TABLE `files` (
 `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -51,7 +52,7 @@ INDEX `fk_files_torrents1_idx` (`torrent_id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=10;
+AUTO_INCREMENT=1;
 
 CREATE TABLE `forums` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -73,7 +74,7 @@ PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=6;
+AUTO_INCREMENT=1;
 
 CREATE TABLE `groups` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -85,7 +86,28 @@ PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=7;
+AUTO_INCREMENT=1;
+
+CREATE TABLE `pages` (
+`id` int(10) NOT NULL AUTO_INCREMENT,
+`name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+`slug` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+`content` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+`created_at` datetime NULL DEFAULT NULL,
+`updated_at` datetime NULL DEFAULT NULL,
+PRIMARY KEY (`id`) 
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+AUTO_INCREMENT=1;
+
+CREATE TABLE `password_reminders` (
+`email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+`token` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+`created_at` datetime NULL DEFAULT NULL
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE `peers` (
 `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -107,7 +129,7 @@ INDEX `fk_peers_users1_idx` (`user_id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=97;
+AUTO_INCREMENT=1;
 
 CREATE TABLE `permissions` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -125,7 +147,7 @@ INDEX `fk_permissions_groups1_idx` (`group_id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=31;
+AUTO_INCREMENT=1;
 
 CREATE TABLE `posts` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -140,7 +162,7 @@ INDEX `fk_posts_topics1_idx` (`topic_id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=16;
+AUTO_INCREMENT=1;
 
 CREATE TABLE `topics` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -162,7 +184,7 @@ INDEX `fk_topics_forums1_idx` (`forum_id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=9;
+AUTO_INCREMENT=1;
 
 CREATE TABLE `torrents` (
 `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -174,12 +196,12 @@ CREATE TABLE `torrents` (
 `num_file` int(11) NOT NULL,
 `size` float NOT NULL,
 `nfo` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-`leechers` int(11) NOT NULL,
-`seeders` int(11) NOT NULL,
-`times_completed` int(11) NOT NULL,
+`leechers` int(11) NOT NULL DEFAULT 0,
+`seeders` int(11) NOT NULL DEFAULT 0,
+`times_completed` int(11) NOT NULL DEFAULT 0,
 `created_at` datetime NOT NULL,
-`updated_at` datetime NOT NULL,
-`category_id` int(11) NOT NULL,
+`updated_at` datetime NULL,
+`category_id` int(11) NULL,
 `announce` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
 `user_id` int(11) NOT NULL,
 PRIMARY KEY (`id`) ,
@@ -188,7 +210,7 @@ INDEX `fk_torrents_users1_idx` (`user_id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=7;
+AUTO_INCREMENT=1;
 
 CREATE TABLE `uploads` (
 `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -223,33 +245,40 @@ INDEX `fk_users_groups_idx` (`group_id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=13;
+AUTO_INCREMENT=1;
 
-CREATE TABLE `pages` (
+CREATE TABLE `tags` (
 `id` int(10) NOT NULL AUTO_INCREMENT,
 `name` varchar(255) NULL,
 `slug` varchar(255) NULL,
-`content` longtext NULL,
-`created_at` datetime NULL,
-`updated_at` datetime NULL,
 PRIMARY KEY (`id`) 
-);
+)
+ENGINE=InnoDB;
+
+CREATE TABLE `tag_torrent` (
+`torrent_id` bigint(20) UNSIGNED NOT NULL,
+`tag_id` int(10) NOT NULL,
+PRIMARY KEY (`torrent_id`, `tag_id`) 
+)
+ENGINE=InnoDB;
 
 
 ALTER TABLE `articles` ADD CONSTRAINT `fk_articles_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+ALTER TABLE `comments` ADD CONSTRAINT `fk_comments_users_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 ALTER TABLE `comments` ADD CONSTRAINT `fk_comments_articles_1` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`);
 ALTER TABLE `comments` ADD CONSTRAINT `fk_comments_torrents_1` FOREIGN KEY (`torrent_id`) REFERENCES `torrents` (`id`);
-ALTER TABLE `comments` ADD CONSTRAINT `fk_comments_users_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 ALTER TABLE `files` ADD CONSTRAINT `fk_files_torrents1` FOREIGN KEY (`torrent_id`) REFERENCES `torrents` (`id`);
-ALTER TABLE `peers` ADD CONSTRAINT `fk_peers_torrents1` FOREIGN KEY (`torrent_id`) REFERENCES `torrents` (`id`);
 ALTER TABLE `peers` ADD CONSTRAINT `fk_peers_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-ALTER TABLE `permissions` ADD CONSTRAINT `fk_permissions_forums1` FOREIGN KEY (`forum_id`) REFERENCES `forums` (`id`);
+ALTER TABLE `peers` ADD CONSTRAINT `fk_peers_torrents1` FOREIGN KEY (`torrent_id`) REFERENCES `torrents` (`id`);
 ALTER TABLE `permissions` ADD CONSTRAINT `fk_permissions_groups1` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`);
-ALTER TABLE `posts` ADD CONSTRAINT `fk_forum_posts_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+ALTER TABLE `permissions` ADD CONSTRAINT `fk_permissions_forums1` FOREIGN KEY (`forum_id`) REFERENCES `forums` (`id`);
 ALTER TABLE `posts` ADD CONSTRAINT `fk_posts_topics1` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`id`);
+ALTER TABLE `posts` ADD CONSTRAINT `fk_forum_posts_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 ALTER TABLE `topics` ADD CONSTRAINT `fk_topics_forums1` FOREIGN KEY (`forum_id`) REFERENCES `forums` (`id`);
-ALTER TABLE `torrents` ADD CONSTRAINT `fk_table1_categories1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
 ALTER TABLE `torrents` ADD CONSTRAINT `fk_torrents_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+ALTER TABLE `torrents` ADD CONSTRAINT `fk_table1_categories1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
 ALTER TABLE `uploads` ADD CONSTRAINT `fk_uploads_users_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 ALTER TABLE `users` ADD CONSTRAINT `fk_users_groups` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`);
+ALTER TABLE `tag_torrent` ADD CONSTRAINT `fk_torrents_tags_tags_1` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`);
+ALTER TABLE `tag_torrent` ADD CONSTRAINT `fk_torrents_tags_torrents_1` FOREIGN KEY (`torrent_id`) REFERENCES `torrents` (`id`);
 

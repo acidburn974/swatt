@@ -226,7 +226,7 @@
             <!-- Info tracker -->
             <div class="l-footer-section col-md-12">
                 <h3 class="l-footer-section-title">{{{ Config::get('other.title') }}}</h3>
-                <footer>{{{ Config::get('other.meta_description') }}}</footer>
+                <footer><p>{{{ Config::get('other.meta_description') }}}</p></footer>
             </div><!-- /Info tracker -->
         </div>
     </div><!-- /footer -->

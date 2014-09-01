@@ -4,10 +4,15 @@
 <div class="container">
     <div class="col-md-10">
         <h2>Add a post</h2>
-        {{ Form::open(array('route' => array('admin_article_edit', 'slug' => $post->slug, 'id' => $post->id))) }}
+        {{ Form::open(array('route' => array('admin_article_edit', 'slug' => $post->slug, 'id' => $post->id), 'files' => true)) }}
             <div class="form-group">
                 <label for="title">Title</label>
                 <input type="text" class="form-control" name="title" value="{{ $post->title }}">
+            </div>
+
+            <div class="form-group">
+                <label for="image">Image thumbnail</label>
+                <input type="file" name="image">
             </div>
 
             <div class="form-group">
