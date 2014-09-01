@@ -55,6 +55,7 @@ class HomeController extends BaseController {
 		if(Request::getMethod() == 'POST')
 		{
 			$input = Input::all();
+			// Boucle d'envoie de mails
 			foreach($admins as $user)
 			{
 				Mail::send('emails.contact', array('input' => $input), function($message) use ($user, $input) {

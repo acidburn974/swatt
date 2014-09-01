@@ -60,17 +60,33 @@
 		</div><!-- /User image form -->
 
 		<!-- User about form -->
-		<div class="col-md-10">
 		@if(Auth::check() && Auth::user()->id == $user->id)
+		<div class="col-md-4">
+			<!-- Change description -->
 			{{ Form::open(['route' => array('user_change_about', 'username' => $user->username, 'id' => $user->id)]) }}
-			<div class="form-group">
-				<label for="image">Some informations about you :</label>
+				<div class="form-group">
+					<label for="image">Some informations about you :</label>
 					<textarea class="form-control" name="about" rows="3">{{ $user->about }}</textarea>
 				</div>
-			<button type="submit" class="btn btn-default">Save</button>
-			{{ Form::close() }}
+				<button type="submit" class="btn btn-default">Save</button>
+			{{ Form::close() }}<!-- /Change description -->
+		</div><!-- /User about form -->
 		@endif
-	</div><!-- /User about form -->
+		
+		<!-- Change title -->
+		@if(Auth::check() && Auth::user()->id == $user->id)
+			<div class="col-md-4">
+				@if($user->group->is_admin || $user->group->is_modo)
+					{{ Form::open(array('route' => array('user_change_title', 'username' => $user->username, 'id' => $user->id))) }}
+						<div class="form-group">
+							<label for="title">Forum's title:</label>
+							<input type="text" name="title" value="{{ $user->title }}" class="form-control">
+						</div>
+						<button type="submit" class="btn btn-default">Save</button>
+					{{ Form::close() }}
+				@endif<!-- Change title -->
+			</div>
+		@endif
 
 
 		<div class="clearfix"></div>

@@ -81,7 +81,8 @@
                         @else
                             <img src="{{ url('img/profil.png') }}" alt="{{{ $p->user->username }}}" class="members-table-img img-thumbnail">
                         @endif
-
+                        
+                        <p>{{{ $p->user->title }}}</p>
                         <p>{{ $p->user->group->name }}</p>
                         <p>{{ trans('traduction.join_date')}}: {{ date('d/m/Y', strtotime($p->user->created_at)) }}</p>
                     </aside>

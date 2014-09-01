@@ -191,4 +191,22 @@ class UserController extends BaseController {
 
         return View::make('user.lost_password');
     }
+
+    /**
+     * Modifie le titre de l'utilisateur si il est admin
+     *
+     * @access public 
+     * @return Redirect
+     */
+    public function changeTitle($username, $id)
+    {
+        $user = User::find($id);
+        if($user->id == Auth::user()->id)
+        {
+            $user->title = Input::get('title');
+            $user->save();
+        }
+
+        return Redirect::route('profil', ['username' => $user->username, 'id' => $user->id]);
+    }
 } ?>
