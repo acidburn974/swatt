@@ -49,11 +49,6 @@
                 <input type="text" name="name" class="form-control">
             </div>
 
-            <div class="form-group">
-                <label for="tags">Tags (separated by comma)</label>
-                <input type="text" name="tags" class="form-control" placeholder="Some tags to identify your torrent">
-            </div>
-
 			<div class="form-group">
 				<label for="category_id">Category</label>
 				<select name="category_id" class="form-control">

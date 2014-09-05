@@ -185,8 +185,6 @@ class UserController extends BaseController {
         if(Request::isMethod('post'))
         {
             $user = User::where('email', '=', Input::get('email'))->first();
-
-
         }
 
         return View::make('user.lost_password');

@@ -80,16 +80,11 @@ class TorrentController extends BaseController {
             }
             else
             {
-            	// Save le torrent
-            	//$torrent->save(); 
+            	// Savegarde le torrent
+            	$torrent->save(); 
             	// Compte et sauvegarde le nombre de torrent dans  cette catégorie
                 $category->num_torrent = Torrent::where('category_id', '=', $category->id)->count();
                 $category->save();
-
-                foreach(explode(',', Input::get('tags')) as $k => $v)
-                {
-
-                }
 
                 // Sauvegarde les fichiers que contient le torrent
                 $fileList = TorrentTools::getTorrentFiles($decodedTorrent);
