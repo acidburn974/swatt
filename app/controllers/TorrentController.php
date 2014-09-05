@@ -94,7 +94,7 @@ class TorrentController extends BaseController {
                     $f->name = $file['name'];
                     $f->size = $file['size'];
                     $f->torrent_id = $torrent->id;
-                    //$f->save();
+                    $f->save();
                     unset($f);
                 }
                 return Redirect::route('torrent', ['slug' => $torrent->slug, 'id' => $torrent->id])->with('message', trans('torrent.your_torrent_is_now_seeding'));
