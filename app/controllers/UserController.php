@@ -11,7 +11,8 @@ class UserController extends BaseController {
     /**
      * Enregistre l'utilisateur
      *
-     *
+     * @access public
+     * @return Redirect /login
      */
     public function signup()
     {
@@ -74,6 +75,8 @@ class UserController extends BaseController {
     /**
      * Déconnecte l'utilisateur
      *
+     * @access public
+     * @return Redirect /
      */
     public function logout()
     {
@@ -84,6 +87,8 @@ class UserController extends BaseController {
     /**
      * Affiche la liste des membres
      *
+     * @access public
+     * @return view users.members
      */
     public function members()
     {
@@ -95,6 +100,8 @@ class UserController extends BaseController {
     /**
      * Affiche le profil de l'utilisateur
      *
+     * @access public
+     * @return view user.profile
      */
     public function profil($username, $id)
     {
@@ -105,6 +112,8 @@ class UserController extends BaseController {
     /**
      * Change la photo de l'utilisateur
      *
+     * @access public
+     * @return Redirect profil
      */
     public function changePhoto($slug, $id)
     {
@@ -155,6 +164,7 @@ class UserController extends BaseController {
             return Redirect::to('/')->with('message', 'This link is unavailable');
         }
     }
+
     /**
      * Change les infos de l'utilisateur
      *
@@ -178,7 +188,8 @@ class UserController extends BaseController {
     /**
      * Permet à l'utilisateur de modifier son mot de passe
      *
-     *
+     * @access public
+     * @return view user.lost_password
      */
     public function lostPassword($token = null)
     {
@@ -193,8 +204,8 @@ class UserController extends BaseController {
     /**
      * Modifie le titre de l'utilisateur si il est admin
      *
-     * @access public 
-     * @return Redirect
+     * @access public
+     * @return Redirect profil
      */
     public function changeTitle($username, $id)
     {

@@ -1,17 +1,53 @@
 @extends('layout.default')
 
 @section('content')
-<div class="container">
+<div class="container home">
+
     <div class="col-md-12 page-title">
         <h1>News</h1>
-        <hr />
+
+        <hr/>
     </div>
 
-    <section class="home">
+    <div class="home-newsboxes box col-md-12">
+        <div class="row">
+            <!-- Torrents -->
+            <section class="col-md-4 home-newsboxes-b">
+                <h2>Torrents</h2>
+                <ul>
+                    @foreach($torrents as $t)
+                        <li><a href="{{ route('torrent', array('slug' => $t->slug, 'id' => $t->id)) }}">{{{ $t->name }}}</a></li>
+                    @endforeach
+                </ul>
+            </section><!-- /Torrents -->
+
+            <!-- Topics -->
+            <section class="col-md-4 home-newsboxes-b">
+                <h2>Topics</h2>
+                <ul>
+                    @foreach($topics as $t)
+                        <li><a href="{{ route('forum_topic', array('slug' => $t->slug, 'id' => $t->id)) }}">{{{ $t->name }}}</a></li>
+                    @endforeach
+                </ul>
+            </section><!-- /Topics -->
+
+            <!-- Members -->
+            <section class="col-md-4 home-newsboxes-b">
+                <h2>{{{ trans('common.members') }}}</h2>
+                <ul>
+                    @foreach($users as $u)
+                        <li><a href="{{ route('profil', array('username' => $u->username, 'id' => $u->id)) }}">{{{ $u->username }}}</a></li>
+                    @endforeach
+                </ul>
+            </section><!-- /Members -->
+        </div>
+    </div>
+
+    <section>
         <!-- Articles -->
         @foreach($articles as $a)
             <article class="article col-md-12">
-                <div class="row"> 
+                <div class="row">
                     <a href="{{ route('article', ['slug' => $a->slug, 'id' => $a->id]) }}" class="article-thumb col-md-4">
                         <!-- Image -->
                         @if( ! is_null($a->image))
@@ -20,7 +56,7 @@
                             <img src="{{ url('img/missing-image.jpg') }}" class="article-thumb-img" alt="{{{ $a->title }}}">
                         @endif<!-- /Image -->
                     </a>
-                    
+
                     <div class="col-md-8 article-title">
                         <h2><a href="{{ route('article', ['slug' => $a->slug, 'id' => $a->id]) }}">{{{ $a->title }}}</a></h2>
                     </div>

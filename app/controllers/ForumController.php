@@ -242,7 +242,7 @@ class ForumController extends BaseController {
 			}
 			else
 			{
-
+				Session::put('message', 'An error has occurred with this topic. Try again.');
 			}
 		}
 		return View::make('forum.new_topic', array('forum' => $forum, 'category' => $category, 'parsedContent' => $parsedContent, 'title' => Input::get('title'), 'content' => Input::get('content')));

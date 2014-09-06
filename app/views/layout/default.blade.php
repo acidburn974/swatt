@@ -227,6 +227,9 @@
             <div class="l-footer-section col-md-12">
                 <h3 class="l-footer-section-title">{{{ Config::get('other.title') }}}</h3>
                 <footer><p>{{{ Config::get('other.meta_description') }}}</p></footer>
+                <p>
+                    {{{ 'Powered by swaTT' }}}
+                </p>
             </div><!-- /Info tracker -->
         </div>
     </div><!-- /footer -->
