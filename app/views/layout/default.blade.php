@@ -86,7 +86,7 @@
 
     @if(Session::has('message'))
         <div class="container">
-            <div class="col-md-12 alert">{{ Session::pull('message') }}</div>
+            <div class="col-md-12 alert alert-info">{{ Session::pull('message') }}</div>
         </div>
     @endif
     
@@ -139,6 +139,16 @@
                 </ul>
             </div><!-- /Pages -->
             @endif
+            
+            {{-- 
+            <!-- Other -->
+            <div class="col-md-3 l-footer-section">
+                <h3 class="l-footer-section-title">Other</h3>
+                <ul>
+                    <li><a href="http://top-tracker-fr.tk/" rel="nofollow"><img src="http://top-tracker-fr.tk/button.php?u=ralamoin" alt="Top Tracker FR" border="0"></a></li>
+                    <li><p>{{{ 'Powered by swaTT' }}}</p></li>
+                </ul>
+            </div><!-- /Other --> --}}
         </div>
     </div>
 
