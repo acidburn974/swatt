@@ -18,11 +18,11 @@
         <span itemprop="title" class="l-breadcrumb-item-link-title">Forums</span>
     </a>
 </div>
-<div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+<!-- <div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
     <a href="{{ route('forum_category', array('slug' => $category->slug, 'id' => $category->id)) }}" itemprop="url" class="l-breadcrumb-item-link">
         <span itemprop="title" class="l-breadcrumb-item-link-title">{{ $category->name }}</span>
     </a>
-</div>
+</div> -->
 <div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
     <a href="{{ route('forum_display', array('slug' => $forum->slug, 'id' => $forum->id)) }}" itemprop="url" class="l-breadcrumb-item-link">
         <span itemprop="title" class="l-breadcrumb-item-link-title">{{ $forum->name }}</span>
@@ -77,9 +77,9 @@
                         <aside class="col-md-2 post-info">
 
                             @if($p->user->image != null)
-                                <img src="{{ url('files/img/' . $p->user->image) }}" alt="{{{ $p->user->username }}}" class="members-table-img img-thumbnail">
+                                <img src="{{ url('files/img/' . $p->user->image) }}" alt="{{{ $p->user->username }}}" class="img-thumbnail post-info-image">
                             @else
-                                <img src="{{ url('img/profil.png') }}" alt="{{{ $p->user->username }}}" class="members-table-img img-thumbnail">
+                                <img src="{{ url('img/profil.png') }}" alt="{{{ $p->user->username }}}" class="img-thumbnail post-info-image">
                             @endif
                             
                             <p>{{{ $p->user->title }}}</p>
