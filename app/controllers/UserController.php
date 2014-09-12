@@ -16,6 +16,11 @@ class UserController extends BaseController {
      */
     public function signup()
     {
+        if(Config::get('other.invite-only') == true)
+        {
+            return Redirect::to('/')->with('message', 'You must be invited to register');
+        }
+
         if(Request::isMethod('post'))
         {
             $input = Input::all();

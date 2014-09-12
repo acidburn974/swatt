@@ -4,8 +4,11 @@
  *
  */
 return array(
+	'home' => 'Home',
+	'account' => 'Account',
 	'login' => 'Login',
 	'signup' => 'Signup',
+	'logout' => 'Logout',
 	'username' => 'Username',
 	'password' => 'Password',
 	'download' => 'Download', 
@@ -15,5 +18,6 @@ return array(
 	'added_on' => 'Added on',
 	'lost-password' => 'Forgot your password ?',
 	'recover-my-password' => 'Recover my password',
-	); 
+	'search' => 'Recherche',
+); 
 ?>

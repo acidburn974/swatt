@@ -3,17 +3,11 @@
 @section('content')
 <div class="container home">
 
-    <div class="col-md-12 page-title">
-        <h1>News</h1>
-
-        <hr/>
-    </div>
-
-    <div class="home-newsboxes box col-md-12">
+    <div class="home-newsboxes col-md-12">
         <div class="row">
             <!-- Torrents -->
             <section class="col-md-4 home-newsboxes-b">
-                <h2>Torrents</h2>
+                <h2><a href="{{ route('torrents') }}">Torrents</a></h2>
                 <ul>
                     @foreach($torrents as $t)
                         <li><a href="{{ route('torrent', array('slug' => $t->slug, 'id' => $t->id)) }}">{{{ $t->name }}}</a></li>
@@ -23,7 +17,7 @@
 
             <!-- Topics -->
             <section class="col-md-4 home-newsboxes-b">
-                <h2>Topics</h2>
+                <h2><a href="{{ route('forum_index') }}">Forums</a></h2>
                 <ul>
                     @foreach($topics as $t)
                         <li><a href="{{ route('forum_topic', array('slug' => $t->slug, 'id' => $t->id)) }}">{{{ $t->name }}}</a></li>
@@ -33,7 +27,7 @@
 
             <!-- Members -->
             <section class="col-md-4 home-newsboxes-b">
-                <h2>{{{ trans('common.members') }}}</h2>
+                <h2><a href="{{ route('members') }}">{{{ trans('common.members') }}}</a></h2>
                 <ul>
                     @foreach($users as $u)
                         <li><a href="{{ route('profil', array('username' => $u->username, 'id' => $u->id)) }}">{{{ $u->username }}}</a></li>
@@ -41,6 +35,11 @@
                 </ul>
             </section><!-- /Members -->
         </div>
+    </div>
+
+    <div class="col-md-12 page-title">
+        <h1>News</h1>
+        <hr/>
     </div>
 
     <section>
@@ -70,7 +69,7 @@
                         {{{ substr(strip_tags($a->content), 0, strpos(strip_tags($a->content), ' ', 240)) }}}...
                     </div>
 
-                    <div class="col-md-8 article-readmore">
+                    <div class="col-md-12 article-readmore">
                         <a href="{{ route('article', ['slug' => $a->slug, 'id' => $a->id]) }}" class="btn btn-default">{{{ trans('articles.read-more') }}}</a>
                     </div>
                 </div>

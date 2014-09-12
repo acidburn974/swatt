@@ -24,7 +24,7 @@
 @section('content')
 <div class="torrent box container">
     <div class="col-md-12">
-        <h1 class="torrent-title"><a href="{{ route('download', array('slug' => $torrent->slug, 'id' => $torrent->id)) }}" class="torrent-data-item">{{{ trans('common.download') }}} {{{ $torrent->name }}}</a></h1>
+        <h1 class="torrent-title"><a href="{{ route('download', array('slug' => $torrent->slug, 'id' => $torrent->id)) }}" class="torrent-data-item">{{{ $torrent->name }}}</a></h1>
     </div>
 
     <!-- Données sur le torrent -->

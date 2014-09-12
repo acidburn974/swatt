@@ -1,43 +1,76 @@
-@extends('layout.default')
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{{ trans('common.signup') }}} - {{ Config::get('other.title') }}</title>
 
-@section('title')
-<title>{{{ trans('common.signup') }}} - {{ Config::get('other.title') }}</title>
-@stop
+    <!-- Meta -->
+    @section('meta')
+        <meta name="description" content="Inscription sur {{{ Config::get('other.title') }}}. Téléchargement de torrents illimité.">
+        <meta name="keywords" content="{{{ 'torrents, films, movies, series, tv, show, téléchargement, download, albums, logiciels, jeux, games' }}}">
 
-@section('meta')
-<meta name="description" content="Signup to the torrent tracker in less than 30s. Get access to exclusive HD movies and tv shows.">
-@stop
+        <meta property="og:title" content="{{{ Config::get('other.title') }}}">
+        <meta property="og:type" content="website">
+        <meta property="og:image" content="{{ url('/img/rlm.png') }}">
+        <meta property="og:url" content="{{ url('/') }}">
+    @show
+    <!-- /Meta -->
 
-@section('breadcrumb')
-<div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
-    <a href="{{ url('/signup') }}" itemprop="url" class="l-breadcrumb-item-link">
-        <span itemprop="title" class="l-breadcrumb-item-link-title">{{{ trans('common.signup') }}}</span>
-    </a>
-</div>
-@stop
+    <link rel="shortcut icon" href="{{ url('/favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url('/favicon.ico') }}" type="image/x-icon">
+    
+    <link rel="stylesheet" href="{{ url('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url('css/flat-ui.css') }}">
+    <link rel="stylesheet" href="{{ url('css/main.css') }}">
+    <link rel="stylesheet" href="{{ url('css/font-awesome.min.css') }}">
+</head>
+<body class="signup">
+    
+    <div class="container">
 
-@section('content')
-<div class="container">
-    <div class="col-md-4 box centered-form">
-        <h3>{{{ trans('common.signup') }}}</h3>
-        {{ Form::open(array('route' => 'signup')) }}
-            <div class="form-group">
-                <label for="username">{{{ trans('common.username') }}}</label>
-                <input type="text" name="username" class="form-control">
-            </div>
+        <div class="col-md-4 signup-logo">
+            <h1>{{ Config::get('other.title') }}</h1>
+        </div>
+        
+        @if(Session::has('message'))
+        <div class="col-md-4 signup-alert">
+            {{ Session::pull('message') }}
+        </div>
+        @endif
 
-            <div class="form-group">
-                <label for="email">E-mail</label>
-                <input type="text" name="email" class="form-control">
-            </div>
+        <div class="col-md-3 login-form signup-form">
+            <h3 class="signup-form-title">{{{ trans('common.signup') }}}</h3>
+            {{ Form::open(array('route' => 'signup')) }}
+                <div class="form-group">
+                    <input type="text" name="username" placeholder="{{{ trans('common.username') }}}" class="form-control">
+                </div>
 
-            <div class="form-group">
-                <label for="password">{{{ trans('common.password') }}}</label>
-                <input type="password" name="password" class="form-control">
-            </div>
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="E-mail" class="form-control">
+                </div>
 
-            <button type="submit" class="btn btn-default">Go !</button>
-        {{ Form::close() }}
+                <div class="form-group">
+                    <input type="password" name="password" placeholder="{{{ trans('common.password') }}}" class="form-control">
+                </div>
+
+                <button type="submit" class="btn btn-default">{{{ trans('common.signup') }}}</button>
+            {{ Form::close() }}
+        </div>
+
+
+        <div class="col-md-6 signup-info">
+            <p>{{{ Config::get('other.meta_description') }}}</p>
+            <nav>
+                <a href="{{ route('home') }}">{{{ trans('common.home') }}}</a>
+                -
+                <a href="{{ route('login') }}">{{{ trans('common.login') }}}</a>
+                -
+                <a href="{{ route('signup') }}">Inscription</a>
+                -
+                <a href="{{ route('reminder_get_remind') }}">{{{ trans('common.lost-password') }}}</a>
+            </nav>
+        </div>
     </div>
-</div>
-@stop
+
+</body>
+</html>
