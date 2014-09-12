@@ -57,7 +57,15 @@
                 <a href="{{ route('upload') }}" class="l-header-menu-item">Upload</a>
                 @endif
             </nav>
-
+            
+            @if(Auth::check())
+            <div class="col-md-3 l-header-info">
+                <a href="{{ route('profil', array('username' => Auth::user()->username, 'id' => Auth::user()->id)) }}" class="l-header-user-data-link">{{ Auth::user()->username }}</a>
+                <span class="l-header-info-span">{{ Auth::user()->getUploaded() }} <i class="fa fa-long-arrow-up"></i></span>
+                <span class="l-header-info-span">{{ Auth::user()->getDownloaded() }} <i class="fa fa-long-arrow-down"></i></span>
+                <span class="l-header-info-span">{{ Auth::user()->getRatio() }} <i class="fa fa-arrows-v"></i></span>
+            </div>
+            @endif
             
         </div>
     </div><!-- Header -->
@@ -122,7 +130,7 @@
 
             @if(count($pages))
             <!-- Pages -->
-            <div class="col-md-2 l-footer-section">
+            <div class="col-md-3 l-footer-section">
                 <h3 class="l-footer-section-title">Pages</h3>
                 <ul>
                     @foreach($pages as $p)
