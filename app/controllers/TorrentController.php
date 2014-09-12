@@ -187,8 +187,14 @@ class TorrentController extends BaseController {
 			{
 				$client->user_id = $user->id;
 			}
+
 			$client->torrent_id = $torrent->id;
 			$client->save();
+
+			// Modification de l'upload/download de l'utilisateur pour le ratio
+			$user->uploaded += Input::get('uploaded') - $client->uploaded;
+			$user->downloaded += Input::get('downloaded') - $client->downloaded;
+			$user->save();
 
 			$torrent->seeders = Peer::whereRaw('torrent_id = ? AND `left` = 0', array($torrent->id))->count();
 			$torrent->leechers = Peer::whereRaw('torrent_id = ? AND `left` > 0', array($torrent->id))->count();
