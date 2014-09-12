@@ -61,47 +61,45 @@
         </div>
 
         <div class="topic-posts">
-            <div class="topic-posts-head">
-                <p>{{ $topic->num_post - 1 }} replies to this topic</p>
-            </div>
-
-            @foreach($posts as $k => $p)
-                <div class="post" id="post_{{ $p->id }}" data-id="{{ $p->id }}">
-                    <div class="col-md-12 post-head">
-                        <a href="{{ route('profil', ['username' => $p->user->username, 'id' => $p->user->id]) }}" class="post-info-username">
-                            {{ $p->user->username }}
-                        </a>
-                        <span class="post-head-date">{{ date('d/m/Y H:m:s', strtotime($p->created_at)) }}</span>
-                    </div>
-
-                    <aside class="col-md-2 post-info">
-
-                        @if($p->user->image != null)
-                            <img src="{{ url('files/img/' . $p->user->image) }}" alt="{{{ $p->user->username }}}" class="members-table-img img-thumbnail">
-                        @else
-                            <img src="{{ url('img/profil.png') }}" alt="{{{ $p->user->username }}}" class="members-table-img img-thumbnail">
-                        @endif
-                        
-                        <p>{{{ $p->user->title }}}</p>
-                        <p>{{ $p->user->group->name }}</p>
-                        <p>{{ trans('traduction.join_date')}}: {{ date('d/m/Y', strtotime($p->user->created_at)) }}</p>
-                    </aside>
-
-                    <article class="col-md-10 post-content">
-                        {{ $p->getContentHtml() }}
-                    </article>
-
-                    <div class="col-md-12 post-control">
-                        @if(Auth::check() && (Auth::user()->group->is_modo || $p->user_id == Auth::user()->id) && $topic->state == 'open')
-                            <a href="{{ route('forum_post_edit', ['slug' => $topic->slug, 'id' => $topic->id, 'postId' => $p->id]) }}">Edit</a>
-                        @endif
-                    </div>
-
-                    <div class="clearfix"></div>
+                <div class="topic-posts-head">
+                    <p>{{ $topic->num_post - 1 }} replies to this topic</p>
                 </div>
-            @endforeach
 
-            {{ $posts->links() }}
+                @foreach($posts as $k => $p)
+                    <div class="post" id="post_{{ $p->id }}" data-id="{{ $p->id }}">
+                        <div class="col-md-12 post-head">
+                            <a href="{{ route('profil', ['username' => $p->user->username, 'id' => $p->user->id]) }}" class="post-info-username">
+                                {{ $p->user->username }}
+                            </a>
+                            <span class="post-head-date">{{ date('d/m/Y H:m:s', strtotime($p->created_at)) }}</span>
+                        </div>
+
+                        <aside class="col-md-2 post-info">
+
+                            @if($p->user->image != null)
+                                <img src="{{ url('files/img/' . $p->user->image) }}" alt="{{{ $p->user->username }}}" class="members-table-img img-thumbnail">
+                            @else
+                                <img src="{{ url('img/profil.png') }}" alt="{{{ $p->user->username }}}" class="members-table-img img-thumbnail">
+                            @endif
+                            
+                            <p>{{{ $p->user->title }}}</p>
+                            <p>{{ $p->user->group->name }}</p>
+                            <p>{{ trans('traduction.join_date')}}: {{ date('d/m/Y', strtotime($p->user->created_at)) }}</p>
+                            @if(Auth::check() && (Auth::user()->group->is_modo || $p->user_id == Auth::user()->id) && $topic->state == 'open')
+                                <p><a href="{{ route('forum_post_edit', ['slug' => $topic->slug, 'id' => $topic->id, 'postId' => $p->id]) }}">Edit this post</a></p>
+                            @endif
+
+                        </aside>
+
+                        <article class="col-md-10 post-content">
+                            {{ $p->getContentHtml() }}
+                        </article>
+
+                        <div class="clearfix"></div>
+                    </div>
+                @endforeach
+
+                {{ $posts->links() }}
         </div>
 
         <div class="topic-new-post">
