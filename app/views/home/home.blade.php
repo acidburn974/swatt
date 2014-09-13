@@ -3,11 +3,11 @@
 @section('content')
 <div class="container home">
 
-    <div class="home-newsboxes col-md-12">
+    <div class="col-md-12 home-newsboxes box">
         <div class="row">
             <!-- Torrents -->
             <section class="col-md-4 home-newsboxes-b">
-                <h2><a href="{{ route('torrents') }}">Torrents</a></h2>
+                <h2 class="home-newsboxes-b-title"><a href="{{ route('torrents') }}">Torrents</a></h2>
                 <ul>
                     @foreach($torrents as $t)
                         <li><a href="{{ route('torrent', array('slug' => $t->slug, 'id' => $t->id)) }}">{{{ $t->name }}}</a></li>
@@ -17,7 +17,7 @@
 
             <!-- Topics -->
             <section class="col-md-4 home-newsboxes-b">
-                <h2><a href="{{ route('forum_index') }}">Forums</a></h2>
+                <h2 class="home-newsboxes-b-title"><a href="{{ route('forum_index') }}">Forums</a></h2>
                 <ul>
                     @foreach($topics as $t)
                         <li><a href="{{ route('forum_topic', array('slug' => $t->slug, 'id' => $t->id)) }}">{{{ $t->name }}}</a></li>
@@ -27,7 +27,7 @@
 
             <!-- Members -->
             <section class="col-md-4 home-newsboxes-b">
-                <h2><a href="{{ route('members') }}">{{{ trans('common.members') }}}</a></h2>
+                <h2 class="home-newsboxes-b-title"><a href="{{ route('members') }}">{{{ trans('common.members') }}}</a></h2>
                 <ul>
                     @foreach($users as $u)
                         <li><a href="{{ route('profil', array('username' => $u->username, 'id' => $u->id)) }}">{{{ $u->username }}}</a></li>

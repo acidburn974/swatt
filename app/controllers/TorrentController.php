@@ -269,6 +269,10 @@ class TorrentController extends BaseController {
 	/**
 	 * Telecharge le torrent
 	 *
+	 * @access public
+	 * @param string $slug Slug du torrent
+	 * @param int $id Id du torrent 
+	 * @return file
 	 */
 	public function download($slug, $id)
 	{
