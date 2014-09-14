@@ -156,7 +156,8 @@
     <script type="text/javascript">
         var url = "{{ url('/') }}";
     </script>
-
+    
+    <script type="text/javascript" src="{{ url('js/vendor/pace.min.js') }}"></script>
     <script type="text/javascript" src="{{ url('js/vendor/jquery.min.js') }}"></script>
     @yield('javascripts')<!-- /Scripts -->
 

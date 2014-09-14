@@ -122,7 +122,7 @@ Route::group(array('prefix' => 'community'), function()
 Route::group(['prefix' => 'api', 'namespace' => 'Api'], function(){
 
     // Affiche l'article
-    Route::any('/article/{id}', 'ArticleController@article');
+    Route::any('/articles/{id}', 'ArticleController@article');
     // Affiche le torrent
     Route::any('/torrents/{id}', 'TorrentController@torrent');
 
