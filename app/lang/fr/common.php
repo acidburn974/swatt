@@ -19,6 +19,7 @@ return array(
 	'lost-password' => 'Mot de passe oublié ?',
 	'recover-my-password' => 'Récupération de mot de passe',
 	'search' => 'Recherche',
+	'category' => 'Catégorie',
 	
 );
 ?>

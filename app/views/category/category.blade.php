@@ -1,7 +1,7 @@
 @extends('layout.default')
 
 @section('title')
-<title>{{{ $category->name }}} - Category - {{ Config::get('other.title') }}</title>
+<title>{{{ $category->name }}} - {{{ trans('common.category') }}} - {{ Config::get('other.title') }}</title>
 @stop
 
 @section('meta')

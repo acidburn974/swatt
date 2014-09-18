@@ -19,5 +19,6 @@ return array(
 	'lost-password' => 'Forgot your password ?',
 	'recover-my-password' => 'Recover my password',
 	'search' => 'Recherche',
+	'category' => 'Category',
 ); 
 ?>
