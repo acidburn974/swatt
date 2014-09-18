@@ -23,7 +23,7 @@ class ArticleController extends \BaseController {
      */
     public function index()
     {
-        $posts = Article::all();
+        $posts = Article::orderBy('created_at', 'DESC')->paginate(20);
         return View::make('Admin.article.index', array('posts' => $posts));
     }
 

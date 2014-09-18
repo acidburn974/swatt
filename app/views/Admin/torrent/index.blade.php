@@ -22,7 +22,8 @@
                 @endforeach
             </tbody>
         </table>
-
+        
+        {{ $torrents->links() }}
     </div>
 </div>
 @stop

@@ -22,7 +22,7 @@ class TorrentController extends \BaseController {
      */
 	public function index()
 	{
-		$torrents = Torrent::all();
+		$torrents = Torrent::orderBy('created_at', 'DESC')->paginate(20);
         return View::make('Admin.torrent.index', array('torrents' => $torrents));
 	}
 
