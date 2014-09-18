@@ -1,0 +1,32 @@
+<div class="box container">
+    <article class="article col-md-12">
+
+        <h1 class="article-title">{{ article.title }}</h1>
+
+        <div class="article-info">
+            <span>Published at</span>
+            <time datetime="">{{ article.created_at }}</time>
+        </div>
+
+        <div class="article-content">
+            {{ &article.content }}
+        </div>
+        <hr>
+    </article>
+
+    <div class="col-md-12">
+        <!-- <form id="article-comment" action="">
+            <div class="form-group">
+                <label for="content">Your comment:</label>
+                <textarea id="article-comment-content" name="content" cols="30" rows="5" class="form-control"></textarea>
+            </div>
+        
+            <button type="submit" class="btn btn-default">Save my comment</button>
+        </form>
+        <hr> -->
+    </div>
+
+    <div id="#comments" class="comments col-md-12" data-article-id="{{ article.id }}">
+        
+    </div>
+</div>

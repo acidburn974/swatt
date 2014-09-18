@@ -45,7 +45,7 @@
     <section>
         <!-- Articles -->
         @foreach($articles as $a)
-            <article class="article col-md-12">
+            <article data-id="{{ $a->id }}" class="article col-md-12">
                 <div class="row">
                     <a href="{{ route('article', ['slug' => $a->slug, 'id' => $a->id]) }}" class="article-thumb col-md-4">
                         <!-- Image -->
@@ -81,4 +81,11 @@
         {{ $articles->links() }}
     </div>
 </div>
+@stop
+
+@section('javascripts')
+<script type="text/javascript" src="{{ url('js/vendor/lodash.min.js') }}"></script>
+<script type="text/javascript" src="{{ url('js/vendor/backbone.min.js') }}"></script>
+<script type="text/javascript" src="{{ url('js/vendor/mustache.js') }}"></script>
+<script type="text/javascript" src="{{ url('js/views/home.js') }}"></script>
 @stop
