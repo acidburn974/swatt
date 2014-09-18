@@ -1,6 +1,7 @@
 <?php
 
 class Article extends Eloquent {
+    
     public $rules = array(
         'title' => 'required',
         'slug' => 'required',

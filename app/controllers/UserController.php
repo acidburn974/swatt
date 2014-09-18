@@ -115,33 +115,40 @@ class UserController extends BaseController {
     }
 
     /**
-     * Change la photo de l'utilisateur
+     * Permet à l'utilisateur d'éditer son profil
      *
      * @access public
-     * @return Redirect profil
+     * @return void
+     *
      */
-    public function changePhoto($slug, $id)
+    public function editProfil($username, $id)
     {
         $user = Auth::user();
-        if(Input::hasFile('image'))
+        // Requetes post only
+        if(Request::isMethod('post'))
         {
-            $image = Input::file('image');
-            if(in_array($image->getClientOriginalExtension(), array('jpg', 'jpeg', 'bmp', 'png', 'tiff')) && preg_match('#image/*#', $image->getMimeType()))
+            if(Input::hasFile('image'))
             {
-                $image->move(getcwd() . '/files/img/', $user->username . '.' . $image->getClientOriginalExtension());
-                $user->image = $user->username . '.' . $image->getClientOriginalExtension();
-                $user->save();
-                return Redirect::route('profil', ['username' => $user->username, 'id' => $user->id])->with('message', 'Photo succesfully saved');
+                // Modification de l'image de l'utilisateur
+                $image = Input::file('image');
+                // Check file
+                if(in_array($image->getClientOriginalExtension(), array('jpg', 'jpeg', 'bmp', 'png', 'tiff')) && preg_match('#image/*#', $image->getMimeType()))
+                {
+                    // Move file
+                    $image->move(getcwd() . '/files/img/', $user->username . '.' . $image->getClientOriginalExtension());
+                    $user->image = $user->username . '.' . $image->getClientOriginalExtension();
+                }
             }
-            else
-            {
-                Redirect::route('profil', ['username' => $user->username, 'id' => $user->id])->with('message', 'Your image is invalid');
-            }
+            // Define data
+            $user->title = Input::get('title');
+            $user->about = Input::get('about');
+            // Save the user
+            $user->save();
+
+            return Redirect::route('profil', ['username' => $user->username, 'id' => $user->id]);
         }
-        else
-        {
-            Redirect::route('profil', ['username' => $user->username, 'id' => $user->id])->with('message', 'You must upload an image');
-        }
+
+        return View::make('user.edit_profil', array('user' => $user));
     }
 
     /**
@@ -168,59 +175,5 @@ class UserController extends BaseController {
         {
             return Redirect::to('/')->with('message', 'This link is unavailable');
         }
-    }
-
-    /**
-     * Change les infos de l'utilisateur
-     *
-     * @access public
-     * @param $username Nom d'utilisateur
-     * @param $id Id de l'utilisateur
-     */
-    public function changeAbout($username, $id)
-    {
-        $user = Auth::user();
-        if(Request::isMethod('post'))
-        {
-            $user->about = Input::get('about');
-            $user->save();
-            Session::put('message', 'Your informations are successfully saved');
-        }
-
-        return Redirect::route('profil', ['username' => $user->username, 'id' => $user->id]);
-    }
-
-    /**
-     * Permet à l'utilisateur de modifier son mot de passe
-     *
-     * @access public
-     * @return view user.lost_password
-     */
-    public function lostPassword($token = null)
-    {
-        if(Request::isMethod('post'))
-        {
-            $user = User::where('email', '=', Input::get('email'))->first();
-        }
-
-        return View::make('user.lost_password');
-    }
-
-    /**
-     * Modifie le titre de l'utilisateur si il est admin
-     *
-     * @access public
-     * @return Redirect profil
-     */
-    public function changeTitle($username, $id)
-    {
-        $user = User::find($id);
-        if($user->id == Auth::user()->id)
-        {
-            $user->title = Input::get('title');
-            $user->save();
-        }
-
-        return Redirect::route('profil', ['username' => $user->username, 'id' => $user->id]);
     }
 } ?>

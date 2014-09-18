@@ -164,6 +164,22 @@
 	@if(Config::get('app.debug') == false)
 	   <!-- INSERT YOUR ANALYTICS CODE HERE -->
     @else
+        <script type="text/javascript" src="{{ url('js/vendor/f5less.js') }}"></script>
+        <script type="text/javascript">
+            f5less.connect({
+                triggersCSSReload: function(filename) {
+                    return f5less.strEndsWith(filename, 
+                        ".css", ".png", ".jpg", ".less"
+                    );
+                },
+
+                triggersPageReload: function(filename) {
+                    return f5less.strEndsWith(filename, 
+                        ".js", ".html", ".htm", ".php", "coffee"
+                    );
+                }
+            });
+        </script>
         <!-- INSERT DEBUG CODE HERE -->
 	@endif
 </body>

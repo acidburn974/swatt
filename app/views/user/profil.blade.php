@@ -25,70 +25,30 @@
 @section('content')
 <div class="box container">
 	<div class="profil">
+
 		<!-- User image -->
-		<div class="profil-image col-md-2">
+		<div class="profil-side col-md-2">
+			<h2>{{ $user->username }}</h2>
 			@if($user->image != null)
 				<img src="{{ url('files/img/' . $user->image) }}" alt="{{{ $user->username }}}" class="members-table-img img-thumbnail">
 			@else
 				<img src="{{ url('img/profil.png') }}" alt="{{{ $user->username }}}" class="members-table-img img-thumbnail">
 			@endif
 		</div><!-- /User image -->
-		<!-- User data -->
-		<div class="col-md-5">
-			<h2>{{ $user->username }}</h2>
-			<p>Last activity: {{ date('d M Y', strtotime($user->updated_at)) }}</p>
-			<p>Registered: {{ date('d M Y', strtotime($user->created_at)) }}</p>
-			<p>Upload: {{ $user->getUploaded() }} - Download: {{ $user->getDownloaded() }}</p>
-			<p>Ratio: {{ $user->getUploaded() / $user->getDownloaded() }}</p>
-			@if($user->about)
-				<p>About : <blockquote>{{{ $user->about }}}</blockquote></p>
-			@endif
-		</div><!-- /User data -->
-
-		<!-- User image form -->
-		<div class="col-md-5">
-			@if(Auth::check() && Auth::user()->id == $user->id)
-				<h3>Change your image:</h3>
-				{{ Form::open(['route' => array('user_change_photo', 'username' => $user->username, 'id' => $user->id), 'files' => true]) }}
-					<div class="form-group">
-						<label for="image">Image</label>
-						<input type="file" name="image">
-					</div>
-					<button type="submit" class="btn btn-default">Save</button>
-				{{ Form::close() }}
-			@endif
-		</div><!-- /User image form -->
-
-		<!-- User about form -->
-		@if(Auth::check() && Auth::user()->id == $user->id)
-		<div class="col-md-4">
-			<!-- Change description -->
-			{{ Form::open(['route' => array('user_change_about', 'username' => $user->username, 'id' => $user->id)]) }}
-				<div class="form-group">
-					<label for="image">Some informations about you :</label>
-					<textarea class="form-control" name="about" rows="3">{{ $user->about }}</textarea>
-				</div>
-				<button type="submit" class="btn btn-default">Save</button>
-			{{ Form::close() }}<!-- /Change description -->
-		</div><!-- /User about form -->
-		@endif
 		
-		<!-- Change title -->
-		@if(Auth::check() && Auth::user()->id == $user->id)
-			<div class="col-md-4">
-				@if($user->group->is_admin || $user->group->is_modo)
-					{{ Form::open(array('route' => array('user_change_title', 'username' => $user->username, 'id' => $user->id))) }}
-						<div class="form-group">
-							<label for="title">Forum's title:</label>
-							<input type="text" name="title" value="{{ $user->title }}" class="form-control">
-						</div>
-						<button type="submit" class="btn btn-default">Save</button>
-					{{ Form::close() }}
-				@endif<!-- Change title -->
-			</div>
-		@endif
-
-
+		<div class="col-md-5 profil-content">
+			<p>Inscrit le {{ date('d M Y', $user->created_at->getTimestamp()) }}</p>
+			<p>Dernière activitée le {{ date('d M Y H:m', $user->updated_at->getTimestamp()) }}</p>
+			@if($user->title)
+				<p>Title: {{{ $user->title }}}</p>
+			@endif
+			@if($user->about)
+				<p>About: {{{ $user->about }}}</p>
+			@endif
+			@if(Auth::user()->id == $user->id)
+				<p><a href="{{ route('user_edit_profil', array('username' => $user->username, 'id' => $user->id)) }}" class="btn btn-primary">Edit my profile</a></p>
+			@endif
+		</div>
 		<div class="clearfix"></div>
 	</div>
 </div>
