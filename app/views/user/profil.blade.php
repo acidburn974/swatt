@@ -1,7 +1,7 @@
 @extends('layout.default')
 
 @section('title')
-<title>{{{ $user->username }}} - Members - {{{ Config::get('other.title') }}}</title>
+<title>{{{ $user->username }}} - {{{ trans('common.members') }}} - {{{ Config::get('other.title') }}}</title>
 @stop
 
 @section('meta')
@@ -39,13 +39,13 @@
 		<div class="col-md-5 profil-content">
 			<p>Inscrit le {{ date('d M Y', $user->created_at->getTimestamp()) }}</p>
 			<p>Dernière activitée le {{ date('d M Y H:m', $user->updated_at->getTimestamp()) }}</p>
-			@if($user->title)
+			@if( ! is_null($user->title))
 				<p>Title: {{{ $user->title }}}</p>
 			@endif
-			@if($user->about)
+			@if( ! is_null($user->about))
 				<p>About: {{{ $user->about }}}</p>
 			@endif
-			@if(Auth::user()->id == $user->id)
+			@if(Auth::check() && Auth::user()->id == $user->id)
 				<p><a href="{{ route('user_edit_profil', array('username' => $user->username, 'id' => $user->id)) }}" class="btn btn-primary">Edit my profile</a></p>
 			@endif
 		</div>
