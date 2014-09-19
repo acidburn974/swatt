@@ -112,7 +112,7 @@ class TorrentController extends BaseController {
 	*/
 	public function announce($passkey = null)
 	{
-		//Log::info(Input::all());
+		Log::info(Input::all());
 
 		// Correct info hash
 		$infoHash = bin2hex((Input::get('info_hash') != null) ? Input::get('info_hash') : Input::get('hash_id'));
@@ -150,14 +150,14 @@ class TorrentController extends BaseController {
 		// Deleting old peers from the database
 		foreach(Peer::all() as $peer)
 		{
-			if((time() - strtotime($peer->updated_at)) > (5 * 60))
+			if((time() - strtotime($peer->updated_at)) > (50 * 60))
 			{
 				$peer->delete();
 			}
 		}
 
 		// Finding peers for this torrent on the database
-		$peers = Peer::whereRaw('torrent_id = ?', array($torrent->id))->get()->toArray();
+		$peers = Peer::whereRaw('torrent_id = ?', array($torrent->id))->take(50)->get()->toArray();
 
 		// Removing useless data from the
 		foreach($peers as $k => $p)
@@ -166,6 +166,7 @@ class TorrentController extends BaseController {
 			unset($p['md5_peer_id']);
 			$peers[$k] = $p;
 		}
+
 
 		// Get the event of the tracker
 		if(Input::get('event') == 'started' || Input::get('event') == null)
@@ -179,6 +180,7 @@ class TorrentController extends BaseController {
 			$client->uploaded = Input::get('uploaded');
 			$client->downloaded = Input::get('downloaded');
 			$client->seeder = ($client->left > 0) ? false : true;
+
 			if(Config::get('other.freeleech') == true)
 			{
 				$client->user_id = 0;
@@ -190,11 +192,6 @@ class TorrentController extends BaseController {
 
 			$client->torrent_id = $torrent->id;
 			$client->save();
-
-			// Modification de l'upload/download de l'utilisateur pour le ratio
-			$user->uploaded += Input::get('uploaded') - $client->uploaded;
-			$user->downloaded += Input::get('downloaded') - $client->downloaded;
-			$user->save();
 
 			$torrent->seeders = Peer::whereRaw('torrent_id = ? AND `left` = 0', array($torrent->id))->count();
 			$torrent->leechers = Peer::whereRaw('torrent_id = ? AND `left` > 0', array($torrent->id))->count();
@@ -224,6 +221,15 @@ class TorrentController extends BaseController {
 			{
 				return Response::make(Bencode::bencode(array('failure reason' => 'You don\'t have a life'), 200, array('Content-Type' => 'text/plain')));
 			}
+		}
+
+		// Savegarde le ratio de l'utilisateur
+		if(Config::get('other.freeleech') == false)
+		{
+			// Modification de l'upload/download de l'utilisateur pour le ratio
+			$user->uploaded += Input::get('uploaded') - $client->uploaded;
+			$user->downloaded += Input::get('downloaded') - $client->downloaded;
+			$user->save();
 		}
 
 		$resp['interval'] = 60; // Set to 60 for debug
