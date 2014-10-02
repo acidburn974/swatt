@@ -79,10 +79,10 @@ return array(
 
     /*
     |--------------------------------------------------------------------------
-    | Private tracker
+    | Invite only
     |--------------------------------------------------------------------------
     |
-    | Registered member only can register to the site
+    | L'inscription se fait sur invitation
     |
     */
     'invite-only' => false,

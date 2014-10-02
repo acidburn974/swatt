@@ -33,7 +33,7 @@ class UserController extends BaseController {
             }
             else
             {
-                $group = Group::where('slug', '=', 'validating')->first();
+                $group = Group::where('slug', '=', 'members')->first();
                 $user->username = $input['username'];
                 $user->email = $input['email'];
                 $user->password = Hash::make($input['password']);
@@ -42,10 +42,10 @@ class UserController extends BaseController {
                 $user->downloaded = 1073741824; // 1GB
                 $group->users()->save($user);
 
-                Mail::send('emails.welcome', array('user' => $user), function($message) use ($user) {
+/*                Mail::send('emails.welcome', array('user' => $user), function($message) use ($user) {
                     $message->from(Config::get('other.email'), Config::get('other.title'));
                     $message->to($user->email, '')->subject('Welcome to ' . Config::get('other.title'));
-                });
+                });*/
 
                 Session::put('message', 'An e-mail was sent to this address now you can activate your account');
                 return Redirect::route('login');
