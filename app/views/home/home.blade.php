@@ -84,8 +84,4 @@
 @stop
 
 @section('javascripts')
-<script type="text/javascript" src="{{ url('js/vendor/lodash.min.js') }}"></script>
-<script type="text/javascript" src="{{ url('js/vendor/backbone.min.js') }}"></script>
-<script type="text/javascript" src="{{ url('js/vendor/mustache.js') }}"></script>
-<script type="text/javascript" src="{{ url('js/views/home.js') }}"></script>
 @stop
