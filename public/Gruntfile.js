@@ -16,13 +16,13 @@ module.exports = function(grunt) {
             }
         },
         coffee: {
-            compile: {
-                options: {
-                  bare: true
-                },
-                files: {
-                  "js/forum.js": "coffee/forum.coffee",
-                }
+            glob_to_multiple: {
+                expand: true,
+                //flatten: true,
+                cwd: './coffee',
+                src: ['./**/*.coffee'],
+                dest: 'js/',
+                ext: '.js'
             }
         },
         watch: {
@@ -30,7 +30,7 @@ module.exports = function(grunt) {
                 files: ['less/**/*.less'], // which files to watch
                 tasks: ['less'],
                 options: {
-                nospawn: true
+                    nospawn: true
                 }
             },
             scripts: {

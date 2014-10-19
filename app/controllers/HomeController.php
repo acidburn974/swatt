@@ -14,11 +14,6 @@ class HomeController extends BaseController {
 	 */
 	public function home()
 	{
-		if(Config::get('other.private') == true && Auth::check() == false && isset($_SERVER['HTTP_USER_AGENT']) && ! preg_match('/bot|crawl|slurp|spider/i', $_SERVER['HTTP_USER_AGENT']))
-		{
-			return View::make('user.login');
-		}
-
 		// Fetch latest articles
         $articles = Article::orderBy('created_at', 'DESC')->paginate(5);
 		// Fetch latest torrents

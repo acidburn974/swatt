@@ -112,7 +112,7 @@ class TorrentController extends BaseController {
 	*/
 	public function announce($passkey = null)
 	{
-		Log::info(Input::all());
+		//Log::info(Input::all());
 
 		// Correct info hash
 		$infoHash = bin2hex((Input::get('info_hash') != null) ? Input::get('info_hash') : Input::get('hash_id'));

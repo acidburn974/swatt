@@ -14,6 +14,12 @@
 App::before(function($request)
 {
 	//
+
+	// Tracker privée seulement
+	if(Config::get('other.private') == true && Auth::check() == false)
+	{
+		return View::make('user.login');
+	}
 });
 
 
