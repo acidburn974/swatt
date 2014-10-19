@@ -18,7 +18,7 @@ Route::any('/contact', ['uses' => 'HomeController@contact', 'as' => 'contact']);
 
 // User
 Route::any('/login', ['uses' => 'UserController@login', 'as' => 'login']);
-Route::any('/signup', ['uses' => 'UserController@signup', 'as' => 'signup']);
+Route::any('/signup/{key?}', ['uses' => 'UserController@signup', 'as' => 'signup']);
 Route::any('/logout', ['uses' => 'UserController@logout', 'before' => 'auth', 'as' => 'logout']);
 Route::get('/members', ['uses' => 'UserController@members', 'as' => 'members']);
 Route::get('/members/{username}.{id}', ['uses' => 'UserController@profil', 'as' => 'profil']);
@@ -26,7 +26,8 @@ Route::any('/members/{username}.{id}/edit', ['uses' => 'UserController@editProfi
 Route::post('/members/{username}.{id}/photo', ['uses' => 'UserController@changePhoto', 'as' => 'user_change_photo', 'before' => 'auth']);
 Route::get('/members/{username}.{id}/activate/{token}', ['uses' => 'UserController@activate', 'as' => 'user_activate']);
 Route::post('/members/{username}.{id}/about', ['uses' => 'UserController@changeAbout', 'as' => 'user_change_about', 'before' => 'auth']);
-Route::post('/members/{username}.{id}/photo', ['uses' => 'UserController@changeTitle', 'as' => 'user_change_title', 'beofore' => 'auth']);
+Route::post('/members/{username}.{id}/photo', ['uses' => 'UserController@changeTitle', 'as' => 'user_change_title', 'before' => 'auth']);
+Route::any('/members/invite', array('uses' => 'UserController@invite', 'as' => 'user_invite', 'before' => 'auth'));
 
 // RemindersController (Récupération de mot de passe)
 Route::get('/lost-password', ['uses' => 'RemindersController@getRemind', 'as' => 'reminder_get_remind']);

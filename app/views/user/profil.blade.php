@@ -35,7 +35,7 @@
 				<img src="{{ url('img/profil.png') }}" alt="{{{ $user->username }}}" class="members-table-img img-thumbnail">
 			@endif
 		</div><!-- /User image -->
-		
+
 		<div class="col-md-5 profil-content">
 			<p>Inscrit le {{ date('d M Y', $user->created_at->getTimestamp()) }}</p>
 			<p>Dernière activitée le {{ date('d M Y H:m', $user->updated_at->getTimestamp()) }}</p>
@@ -46,7 +46,10 @@
 				<p>About: {{{ $user->about }}}</p>
 			@endif
 			@if(Auth::check() && Auth::user()->id == $user->id)
-				<p><a href="{{ route('user_edit_profil', array('username' => $user->username, 'id' => $user->id)) }}" class="btn btn-primary">Edit my profile</a></p>
+				<p><a href="{{ route('user_edit_profil', array('username' => $user->username, 'id' => $user->id)) }}" class="btn btn-primary">Editer mon profil</a></p>
+				<p>
+					<a href="{{ route('user_invite') }}" class="btn btn-primary">Inviter quelqu'un</a>
+				</p>
 			@endif
 		</div>
 		<div class="clearfix"></div>

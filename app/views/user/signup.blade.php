@@ -18,20 +18,20 @@
 
     <link rel="shortcut icon" href="{{ url('/favicon.ico') }}" type="image/x-icon">
     <link rel="icon" href="{{ url('/favicon.ico') }}" type="image/x-icon">
-    
+
     <link rel="stylesheet" href="{{ url('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url('css/flat-ui.css') }}">
     <link rel="stylesheet" href="{{ url('css/main.css') }}">
     <link rel="stylesheet" href="{{ url('css/font-awesome.min.css') }}">
 </head>
 <body class="signup">
-    
+
     <div class="container">
 
         <div class="col-md-4 signup-logo">
             <h1>{{ Config::get('other.title') }}</h1>
         </div>
-        
+
         @if(Session::has('message'))
         <div class="col-md-4 signup-alert">
             {{ Session::pull('message') }}
@@ -40,7 +40,7 @@
 
         <div class="col-md-3 login-form signup-form">
             <h3 class="signup-form-title">{{{ trans('common.signup') }}}</h3>
-            {{ Form::open(array('route' => 'signup')) }}
+            {{ Form::open(array('route' => array('signup', 'key' => $key))) }}
                 <div class="form-group">
                     <input type="text" name="username" placeholder="{{{ trans('common.username') }}}" class="form-control">
                 </div>

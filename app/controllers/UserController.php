@@ -14,15 +14,21 @@ class UserController extends BaseController {
      * @access public
      * @return Redirect /login
      */
-    public function signup()
+    public function signup($key = null)
     {
-        if(Config::get('other.invite-only') == true)
+        if(Config::get('other.invite-only') == true && $key == null)
         {
             return Redirect::to('/')->with('message', 'You must be invited to register');
         }
 
         if(Request::isMethod('post'))
         {
+            if(Config::get('other.invite-only') == true && md5(Input::get('email')) != $key)
+            {
+                Session::put('message', "Clé d'inscription invalide");
+                return View::make('user.signup', array('key' => $key));
+            }
+
             $input = Input::all();
             $user = new User();
             $v = Validator::make($input, $user->rules);
@@ -47,11 +53,12 @@ class UserController extends BaseController {
                     $message->to($user->email, '')->subject('Welcome to ' . Config::get('other.title'));
                 });*/
 
-                Session::put('message', 'An e-mail was sent to this address now you can activate your account');
+                //Session::put('message', 'An e-mail was sent to this address now you can activate your account');
+                Session::put('message', 'Vôtre compte à était enregistrer avec succès vous pouvez maintenant vous connecté');
                 return Redirect::route('login');
             }
         }
-        return View::make('user.signup');
+        return View::make('user.signup', array('key' => $key));
     }
 
     /**
@@ -175,5 +182,29 @@ class UserController extends BaseController {
         {
             return Redirect::to('/')->with('message', 'This link is unavailable');
         }
+    }
+
+    /**
+     * Invite l'utilisateur grace à son mail
+     *
+     * @access public
+     * @return void
+     *
+     */
+    public function invite()
+    {
+        if(Request::isMethod('post'))
+        {
+            $email = Input::get('email');
+
+            Mail::send('emails.invite', array('email' => $email), function($message) use($email)
+            {
+                $message->to($email)->subject('Une invitation sur ' . Config::get('other.title'));
+            });
+
+            Session::put('message', 'Invitation envoyé avec succès');
+        }
+
+        return View::make('user.invite');
     }
 } ?>
