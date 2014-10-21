@@ -37,7 +37,7 @@
                 <a href="{{ route('home') }}">{{{ Config::get('other.title') }}}</a>
             </header><!-- /Logo -->
 
-            <div class="col-md-3 l-header-search">
+            <div class="col-md-2 l-header-search">
                 {{ Form::open(array('route' => 'search')) }}
 
                     <div class="form-group">
@@ -46,7 +46,7 @@
                 {{ Form::close() }}
             </div>
 
-            <nav class="col-md-4 l-header-menu">
+            <nav class="col-md-5 l-header-menu">
                 <a href="{{ route('home') }}" class="l-header-menu-item">Accueil</a>
                 <a href="{{ route('torrents') }}" class="l-header-menu-item">Torrents</a>
                 <a href="{{ route('forum_index') }}" class="l-header-menu-item">Forums</a>
