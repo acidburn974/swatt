@@ -59,6 +59,7 @@ class ForumController extends BaseController {
 		{
 			return Redirect::route('forum_index')->with('message', 'You haven\'t access to this forum');
 		}
+
 		// Fetch les topics par ordre décroissant
 		$topics = $forum->topics()->orderBy('created_at', 'DESC')->paginate();
 
@@ -87,6 +88,9 @@ class ForumController extends BaseController {
 		// Get all posts
 		$posts = $topic->posts()->paginate(20);
 
+		// First post
+		$firstPost = Post::where('topic_id', '=', $topic->id)->first();
+
 		// The user can post a topic here ?
 		if($category->getPermission()->read_topic != true)
 		{
@@ -98,7 +102,7 @@ class ForumController extends BaseController {
 		$topic->views++;
 		$topic->save();
 
-		return View::make('forum.topic', array('topic' => $topic, 'forum' => $forum, 'category' => $category, 'posts' => $posts));
+		return View::make('forum.topic', array('topic' => $topic, 'forum' => $forum, 'category' => $category, 'posts' => $posts, 'firstPost' => $firstPost));
 	}
 
 	/**

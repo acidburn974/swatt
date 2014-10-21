@@ -5,7 +5,7 @@
 @stop
 
 @section('meta')
-<meta name="description" content="{{{ trans('forum.read-topic') . ' ' . $topic->name }}}">
+<meta name="description" content="{{ (strlen(strip_tags($firstPost->getContentHtml())) >= 120) ? substr(strip_tags($firstPost->getContentHtml()), 0, 110) : substr(strip_tags($firstPost->getContentHtml()), 0, 20) }}...">
 @stop
 
 @section('stylesheets')
@@ -18,11 +18,6 @@
         <span itemprop="title" class="l-breadcrumb-item-link-title">Forums</span>
     </a>
 </div>
-<!-- <div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
-    <a href="{{ route('forum_category', array('slug' => $category->slug, 'id' => $category->id)) }}" itemprop="url" class="l-breadcrumb-item-link">
-        <span itemprop="title" class="l-breadcrumb-item-link-title">{{ $category->name }}</span>
-    </a>
-</div> -->
 <div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
     <a href="{{ route('forum_display', array('slug' => $forum->slug, 'id' => $forum->id)) }}" itemprop="url" class="l-breadcrumb-item-link">
         <span itemprop="title" class="l-breadcrumb-item-link-title">{{ $forum->name }}</span>
@@ -93,7 +88,6 @@
 
                         <article class="col-md-10 post-content">
                             {{ $p->getContentHtml() }}
-                            
                         </article>
 
                         @if($p->user->signature != null)

@@ -5,7 +5,7 @@
 @stop
 
 @section('meta')
-<meta name="description" content="The page of {{{ $user->username }}} on {{{ Config::get('other.title') }}}">
+<meta name="description" content="{{{ 'Profil de l\'utilisateur ' . $user->username . ' sur le site ' . Config::get('other.title') . '. Découvrer son profil RLM en intégralité en vous inscrivant.' }}}">
 @stop
 
 @section('breadcrumb')
