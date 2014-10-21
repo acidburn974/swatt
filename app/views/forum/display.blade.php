@@ -14,11 +14,6 @@
         <span itemprop="title" class="l-breadcrumb-item-link-title">Forums</span>
     </a>
 </div>
-<!-- <div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
-    <a href="{{ route('forum_category', array('slug' => $category->slug, 'id' => $category->id)) }}" itemprop="url" class="l-breadcrumb-item-link">
-        <span itemprop="title" class="l-breadcrumb-item-link-title">{{ $category->name }}</span>
-    </a>
-</div> -->
 <div class="l-breadcrumb-item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
     <a href="{{ route('forum_display', array('slug' => $forum->slug, 'id' => $forum->id)) }}" itemprop="url" class="l-breadcrumb-item-link">
         <span itemprop="title" class="l-breadcrumb-item-link-title">{{ $forum->name }}</span>
@@ -30,7 +25,7 @@
 <div class="box container">
     <div class="f-display">
         <div class="f-display-info col-md-12">
-            <h2 class="f-display-info-title">{{ $forum->name }}</h2>
+            <h1 class="f-display-info-title">{{ $forum->name }}</h1>
             <p class="f-display-info-description">{{ $forum->description }}</p>
         </div>
         <div class="f-display-table-wrapper col-md-12">

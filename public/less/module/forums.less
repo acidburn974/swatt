@@ -1,48 +1,22 @@
 
-.f-category {
-	.f-category-title {
-		//margin: 0.75em auto;
-		//background: linear-gradient(#2ca0ce, #37add9);
-		//.border-radius(4px, 0, 0, 4px);
-		//border: 1px solid #1E92C0;
-		//.rounded(4px);
-		/* h2 {
-			text-shadow: 0px 1px 2px #000;
-			> a { color: #fff; .transition(); &:hover { text-decoration: none; } }
-		} */
-	}
+// Forum index
+.forum-categories {
+	.forum-category {
+		.forum-category-title {
+			h1 { }
+		}
 
-	.f-category-table-wrapper {
-		//background: rgb(233, 233, 233);
-		//margin: 0 auto 0.75em;
-		//padding: 0 15px;
-		table.f-category-forums {
-			background: white;
-			//.bordered(1px solid #dbe4ef);
-			//.rounded(4px);
-			.f-category-forums-icon { vertical-align: middle; img { } }
-			.f-category-forums-hidden { background: #D8DDE8; display: none; }
-			h4.f-category-forums-title {
-				margin: 0;
-				.f-category-forums-title-link { 
-
-				}
-			}
-			p.f-category-forums-description { color: #777777; }
-			tr { /* background: #f7f9fa; */ }
-			.f-category-forums-stats {
-				vertical-align: middle;
-				ul { list-style: none; li.f-category-forums-item { } }
-			}
-			ul.f-category-forums-last-post {
-				list-style: none;
-				.f-category-forums-last-post-item {
-					time { color: #777777; }
-				}
+		.forum-category-childs {
+			a.forum-category-childs-forum {
+				display: block;
+				padding: 1.25em;
+				.rounded(4px);
+				&:hover { background: rgba(0, 0, 0, 0.05); }
+				span { font-size: 18px; } 
+				p { color: #aaa; }
 			}
 		}
 	}
-
 }
 
 .f-display {
