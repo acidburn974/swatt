@@ -161,10 +161,10 @@ class ForumController extends BaseController {
 			$topicCreator = User::find($topic->first_post_user_id);
 
 			// Envoie un mail pour signaler un nouveau message dans le topic
-			Mail::send('emails.new_reply', array('user' => $user, 'topic' => $topic), function($message) use ($user, $topic, $topicCreator) {
+/*			Mail::send('emails.new_reply', array('user' => $user, 'topic' => $topic), function($message) use ($user, $topic, $topicCreator) {
 				$message->from(Config::get('other.email'), Config::get('other.title'));
                 $message->to($topicCreator->email, '')->subject('The topic ' . $topic->name . ' has a new reply');
-			});
+			});*/
 
 			return Redirect::route('forum_topic', array('slug' => $topic->slug, 'id' => $topic->id));
 		}
