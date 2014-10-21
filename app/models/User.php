@@ -127,4 +127,20 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	{
 		return round($this->uploaded / $this->downloaded, 2);
 	}
+
+	/**
+	 * Retourne le code HTML de la signature de l'utilisateur
+	 *
+	 * @access public
+	 * @return string html
+	 */
+	public function getSignature()
+	{
+		$code = new Decoda\Decoda($this->signature);
+		$code->defaults();
+		$code->setXhtml(false);
+		$code->setStrict(false);
+		$code->setLineBreaks(true);
+		return $code->parse();
+	}
 }

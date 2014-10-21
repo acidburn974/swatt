@@ -93,7 +93,14 @@
 
                         <article class="col-md-10 post-content">
                             {{ $p->getContentHtml() }}
+                            
                         </article>
+
+                        @if($p->user->signature != null)
+                        <div class="post-signature col-md-12">
+                            {{ $p->user->getSignature() }}
+                        </div>
+                        @endif
 
                         <div class="clearfix"></div>
                     </div>

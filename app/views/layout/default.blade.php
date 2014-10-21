@@ -46,7 +46,7 @@
                 {{ Form::close() }}
             </div>
 
-            <nav class="col-md-5 l-header-menu">
+            <nav class="col-md-4 l-header-menu">
                 <a href="{{ route('home') }}" class="l-header-menu-item">Accueil</a>
                 <a href="{{ route('torrents') }}" class="l-header-menu-item">Torrents</a>
                 <a href="{{ route('forum_index') }}" class="l-header-menu-item">Forums</a>
@@ -59,7 +59,7 @@
             </nav>
             
             @if(Auth::check())
-            <div class="col-md-3 l-header-info">
+            <div class="col-md-4 l-header-info">
                 <a href="{{ route('profil', array('username' => Auth::user()->username, 'id' => Auth::user()->id)) }}" class="l-header-user-data-link">{{ Auth::user()->username }}</a>
                 <span class="l-header-info-span">{{ Auth::user()->getUploaded() }} <i class="fa fa-long-arrow-up"></i></span>
                 <span class="l-header-info-span">{{ Auth::user()->getDownloaded() }} <i class="fa fa-long-arrow-down"></i></span>

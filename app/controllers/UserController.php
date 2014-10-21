@@ -149,10 +149,11 @@ class UserController extends BaseController {
             // Define data
             $user->title = Input::get('title');
             $user->about = Input::get('about');
+            $user->signature = Input::get('signature');
             // Save the user
             $user->save();
 
-            return Redirect::route('profil', ['username' => $user->username, 'id' => $user->id]);
+            return Redirect::route('profil', ['username' => $user->username, 'id' => $user->id])->with('message', 'Modification sauvegardé avec succès');
         }
 
         return View::make('user.edit_profil', array('user' => $user));
