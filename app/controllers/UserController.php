@@ -16,6 +16,7 @@ class UserController extends BaseController {
      */
     public function __construct() 
     {
+        View::share('pages', Page::all());
         // Pas de filtre private sinon redirection en boucle
     }
 
