@@ -20,9 +20,7 @@
     <link rel="icon" href="{{ url('/favicon.ico') }}" type="image/x-icon">
 
     <link rel="stylesheet" href="{{ url('css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url('css/flat-ui.css') }}">
     <link rel="stylesheet" href="{{ url('css/main.css') }}">
-    <link rel="stylesheet" href="{{ url('css/font-awesome.min.css') }}">
 </head>
 <body class="signup">
 
@@ -53,7 +51,7 @@
                     <input type="password" name="password" placeholder="{{{ trans('common.password') }}}" class="form-control">
                 </div>
 
-                <button type="submit" class="btn btn-default">{{{ trans('common.signup') }}}</button>
+                <button type="submit" class="btn btn-primary btn-block">{{{ trans('common.signup') }}}</button>
             {{ Form::close() }}
         </div>
 

@@ -18,10 +18,7 @@
     <link rel="icon" href="{{ url('/favicon.ico') }}" type="image/x-icon">
     
     <link rel="stylesheet" href="{{ url('css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url('css/flat-ui.css') }}">
     <link rel="stylesheet" href="{{ url('css/main.css') }}">
-    <link rel="stylesheet" href="{{ url('css/font-awesome.min.css') }}">
-
 </head>
 <body class="lostpassword-page">
     

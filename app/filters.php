@@ -14,12 +14,6 @@
 App::before(function($request)
 {
 	//
-
-	// Tracker privée seulement
-	if(Config::get('other.private') == true && Auth::check() == false)
-	{
-		return View::make('user.login');
-	}
 });
 
 
@@ -114,5 +108,21 @@ Route::filter('admin', function()
 	{
 		throw new NotFoundHttpException;
 		//return Redirect::to('/');
+	}
+});
+
+/*
+|--------------------------------------------------------------------------
+| Private filters
+|--------------------------------------------------------------------------
+|
+| Check if user is logged in and tracker is private
+|
+*/
+
+Route::filter('private', function() {
+	if(Config::get('other.private') && !Auth::check())
+	{
+		return Redirect::to('/login');
 	}
 });

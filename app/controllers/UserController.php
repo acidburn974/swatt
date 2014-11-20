@@ -9,6 +9,18 @@
 class UserController extends BaseController {
 
     /**
+     * Ctor
+     *
+     * @override parent constructor
+     *
+     */
+    public function __construct() 
+    {
+        // Pas de filtre private sinon redirection en boucle
+    }
+
+
+    /**
      * Enregistre l'utilisateur
      *
      * @access public

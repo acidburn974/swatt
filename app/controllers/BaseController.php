@@ -7,10 +7,9 @@ class BaseController extends Controller {
 	*
 	*
 	*/
-	public function __construct()
-	{
-
+	public function __construct() {
 		View::share('pages', Page::all());
+		$this->beforeFilter('private');
 	}
 
 	/**
