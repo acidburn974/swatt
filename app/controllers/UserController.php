@@ -9,19 +9,6 @@
 class UserController extends BaseController {
 
     /**
-     * Ctor
-     *
-     * @override parent constructor
-     *
-     */
-    public function __construct() 
-    {
-        View::share('pages', Page::all());
-        // Pas de filtre private sinon redirection en boucle
-    }
-
-
-    /**
      * Enregistre l'utilisateur
      *
      * @access public

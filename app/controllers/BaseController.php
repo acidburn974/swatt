@@ -2,14 +2,8 @@
 
 class BaseController extends Controller {
 
-	/**
-	* Constructeur
-	*
-	*
-	*/
 	public function __construct() {
 		View::share('pages', Page::all());
-		$this->beforeFilter('private');
 	}
 
 	/**
