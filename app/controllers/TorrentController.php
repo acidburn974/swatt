@@ -232,8 +232,8 @@ class TorrentController extends BaseController {
 			$user->save();
 		}
 
-		$resp['interval'] = 60; // Set to 60 for debug
-		$resp['min interval'] = 30; // Set to 30 for debug
+		$resp['interval'] = 600; // Set to 60 for debug
+		$resp['min interval'] = 300; // Set to 30 for debug
 		$resp['tracker_id'] = $client->md5_peer_id; // A string that the client should send back on its next announcements.
 		$resp['complete'] = $torrent->seeders;
 		$resp['incomplete'] = $torrent->leechers;
@@ -284,7 +284,10 @@ class TorrentController extends BaseController {
 	{
 		if(Auth::check())
 		{
+			// Current user is the logged in user
 			$user = Auth::user();
+			// Find the torrent in the database
+			$torrent = Torrent::find($id);
 			// User's ratio is too low
 			if($user->getDownloaded() / $user->getUploaded() < Config::get('other.ratio') && Config::get('other.freeleech') == false)
 			{
@@ -295,9 +298,6 @@ class TorrentController extends BaseController {
 		{
 			$user = null;
 		}
-
-		// Find th etorrent in the
-		$torrent = Torrent::find($id);
 
 		// Define the filename for the download
 		$tmpFileName = $torrent->slug . '.torrent';

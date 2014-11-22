@@ -188,8 +188,8 @@ AUTO_INCREMENT=1;
 
 CREATE TABLE `torrents` (
 `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-`name` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-`slug` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+`name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+`slug` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
 `description` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
 `info_hash` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
 `file_name` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -235,7 +235,9 @@ CREATE TABLE `users` (
 `uploaded` bigint(20) NOT NULL,
 `downloaded` bigint(20) NOT NULL,
 `image` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+`title` varchar(255) NULL,
 `about` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+`signature` text NULL,
 `remember_token` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
 `created_at` datetime NULL DEFAULT NULL,
 `updated_at` datetime NULL DEFAULT NULL,
