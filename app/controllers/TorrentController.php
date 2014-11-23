@@ -112,61 +112,38 @@ class TorrentController extends BaseController {
 	*/
 	public function announce($passkey = null)
 	{
-		//Log::info(Input::all());
-
-		// Correct info hash
-		$infoHash = bin2hex((Input::get('info_hash') != null) ? Input::get('info_hash') : Input::get('hash_id'));
-
-		// Finding the torrent on the DB
-		$torrent = Torrent::where('info_hash', '=', $infoHash)->first();
-
-		// Is torrent incorrect ?
-		if($torrent == null)
+		// Pas de passkey et pas de freeleech
+		if(Config::get('other.freeleech') == false && $passkey == null)
 		{
-			return Response::make(Bencode::bencode(array('failure reason' => 'This torrent does not exist'), 200, array('Content-Type' => 'text/plain')));
+			return Response::make(Bencode::bencode(array('failure reason' => 'Passkey is invalid')), 200, array('Content-Type' => 'text/plain'));
 		}
 
-		// Is this a public tracker ?
-		if(Config::get('other.freeleech') == false)
+		$hash = bin2hex(Input::get('info_hash')); // Get hash
+
+		$torrent = (Config::get('other.freelech') == false) ? Torrent::where('info_hash', '=', $hash)->first() : null; // Find the torrent if tracker 
+
+		$user = (Config::get('other.freelech') == false) ? User::where('passkey', '=', $passkey)->first() : null; // Get the user
+
+		$client = Peer::where('md5_peer_id', '=', md5(Input::get('peer_id')))->first(); // Get the current peer
+
+		if($client == null) { $client = new Peer(); } // Crée un nouveau client si non existant
+
+		Peer::deleteOldPeers(); // Delete olds peers from database
+
+		$peers = Peer::where('hash', '=', $hash)->take(50)->get()->toArray(); // Liste des pairs
+
+		$seeders = 0;
+		$leechers = 0;
+
+		foreach($peers as &$p)
 		{
-			// Finding the user in the DB
-			$user = User::where('passkey', '=', $passkey)->first();
+			if($p['left'] > 0)
+				$leechers++; // Compte le nombre de leechers
+			else
+				$seeders++; // Compte le nombre de seeders
 
-			// The user is incorrect ?
-			if($user == null)
-			{
-				return Response::make(Bencode::bencode(array('failure reason' => 'This user does not exist'), 200, array('Content-Type' => 'text/plain')));
-			}
+			unset($p['uploaded'], $p['downloaded'], $p['left'], $p['seeder'], $p['connectable'], $p['user_id'], $p['torrent_id'], $p['client'], $p['created_at'], $p['updated_at'], $p['md5_peer_id']);
 		}
-		// Finding the correct client/peer by the md5 of the peer_id
-		$client = Peer::whereRaw('md5_peer_id = ?', [md5(Input::get('peer_id'))])->first();
-
-		// First time the client connect
-		if($client == null)
-		{
-			$client = new Peer();
-		}
-
-		// Deleting old peers from the database
-		foreach(Peer::all() as $peer)
-		{
-			if((time() - strtotime($peer->updated_at)) > (50 * 60))
-			{
-				$peer->delete();
-			}
-		}
-
-		// Finding peers for this torrent on the database
-		$peers = Peer::whereRaw('torrent_id = ?', array($torrent->id))->take(50)->get()->toArray();
-
-		// Removing useless data from the
-		foreach($peers as $k => $p)
-		{
-			unset($p['uploaded']); unset($p['downloaded']); unset($p['left']); unset($p['seeder']); unset($p['connectable']); unset($p['user_id']); unset($p['torrent_id']); unset($p['client']);unset($p['created_at']); unset($p['updated_at']);
-			unset($p['md5_peer_id']);
-			$peers[$k] = $p;
-		}
-
 
 		// Get the event of the tracker
 		if(Input::get('event') == 'started' || Input::get('event') == null)
@@ -174,74 +151,54 @@ class TorrentController extends BaseController {
 			// Set the torrent data
 			$client->peer_id = Input::get('peer_id');
 			$client->md5_peer_id = md5($client->peer_id);
+			$client->hash = $hash;
 			$client->ip = Request::getClientIp();
 			$client->port = Input::get('port');
 			$client->left = Input::get('left');
 			$client->uploaded = Input::get('uploaded');
 			$client->downloaded = Input::get('downloaded');
-			$client->seeder = ($client->left > 0) ? false : true;
-
-			if(Config::get('other.freeleech') == true)
-			{
-				$client->user_id = 0;
-			}
-			else
-			{
-				$client->user_id = $user->id;
-			}
-
-			$client->torrent_id = $torrent->id;
+			$client->seeder = ($client->left == 0) ? true : false;
+			$client->user_id = (Config::get('other.freeleech') == false) ? $user->id : null;
+			$client->torrent_id = (Config::get('other.freeleech') == false) ? $torrent->id : null;
 			$client->save();
+		}
+		elseif(Input::get('event') == 'completed')
+		{
+			if(Config::get('other.freeleech') == false)
+			{
+				$torrent->times_completed++;
+				$torrent->save();
+			}
+			$client->left = 0;
+			$client->seeder = true;
+			$client->save();
+		}
+		elseif(Input::get('event') == 'stopped')
+		{
+			$client->delete();
+		}
+		else { }
 
+		if(Config::get('other.freeleech') == false && $torrent != null && $user != null)
+		{
 			$torrent->seeders = Peer::whereRaw('torrent_id = ? AND `left` = 0', array($torrent->id))->count();
 			$torrent->leechers = Peer::whereRaw('torrent_id = ? AND `left` > 0', array($torrent->id))->count();
 			$torrent->save();
-		}
 
-		if(Input::get('event') == 'completed')
-		{
-			if($client == null && $client->left > 0)
-			{
-				return Response::make(Bencode::bencode(array('failure reason' => 'Are you fucking kidding me ?'), 200, array('Content-Type' => 'text/plain')));
-			}
-			$torrent->times_completed++;
-			$torrent->save();
-			$client->left = 0;
-			$client->seeder = 0;
-			$client->save();
-		}
-
-		if(Input::get('event') == 'stopped')
-		{
-			if($client != null)
-			{
-				$client->delete();
-			}
-			else
-			{
-				return Response::make(Bencode::bencode(array('failure reason' => 'You don\'t have a life'), 200, array('Content-Type' => 'text/plain')));
-			}
-		}
-
-		// Savegarde le ratio de l'utilisateur
-		if(Config::get('other.freeleech') == false)
-		{
 			// Modification de l'upload/download de l'utilisateur pour le ratio
 			$user->uploaded += Input::get('uploaded') - $client->uploaded;
 			$user->downloaded += Input::get('downloaded') - $client->downloaded;
 			$user->save();
 		}
+		
+		$res['interval'] = 60; // Set to 60 for debug
+		$res['min interval'] = 30; // Set to 30 for debug
+		$res['tracker_id'] = $client->md5_peer_id; // A string that the client should send back on its next announcements.
+		$res['complete'] = $seeders;
+		$res['incomplete'] = $leechers;
+		$res['peers'] = $peers;
 
-		$resp['interval'] = 600; // Set to 60 for debug
-		$resp['min interval'] = 300; // Set to 30 for debug
-		$resp['tracker_id'] = $client->md5_peer_id; // A string that the client should send back on its next announcements.
-		$resp['complete'] = $torrent->seeders;
-		$resp['incomplete'] = $torrent->leechers;
-		$resp['peers'] = $peers;
-
-		//Log::info($resp);
-
-		return Response::make(Bencode::bencode($resp), 200, array('Content-Type' => 'text/plain'));
+		return Response::make(Bencode::bencode($res), 200, array('Content-Type' => 'text/plain'));
 	}
 
 	/**
