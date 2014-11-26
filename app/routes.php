@@ -16,6 +16,10 @@ Route::get('/', ['uses' => 'HomeController@home', 'as' => 'home']);
 Route::any('/search', ['uses' => 'HomeController@search', 'as' => 'search']);
 Route::any('/contact', ['uses' => 'HomeController@contact', 'as' => 'contact']);
 
+// Shoutbox
+Route::get('/shoutbox', ['uses' => 'ShoutController@index', 'as' => 'shoutbox', 'before' => 'auth']);
+Route::post('/shoutbox/add', ['uses' => 'ShoutController@add', 'as' => 'shoutbox_add', 'before' => 'auth']);
+
 // User
 Route::any('/login', ['uses' => 'UserController@login', 'as' => 'login']);
 Route::any('/signup/{key?}', ['uses' => 'UserController@signup', 'as' => 'signup']);
@@ -141,4 +145,7 @@ Route::group(['prefix' => 'api', 'namespace' => 'Api'], function(){
 
     // Retourne le contenue BBCode en HTMl
     Route::post('/forums/preview', ['uses' => 'ForumController@getPreview']);
+
+
+    Route::resource('shout', 'ShoutController');
 });
