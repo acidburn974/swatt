@@ -20,13 +20,13 @@
 				</tr>
 			</thead>
 			<tbody class="shoutbox-shouts">
-				{{-- @foreach($shouts as $s)
+				@foreach($shouts as $s)
 					<tr>
 						<td>{{{ $s->user->username }}}</td>
 						<!-- <td>{{ date('d M Y H:m:s', $s->created_at->getTimeStamp()) }}</td> -->
 						<td>{{{ $s->content }}}</td>
 					</tr>
-				@endforeach --}}
+				@endforeach
 			</tbody>
 		</table>
 

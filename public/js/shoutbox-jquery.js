@@ -1,10 +1,12 @@
 var lastId = 0;
+$(".shoutbox-shouts").html('');
+
 
 function addShout(data) {
 	$(".shoutbox-shouts").append(
 		'<tr>' +
 			'<td>'+ data.username +'</td>' +
-			'<td>'+ data.content +'</td>' +
+			'<td>'+ data.content.replace(/(<([^>]+)>)/ig,"") +'</td>' +
 		'</tr>'
 	).hide().fadeIn();
 }
@@ -34,7 +36,7 @@ $.get("/api/shout", function(data) {
 		$(".shoutbox-shouts").append(
 			'<tr>' +
 				'<td>'+ data[i].username +'</td>' +
-				'<td>'+ data[i].content +'</td>' +
+				'<td>'+ data[i].content.replace(/(<([^>]+)>)/ig,"") +'</td>' +
 			'</tr>'
 		);
 	}
