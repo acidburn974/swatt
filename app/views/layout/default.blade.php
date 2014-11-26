@@ -109,6 +109,7 @@
                         @if(Auth::user()->group->is_admin)
                             <li><a href="{{ route('admin_home') }}">Admin Control Panel</a></li>
                         @endif
+                        <li><a href="{{ route('shoutbox') }}">Shoutbox</a></li>
                         <li><a href="{{ route('logout') }}">{{{ trans('common.logout') }}}</a></li>
                     @else
                         <li><a href="{{ route('login') }}">{{ trans('common.login') }}</a></li>
@@ -155,6 +156,11 @@
     <!-- Scripts -->
     <script type="text/javascript">
         var url = "{{ url('/') }}";
+        @if(Auth::check())
+            var username = "{{ Auth::user()->username }}";
+        @else
+            var username = "";
+        @endif
     </script>
     
     <script type="text/javascript" src="{{ url('js/vendor/pace.min.js') }}"></script>
@@ -164,22 +170,6 @@
 	@if(Config::get('app.debug') == false)
 	   <!-- INSERT YOUR ANALYTICS CODE HERE -->
     @else
-        <script type="text/javascript" src="{{ url('js/vendor/f5less.js') }}"></script>
-        <script type="text/javascript">
-            f5less.connect({
-                triggersCSSReload: function(filename) {
-                    return f5less.strEndsWith(filename, 
-                        ".css", ".png", ".jpg", ".less"
-                    );
-                },
-
-                triggersPageReload: function(filename) {
-                    return f5less.strEndsWith(filename, 
-                        ".js", ".html", ".htm", ".php", "coffee"
-                    );
-                }
-            });
-        </script>
         <!-- INSERT DEBUG CODE HERE -->
 	@endif
 </body>
