@@ -120,7 +120,18 @@ class TorrentController extends BaseController {
 
 		$hash = bin2hex(Input::get('info_hash')); // Get hash
 
-		$torrent = (Config::get('other.freelech') == false) ? Torrent::where('info_hash', '=', $hash)->first() : null; // Find the torrent if tracker 
+		if( !Config::get('other.freelech'))
+		{
+			$torrent = Torrent::where('info_hash', '=', $hash)->first();
+			if(is_null($torrent))
+			{
+				return Response::make(Bencode::bencode(array('failure reason' => 'Torrent not found')), 200, array('Content-Type' => 'text/plain'));
+			}
+		}
+		else
+		{
+			$torrent = null;
+		}
 
 		$user = (Config::get('other.freelech') == false) ? User::where('passkey', '=', $passkey)->first() : null; // Get the user
 
@@ -239,12 +250,13 @@ class TorrentController extends BaseController {
 	 */
 	public function download($slug, $id)
 	{
+		// Find the torrent in the database
+		$torrent = Torrent::find($id);
+
 		if(Auth::check())
 		{
 			// Current user is the logged in user
 			$user = Auth::user();
-			// Find the torrent in the database
-			$torrent = Torrent::find($id);
 			// User's ratio is too low
 			if($user->getDownloaded() / $user->getUploaded() < Config::get('other.ratio') && Config::get('other.freeleech') == false)
 			{
@@ -260,7 +272,7 @@ class TorrentController extends BaseController {
 		$tmpFileName = $torrent->slug . '.torrent';
 
 		// The torrent file exist ?
-		if( ! file_exists(getcwd() . '/files/torrents/' . $torrent->file_name))
+		if( !file_exists(getcwd() . '/files/torrents/' . $torrent->file_name))
 		{
 			return Redirect::route('torrent', array('slug' => $torrent->slug, 'id' => $torrent->id))
 			->with('message', 'The torrent file is currently unavailable');
