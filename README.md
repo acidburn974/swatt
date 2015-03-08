@@ -15,6 +15,3 @@ CSS3 and differents Javacripts libraries as BackboneJS and Grunt.
 
 ## Contact
 If you want to join the developpement team or just need informations here is my data.
-
-TOX ID:541980EC08D22D0BE5C4409557871FD0A9A6FC61E7537FC11A100C3EBCE6E933EE0224D05856
-Skype: Acess1940
