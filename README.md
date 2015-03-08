@@ -12,6 +12,3 @@ CSS3 and differents Javacripts libraries as BackboneJS and Grunt.
 6. Create an account from the site
 7. In your database change your group in `the users` table, ID 4 for administrators
 8. Enjoy
-
-## Contact
-If you want to join the developpement team or just need informations here is my data.
